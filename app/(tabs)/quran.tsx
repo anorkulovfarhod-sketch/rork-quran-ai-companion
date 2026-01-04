@@ -183,11 +183,7 @@ export default function QuranScreen() {
   const [localReciter, setLocalReciter] = useState(selectedReciter);
   const playerRef = useRef<any>(null);
   
-  const currentAudioUrl = currentPlayingVerse !== null && surahData
-    ? surahData[currentPlayingVerse]?.audioUrl
-    : null;
-  
-  const player = useAudioPlayer(currentAudioUrl ? { uri: currentAudioUrl } : null);
+  const player = useAudioPlayer();
   const status = useAudioPlayerStatus(player);
 
   useEffect(() => {
@@ -228,11 +224,13 @@ export default function QuranScreen() {
     setIsLoadingAudio(true);
     setCurrentPlayingVerse(verseIndex);
     
-    await new Promise(resolve => setTimeout(resolve, 150));
-    
     try {
       if (playerRef.current) {
+        console.log('Replacing audio source and playing:', verse.audioUrl);
+        playerRef.current.replace({ uri: verse.audioUrl });
+        await new Promise(resolve => setTimeout(resolve, 300));
         playerRef.current.play();
+        console.log('Audio playing started');
       }
     } catch (error) {
       console.error('Error playing audio:', error);
@@ -271,10 +269,13 @@ export default function QuranScreen() {
 
   const togglePlayVerse = useCallback((verseIndex: number) => {
     if (currentPlayingVerse === verseIndex && status.playing) {
+      console.log('Pausing current verse');
       player.pause();
     } else if (currentPlayingVerse === verseIndex && !status.playing) {
+      console.log('Resuming current verse');
       player.play();
     } else {
+      console.log('Playing new verse:', verseIndex);
       setIsPlayingAll(false);
       playVerse(verseIndex);
     }
