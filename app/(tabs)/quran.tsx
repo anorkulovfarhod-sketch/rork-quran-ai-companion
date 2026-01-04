@@ -782,6 +782,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: "center",
     letterSpacing: 0.3,
+    fontFamily: "Georgia",
   },
   contentContainer: {
     flex: 1,
@@ -836,10 +837,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "500" as const,
     letterSpacing: 0.2,
+    fontFamily: "Georgia",
   },
   surahMeta: {
     fontSize: 12,
     marginTop: 2,
+    fontFamily: "Georgia",
   },
   surahHeader: {
     paddingTop: 60,
@@ -861,6 +864,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#ffffff",
     fontWeight: "500" as const,
+    fontFamily: "Georgia",
   },
   surahHeaderArabic: {
     fontSize: 32,
@@ -877,6 +881,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     textAlign: "center",
     letterSpacing: 0.4,
+    fontFamily: "Georgia",
   },
   surahHeaderSubtext: {
     fontSize: 14,
@@ -884,6 +889,7 @@ const styles = StyleSheet.create({
     opacity: 0.88,
     marginTop: 8,
     textAlign: "center",
+    fontFamily: "Georgia",
   },
   versesContainer: {
     flex: 1,
@@ -944,6 +950,7 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     fontSize: 16,
+    fontFamily: "Georgia",
   },
   completionCard: {
     padding: 32,
@@ -961,12 +968,14 @@ const styles = StyleSheet.create({
     fontWeight: "600" as const,
     marginTop: 16,
     letterSpacing: 0.5,
+    fontFamily: "Georgia",
   },
   completionText: {
     fontSize: 15,
     marginTop: 8,
     textAlign: "center",
     letterSpacing: 0.2,
+    fontFamily: "Georgia",
   },
   quizButton: {
     borderRadius: 18,
@@ -991,6 +1000,7 @@ const styles = StyleSheet.create({
     fontWeight: "600" as const,
     color: "#ffffff",
     letterSpacing: 0.4,
+    fontFamily: "Georgia",
   },
   modalOverlay: {
     flex: 1,
@@ -1025,6 +1035,7 @@ const styles = StyleSheet.create({
     fontWeight: "600" as const,
     marginTop: 20,
     letterSpacing: 0.5,
+    fontFamily: "Georgia",
   },
   modalText: {
     fontSize: 16,
@@ -1032,6 +1043,7 @@ const styles = StyleSheet.create({
     marginTop: 12,
     lineHeight: 24,
     letterSpacing: 0.2,
+    fontFamily: "Georgia",
   },
   modalButton: {
     borderRadius: 18,
@@ -1053,6 +1065,7 @@ const styles = StyleSheet.create({
     fontWeight: "600" as const,
     color: "#ffffff",
     letterSpacing: 0.5,
+    fontFamily: "Georgia",
   },
   modalSkipButton: {
     marginTop: 16,
@@ -1061,6 +1074,7 @@ const styles = StyleSheet.create({
   modalSkipText: {
     fontSize: 15,
     letterSpacing: 0.3,
+    fontFamily: "Georgia",
   },
   audioControlsContainer: {
     marginTop: 20,
@@ -1082,6 +1096,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: "rgba(255,255,255,0.95)",
     fontWeight: "600" as const,
+    fontFamily: "Georgia",
   },
   audioControls: {
     flexDirection: "row",
@@ -1111,6 +1126,7 @@ const styles = StyleSheet.create({
     color: "rgba(255,255,255,0.8)",
     marginTop: 10,
     fontWeight: "500" as const,
+    fontFamily: "Georgia",
   },
   verseCardPlaying: {
     borderWidth: 2,
@@ -1149,6 +1165,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
     marginTop: 4,
     textAlign: "right" as const,
+    fontFamily: "Georgia",
   },
   reciterModalOverlay: {
     flex: 1,
@@ -1178,6 +1195,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "600" as const,
     letterSpacing: 0.3,
+    fontFamily: "Georgia",
   },
   recitersList: {
     padding: 20,
@@ -1204,10 +1222,12 @@ const styles = StyleSheet.create({
     fontWeight: "600" as const,
     marginBottom: 4,
     letterSpacing: 0.2,
+    fontFamily: "Georgia",
   },
   reciterOptionArabic: {
     fontSize: 14,
     letterSpacing: 0.2,
+    fontFamily: "Georgia",
   },
   reciterCheckmark: {
     width: 32,

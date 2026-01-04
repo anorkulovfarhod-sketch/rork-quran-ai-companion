@@ -9,7 +9,7 @@ import {
   Easing,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { BookOpen, CheckCircle2, Clock, Compass, TrendingUp } from "lucide-react-native";
+import { BookOpen, CheckCircle2, Clock, Compass } from "lucide-react-native";
 import Colors from "@/constants/colors";
 import { useLocation } from "@/contexts/LocationContext";
 import { calculatePrayerTimes, type Prayer } from "@/utils/prayerTimes";
@@ -22,7 +22,6 @@ export default function PrayersScreen() {
   const { translate } = useLanguage();
   const { theme } = useTheme();
   const [prayers, setPrayers] = useState<Prayer[]>([]);
-  const currentStreak = 7;
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.95)).current;
   const progressAnim = useRef(new Animated.Value(0)).current;
@@ -185,15 +184,7 @@ export default function PrayersScreen() {
             </View>
           </View>
 
-          <View style={styles.statsRow}>
-            <View style={[styles.statCard, { backgroundColor: colors.card }]}>
-              <View style={[styles.statIconContainer, { backgroundColor: colors.parchment }]}>
-                <TrendingUp color={colors.primary} size={20} strokeWidth={2} />
-              </View>
-              <Text style={[styles.statValue, { color: colors.text }]}>{currentStreak}</Text>
-              <Text style={[styles.statLabel, { color: colors.muted }]}>Day Streak</Text>
-            </View>
-          </View>
+
 
           <View style={[styles.prayersSection, { backgroundColor: colors.card, shadowColor: colors.primary }]}>
             <View style={styles.prayersSectionHeader}>
@@ -304,6 +295,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: "center",
     letterSpacing: 0.3,
+    fontFamily: "Georgia",
   },
   headerLocation: {
     fontSize: 13,
@@ -312,6 +304,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
     fontWeight: "600" as const,
     letterSpacing: 0.5,
+    fontFamily: "Georgia",
   },
   contentContainer: {
     flex: 1,
@@ -331,6 +324,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "500" as const,
     letterSpacing: 0.2,
+    fontFamily: "Georgia",
   },
   cardsRow: {
     flexDirection: "row",
@@ -388,24 +382,24 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   progressCircle: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
+    width: 140,
+    height: 140,
+    borderRadius: 70,
     alignItems: "center",
     justifyContent: "center",
   },
   progressGradientBorder: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
+    width: 140,
+    height: 140,
+    borderRadius: 70,
     alignItems: "center",
     justifyContent: "center",
-    padding: 5,
+    padding: 6,
   },
   progressCircleInner: {
-    width: 110,
-    height: 110,
-    borderRadius: 55,
+    width: 128,
+    height: 128,
+    borderRadius: 64,
     alignItems: "center",
     justifyContent: "center",
     shadowOffset: { width: 0, height: 2 },
@@ -414,7 +408,7 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   progressPercentage: {
-    fontSize: 32,
+    fontSize: 36,
     fontWeight: "700" as const,
     letterSpacing: -1,
   },
@@ -430,43 +424,9 @@ const styles = StyleSheet.create({
     fontWeight: "500" as const,
     letterSpacing: 0.2,
     textAlign: "center",
-  },
-  statsRow: {
-    flexDirection: "row",
-    gap: 12,
-    marginBottom: 16,
-  },
-  statCard: {
-    flex: 1,
-    borderRadius: 16,
-    padding: 16,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 8,
-    elevation: 2,
-  },
-  statIconContainer: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 10,
-  },
-  statValue: {
-    fontSize: 26,
-    fontWeight: "700" as const,
-    letterSpacing: -0.5,
-    marginBottom: 4,
-  },
-  statLabel: {
-    fontSize: 12,
-    fontWeight: "500" as const,
-    letterSpacing: 0.2,
     fontFamily: "Georgia",
   },
+
   prayersSection: {
     borderRadius: 20,
     padding: 20,
@@ -536,6 +496,7 @@ const styles = StyleSheet.create({
   prayerName: {
     fontSize: 13,
     letterSpacing: 0.2,
+    fontFamily: "Georgia",
   },
   prayerTimeContainer: {
     paddingHorizontal: 12,
@@ -546,6 +507,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "600" as const,
     letterSpacing: 0.2,
+    fontFamily: "Georgia",
   },
   reminderCard: {
     padding: 24,
@@ -563,6 +525,7 @@ const styles = StyleSheet.create({
     fontStyle: "italic" as const,
     textAlign: "center",
     letterSpacing: 0.2,
+    fontFamily: "Georgia",
   },
   reminderArabic: {
     fontSize: 17,
@@ -576,5 +539,6 @@ const styles = StyleSheet.create({
     marginTop: 12,
     textAlign: "center",
     letterSpacing: 0.3,
+    fontFamily: "Georgia",
   },
 });
