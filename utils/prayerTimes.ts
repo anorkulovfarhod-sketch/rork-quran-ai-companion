@@ -20,7 +20,7 @@ export const calculatePrayerTimes = async (
     const year = date.getFullYear();
 
     const response = await fetch(
-      `https://api.aladhan.com/v1/timings/${day}-${month}-${year}?latitude=${latitude}&longitude=${longitude}&method=2`
+      `https://api.aladhan.com/v1/timings/${day}-${month}-${year}?latitude=${latitude}&longitude=${longitude}&method=3`
     );
 
     if (!response.ok) {
