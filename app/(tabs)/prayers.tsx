@@ -187,27 +187,15 @@ export default function PrayersScreen() {
               <Text style={[styles.progressText, { color: colors.text }]}>
                 {completedPrayers === 5 ? 'Complete!' : `${5 - completedPrayers} remaining`}
               </Text>
-              {completedPrayers === 5 && (
-                <View style={styles.completionQuoteContainer}>
-                  <Text style={[styles.completionQuote, { color: colors.muted }]}>
-                    &ldquo;Successful indeed are the believers&rdquo;
-                  </Text>
-                  <Text style={[styles.completionQuoteArabic, { color: colors.primary }]}>
-                    قَدْ أَفْلَحَ الْمُؤْمِنُونَ
-                  </Text>
-                </View>
-              )}
+              <View style={styles.completionQuoteContainer}>
+                <Text style={[styles.completionQuote, { color: colors.muted }]}>
+                  &ldquo;Successful indeed are the believers&rdquo;
+                </Text>
+                <Text style={[styles.completionQuoteArabic, { color: colors.primary }]}>
+                  قَدْ أَفْلَحَ الْمُؤْمِنُونَ
+                </Text>
+              </View>
             </View>
-          </View>
-
-          <View style={[styles.quoteCard, { backgroundColor: colors.parchment, borderLeftColor: colors.accent }]}>
-            <Text style={[styles.quoteText, { color: colors.text }]}>
-              &ldquo;Verily, in the remembrance of Allah do hearts find rest&rdquo;
-            </Text>
-            <Text style={[styles.quoteArabic, { color: colors.primary }]}>
-              أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ
-            </Text>
-            <Text style={[styles.quoteReference, { color: colors.muted }]}>Surah Ar-Ra&apos;d (13:28)</Text>
           </View>
 
           <View style={[styles.prayersSection, { backgroundColor: colors.card, shadowColor: colors.primary }]}>
@@ -460,17 +448,17 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   completionQuote: {
-    fontSize: 11,
+    fontSize: 13,
     fontStyle: "italic" as const,
     textAlign: "center",
     letterSpacing: 0.2,
     fontFamily: "Georgia",
   },
   completionQuoteArabic: {
-    fontSize: 13,
-    marginTop: 4,
+    fontSize: 16,
+    marginTop: 6,
     textAlign: "center",
-    fontWeight: "500" as const,
+    fontWeight: "600" as const,
   },
 
   prayersSection: {
