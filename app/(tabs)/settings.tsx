@@ -9,10 +9,11 @@ import {
   Alert,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Settings as SettingsIcon, Globe, MapPin, Check } from "lucide-react-native";
+import { Settings as SettingsIcon, Globe, MapPin, Check, Moon, Sun } from "lucide-react-native";
 import * as Location from "expo-location";
 import Colors from "@/constants/colors";
 import { useLanguage, Language } from "@/contexts/LanguageContext";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const languages = [
   { code: "en" as Language, name: "English", nameArabic: "الإنجليزية" },
@@ -25,6 +26,7 @@ const languages = [
 
 export default function SettingsScreen() {
   const { language, setLanguage, translate } = useLanguage();
+  const { theme, toggleTheme } = useTheme();
   const [locationStatus, setLocationStatus] = useState<string>("Not granted");
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.95)).current;
@@ -78,10 +80,12 @@ export default function SettingsScreen() {
     }
   };
 
+  const colors = theme === 'light' ? Colors.light : Colors.dark;
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <LinearGradient
-        colors={[Colors.light.primary, Colors.light.primaryDark]}
+        colors={[colors.primary, colors.primaryDark]}
         style={styles.headerGradient}
       >
         <Animated.View
@@ -93,7 +97,7 @@ export default function SettingsScreen() {
             },
           ]}
         >
-          <SettingsIcon color={Colors.light.secondary} size={44} strokeWidth={1.5} />
+          <SettingsIcon color={colors.secondary} size={44} strokeWidth={1.5} />
           <Text style={styles.headerTitle}>{translate('settings')}</Text>
           <Text style={styles.headerSubtext}>{translate('customize_experience')}</Text>
         </Animated.View>
@@ -106,8 +110,52 @@ export default function SettingsScreen() {
         <Animated.View style={{ opacity: fadeAnim }}>
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
-              <Globe color={Colors.light.primary} size={24} strokeWidth={2} />
-              <Text style={styles.sectionTitle}>{translate('language')}</Text>
+              <Moon color={colors.primary} size={24} strokeWidth={2} />
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>{translate('appearance')}</Text>
+            </View>
+
+            <View style={styles.themeContainer}>
+              <TouchableOpacity
+                style={[
+                  styles.themeCard,
+                  { backgroundColor: colors.card, borderColor: theme === 'light' ? colors.primary : 'transparent' },
+                  theme === 'light' && styles.themeCardSelected,
+                ]}
+                onPress={() => theme === 'dark' && toggleTheme()}
+                activeOpacity={0.7}
+              >
+                <Sun color={colors.text} size={24} strokeWidth={2} />
+                <Text style={[styles.themeName, { color: colors.text }]}>{translate('light_mode')}</Text>
+                {theme === 'light' && (
+                  <View style={[styles.themeCheckbox, { backgroundColor: colors.parchment }]}>
+                    <Check color={colors.primary} size={20} strokeWidth={3} />
+                  </View>
+                )}
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles.themeCard,
+                  { backgroundColor: colors.card, borderColor: theme === 'dark' ? colors.primary : 'transparent' },
+                  theme === 'dark' && styles.themeCardSelected,
+                ]}
+                onPress={() => theme === 'light' && toggleTheme()}
+                activeOpacity={0.7}
+              >
+                <Moon color={colors.text} size={24} strokeWidth={2} />
+                <Text style={[styles.themeName, { color: colors.text }]}>{translate('dark_mode')}</Text>
+                {theme === 'dark' && (
+                  <View style={[styles.themeCheckbox, { backgroundColor: colors.parchment }]}>
+                    <Check color={colors.primary} size={20} strokeWidth={3} />
+                  </View>
+                )}
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <View style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <Globe color={colors.primary} size={24} strokeWidth={2} />
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>{translate('language')}</Text>
             </View>
 
             <View style={styles.languagesContainer}>
@@ -116,21 +164,22 @@ export default function SettingsScreen() {
                   key={lang.code}
                   style={[
                     styles.languageCard,
+                    { backgroundColor: colors.card, borderColor: language === lang.code ? colors.primary : 'transparent' },
                     language === lang.code && styles.languageCardSelected,
                   ]}
                   onPress={() => setLanguage(lang.code)}
                   activeOpacity={0.7}
                 >
                   <View style={styles.languageTextContainer}>
-                    <Text style={styles.languageName}>{lang.name}</Text>
-                    <Text style={styles.languageNameSecondary}>
+                    <Text style={[styles.languageName, { color: colors.text }]}>{lang.name}</Text>
+                    <Text style={[styles.languageNameSecondary, { color: colors.muted }]}>
                       {lang.nameArabic}
                     </Text>
                   </View>
                   {language === lang.code && (
-                    <View style={styles.languageCheckbox}>
+                    <View style={[styles.languageCheckbox, { backgroundColor: colors.parchment }]}>
                       <Check
-                        color={Colors.light.primary}
+                        color={colors.primary}
                         size={20}
                         strokeWidth={3}
                       />
@@ -143,19 +192,17 @@ export default function SettingsScreen() {
 
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
-              <MapPin color={Colors.light.primary} size={24} strokeWidth={2} />
-              <Text style={styles.sectionTitle}>{translate('location')}</Text>
+              <MapPin color={colors.primary} size={24} strokeWidth={2} />
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>{translate('location')}</Text>
             </View>
 
-            <View style={styles.locationCard}>
+            <View style={[styles.locationCard, { backgroundColor: colors.card }]}>
               <View style={styles.locationInfo}>
-                <Text style={styles.locationLabel}>{translate('permission_status_label')}</Text>
+                <Text style={[styles.locationLabel, { color: colors.text }]}>{translate('permission_status_label')}</Text>
                 <Text
                   style={[
                     styles.locationStatus,
-                    locationStatus === "Granted"
-                      ? styles.locationStatusGranted
-                      : styles.locationStatusDenied,
+                    { color: locationStatus === "Granted" ? colors.primary : colors.muted },
                   ]}
                 >
                   {locationStatus === "Granted" ? translate('location_granted') : translate('location_not_granted')}
@@ -169,7 +216,7 @@ export default function SettingsScreen() {
                   activeOpacity={0.8}
                 >
                   <LinearGradient
-                    colors={[Colors.light.primary, Colors.light.primaryDark]}
+                    colors={[colors.primary, colors.primaryDark]}
                     style={styles.locationButtonGradient}
                   >
                     <MapPin color="#ffffff" size={20} strokeWidth={2} />
@@ -180,22 +227,22 @@ export default function SettingsScreen() {
                 </TouchableOpacity>
               )}
 
-              <View style={styles.locationDescription}>
-                <Text style={styles.locationDescriptionText}>
+              <View style={[styles.locationDescription, { backgroundColor: colors.parchment }]}>
+                <Text style={[styles.locationDescriptionText, { color: colors.text }]}>
                   {translate('location_description')}
                 </Text>
               </View>
             </View>
           </View>
 
-          <View style={styles.infoCard}>
-            <Text style={styles.infoText}>
+          <View style={[styles.infoCard, { backgroundColor: colors.parchment, borderLeftColor: colors.accent }]}>
+            <Text style={[styles.infoText, { color: colors.text }]}>
               {translate('quran_quote_patience')}
             </Text>
-            <Text style={styles.infoArabic}>
+            <Text style={[styles.infoArabic, { color: colors.primary }]}>
               {translate('quran_quote_patience_arabic')}
             </Text>
-            <Text style={styles.infoReference}>{translate('quran_quote_reference')}</Text>
+            <Text style={[styles.infoReference, { color: colors.muted }]}>{translate('quran_quote_reference')}</Text>
           </View>
         </Animated.View>
       </ScrollView>
@@ -206,7 +253,6 @@ export default function SettingsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.light.background,
   },
   headerGradient: {
     paddingTop: 48,
@@ -264,22 +310,22 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 22,
     fontWeight: "600" as const,
-    color: Colors.light.text,
     letterSpacing: 0.4,
   },
   sectionSubtext: {
     fontSize: 16,
-    color: Colors.light.muted,
     marginBottom: 16,
   },
-  languagesContainer: {
+  themeContainer: {
+    flexDirection: "row",
     gap: 12,
   },
-  languageCard: {
+  themeCard: {
+    flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: Colors.light.card,
+    justifyContent: "center",
+    gap: 8,
     padding: 18,
     borderRadius: 16,
     shadowColor: "#000",
@@ -288,11 +334,42 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 2,
     borderWidth: 2,
-    borderColor: "transparent",
+  },
+  themeCardSelected: {
+    shadowOpacity: 0.15,
+  },
+  themeName: {
+    fontSize: 15,
+    fontWeight: "600" as const,
+    letterSpacing: 0.2,
+  },
+  themeCheckbox: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute",
+    top: 8,
+    right: 8,
+  },
+  languagesContainer: {
+    gap: 12,
+  },
+  languageCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: 18,
+    borderRadius: 16,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
+    borderWidth: 2,
   },
   languageCardSelected: {
-    borderColor: Colors.light.primary,
-    shadowColor: Colors.light.primary,
     shadowOpacity: 0.15,
   },
   languageTextContainer: {
@@ -301,24 +378,20 @@ const styles = StyleSheet.create({
   languageName: {
     fontSize: 18,
     fontWeight: "600" as const,
-    color: Colors.light.text,
     letterSpacing: 0.2,
   },
   languageNameSecondary: {
     fontSize: 14,
-    color: Colors.light.muted,
     marginTop: 2,
   },
   languageCheckbox: {
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: Colors.light.parchment,
     alignItems: "center",
     justifyContent: "center",
   },
   locationCard: {
-    backgroundColor: Colors.light.card,
     padding: 20,
     borderRadius: 18,
     shadowColor: "#000",
@@ -335,7 +408,6 @@ const styles = StyleSheet.create({
   },
   locationLabel: {
     fontSize: 16,
-    color: Colors.light.text,
     fontWeight: "500" as const,
     letterSpacing: 0.2,
   },
@@ -343,12 +415,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "600" as const,
     letterSpacing: 0.2,
-  },
-  locationStatusGranted: {
-    color: Colors.light.primary,
-  },
-  locationStatusDenied: {
-    color: Colors.light.muted,
   },
   locationButton: {
     borderRadius: 14,
@@ -370,23 +436,19 @@ const styles = StyleSheet.create({
     letterSpacing: 0.3,
   },
   locationDescription: {
-    backgroundColor: Colors.light.parchment,
     padding: 16,
     borderRadius: 12,
   },
   locationDescriptionText: {
     fontSize: 14,
-    color: Colors.light.text,
     lineHeight: 22,
     textAlign: "center",
     letterSpacing: 0.2,
   },
   infoCard: {
-    backgroundColor: Colors.light.parchment,
     padding: 24,
     borderRadius: 18,
     borderLeftWidth: 4,
-    borderLeftColor: Colors.light.accent,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.04,
@@ -395,7 +457,6 @@ const styles = StyleSheet.create({
   },
   infoText: {
     fontSize: 15,
-    color: Colors.light.text,
     lineHeight: 24,
     fontStyle: "italic" as const,
     textAlign: "center",
@@ -403,7 +464,6 @@ const styles = StyleSheet.create({
   },
   infoArabic: {
     fontSize: 17,
-    color: Colors.light.primary,
     lineHeight: 32,
     marginTop: 16,
     textAlign: "center",
@@ -411,7 +471,6 @@ const styles = StyleSheet.create({
   },
   infoReference: {
     fontSize: 13,
-    color: Colors.light.muted,
     marginTop: 12,
     textAlign: "center",
     letterSpacing: 0.3,

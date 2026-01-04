@@ -57,7 +57,13 @@ type TranslationKey =
   | "new_quote"
   | "welcome_message"
   | "chat_system_prompt"
-  | "prayer_verse_decreed";
+  | "prayer_verse_decreed"
+  | "theme"
+  | "appearance"
+  | "light_mode"
+  | "dark_mode"
+  | "reciter"
+  | "choose_reciter";
 
 const translations: Record<Language, Record<TranslationKey, string>> = {
   en: {
@@ -118,6 +124,12 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     welcome_message: "السلام عليكم ورحمة الله وبركاته\n\nAssalamu Aleykum wa Rahmatullahi wa Barakatuh.\n\nWelcome to your Quranic learning journey. I'm here to help you explore the Quran's verses, meanings, and teachings. How may I assist you today?",
     chat_system_prompt: "You are a knowledgeable Islamic scholar assistant. You ONLY discuss Quran-related topics: verses, meanings, Tafsir, Islamic teachings, memorization, and Quranic history. Respond in the user's language. For ANY off-topic message, respond: 'I appreciate your message, but I'm specifically designed to help with Quran learning and Islamic teachings only.'",
     prayer_verse_decreed: "Indeed, prayer has been decreed upon the believers a decree of specified times.",
+    theme: "Theme",
+    appearance: "Appearance",
+    light_mode: "Light Mode",
+    dark_mode: "Dark Mode",
+    reciter: "Reciter",
+    choose_reciter: "Choose Reciter",
   },
   ar: {
     quran: "القرآن",
@@ -177,6 +189,12 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     welcome_message: "السلام عليكم ورحمة الله وبركاته\n\nمرحبًا بك في رحلة تعلم القرآن. أنا هنا لمساعدتك في استكشاف آيات القرآن ومعانيه وتعاليمه. كيف يمكنني مساعدتك اليوم؟",
     chat_system_prompt: "أنت مساعد عالم إسلامي على دراية. تناقش فقط المواضيع المتعلقة بالقرآن: الآيات والمعاني والتفسير والتعاليم الإسلامية والحفظ والتاريخ القرآني. قم بالرد بلغة المستخدم. لأي رسالة خارج الموضوع، قم بالرد: 'أقدر رسالتك، لكنني مصمم خصيصًا للمساعدة في تعلم القرآن والتعاليم الإسلامية فقط.'",
     prayer_verse_decreed: "إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا",
+    theme: "السمة",
+    appearance: "المظهر",
+    light_mode: "الوضع الفاتح",
+    dark_mode: "الوضع الداكن",
+    reciter: "القارئ",
+    choose_reciter: "اختر القارئ",
   },
   ur: {
     quran: "قرآن",
@@ -236,6 +254,12 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     welcome_message: "السلام علیکم ورحمۃ اللہ وبرکاتہ\n\nآپ کے قرآنی سیکھنے کے سفر میں خوش آمدید۔ میں یہاں قرآن کی آیات، معانی اور تعلیمات کو تلاش کرنے میں آپ کی مدد کے لیے ہوں۔ میں آج آپ کی کیسے مدد کر سکتا ہوں؟",
     chat_system_prompt: "آپ ایک باخبر اسلامی اسکالر اسسٹنٹ ہیں۔ آپ صرف قرآن سے متعلق موضوعات پر بات کرتے ہیں: آیات، معانی، تفسیر، اسلامی تعلیمات، حفظ، اور قرآنی تاریخ۔ صارف کی زبان میں جواب دیں۔ کسی بھی غیر متعلقہ پیغام کے لیے، جواب دیں: 'میں آپ کے پیغام کی قدر کرتا ہوں، لیکن میں خاص طور پر قرآن کی تعلیم اور اسلامی تعلیمات میں مدد کے لیے ڈیزائن کیا گیا ہوں۔'",
     prayer_verse_decreed: "بے شک نماز مومنوں پر مقررہ اوقات میں فرض کی گئی ہے۔",
+    theme: "تھیم",
+    appearance: "ظاہری شکل",
+    light_mode: "لائٹ موڈ",
+    dark_mode: "ڈارک موڈ",
+    reciter: "قاری",
+    choose_reciter: "قاری منتخب کریں",
   },
   tr: {
     quran: "Kuran",
@@ -295,6 +319,12 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     welcome_message: "السلام عليكم ورحمة الله وبركاته\n\nKuran öğrenme yolculuğunuza hoş geldiniz. Kuran'ın ayetlerini, anlamlarını ve öğretilerini keşfetmenize yardımcı olmak için buradayım. Bugün size nasıl yardımcı olabilirim?",
     chat_system_prompt: "Bilgili bir İslami alim asistanısınız. SADECE Kuran ile ilgili konuları tartışırsınız: ayetler, anlamlar, Tefsir, İslami öğretiler, ezberleme ve Kuran tarihi. Kullanıcının dilinde yanıt verin. Herhangi bir konu dışı mesaj için şöyle yanıt verin: 'Mesajınızı takdir ediyorum, ancak özellikle Kuran öğrenimi ve İslami öğretilerde yardımcı olmak için tasarlandım.'",
     prayer_verse_decreed: "Şüphesiz namaz, müminlere belirli vakitlerde farz kılınmıştır.",
+    theme: "Tema",
+    appearance: "Görünüm",
+    light_mode: "Açık Mod",
+    dark_mode: "Koyu Mod",
+    reciter: "Hafız",
+    choose_reciter: "Hafız Seçin",
   },
   fr: {
     quran: "Coran",
@@ -354,6 +384,12 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     welcome_message: "السلام عليكم ورحمة الله وبركاته\n\nBienvenue dans votre parcours d'apprentissage coranique. Je suis là pour vous aider à explorer les versets, les significations et les enseignements du Coran. Comment puis-je vous aider aujourd'hui?",
     chat_system_prompt: "Vous êtes un assistant érudit islamique compétent. Vous ne discutez QUE de sujets liés au Coran: versets, significations, Tafsir, enseignements islamiques, mémorisation et histoire coranique. Répondez dans la langue de l'utilisateur. Pour tout message hors sujet, répondez: 'J'apprécie votre message, mais je suis spécialement conçu pour aider uniquement avec l'apprentissage du Coran et les enseignements islamiques.'",
     prayer_verse_decreed: "En vérité, la prière a été prescrite aux croyants à des heures déterminées.",
+    theme: "Thème",
+    appearance: "Apparence",
+    light_mode: "Mode Clair",
+    dark_mode: "Mode Sombre",
+    reciter: "Récitateur",
+    choose_reciter: "Choisir le Récitateur",
   },
   uz: {
     quran: "Qur'on",
@@ -413,6 +449,12 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     welcome_message: "السلام عليكم ورحمة الله وبركاته\n\nQur'on o'rganish sayohatingizga xush kelibsiz. Men Qur'on oyatlari, ma'nolari va ta'limotlarini o'rganishga yordam berish uchun shu yerdaman. Bugun sizga qanday yordam bera olaman?",
     chat_system_prompt: "Siz bilimli islom olimi yordamchisisiz. Siz FAQAT Qur'onga oid mavzularni muhokama qilasiz: oyatlar, ma'nolar, Tafsir, islom ta'limotlari, yodlash va Qur'on tarixi. Foydalanuvchi tilida javob bering. Har qanday mavzudan tashqari xabar uchun javob bering: 'Xabaringizni qadrlayman, lekin men maxsus Qur'on o'rganish va islom ta'limotlariga yordam berish uchun mo'ljallangan.'",
     prayer_verse_decreed: "Albatta, namoz mo'minlarga belgilangan vaqtlarda farz qilingan.",
+    theme: "Mavzu",
+    appearance: "Tashqi ko'rinish",
+    light_mode: "Yorug' Rejim",
+    dark_mode: "Qorong'u Rejim",
+    reciter: "Qori",
+    choose_reciter: "Qorini Tanlash",
   },
 };
 

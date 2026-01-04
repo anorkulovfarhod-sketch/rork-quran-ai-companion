@@ -7,6 +7,8 @@ import { trpc, trpcClient } from "@/lib/trpc";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { LocationProvider } from "@/contexts/LocationContext";
 import { SubscriptionProvider } from "@/contexts/SubscriptionContext";
+import { ThemeProvider } from "@/contexts/ThemeContext";
+import { ReciterProvider } from "@/contexts/ReciterContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -31,15 +33,19 @@ export default function RootLayout() {
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
-        <LanguageProvider>
-          <LocationProvider>
-            <SubscriptionProvider>
-              <GestureHandlerRootView>
-                <RootLayoutNav />
-              </GestureHandlerRootView>
-            </SubscriptionProvider>
-          </LocationProvider>
-        </LanguageProvider>
+        <ThemeProvider>
+          <LanguageProvider>
+            <ReciterProvider>
+              <LocationProvider>
+                <SubscriptionProvider>
+                  <GestureHandlerRootView>
+                    <RootLayoutNav />
+                  </GestureHandlerRootView>
+                </SubscriptionProvider>
+              </LocationProvider>
+            </ReciterProvider>
+          </LanguageProvider>
+        </ThemeProvider>
       </QueryClientProvider>
     </trpc.Provider>
   );

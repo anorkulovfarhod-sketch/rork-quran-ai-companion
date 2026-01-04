@@ -340,7 +340,7 @@ export default function QuranScreen() {
         ur: 'ur.jalandhry',
         tr: 'tr.diyanet',
         fr: 'fr.hamidullah',
-        uz: 'en.sahih',
+        uz: 'uz.sodik',
       };
       
       const edition = languageMap[language || 'en'] || 'en.sahih';
