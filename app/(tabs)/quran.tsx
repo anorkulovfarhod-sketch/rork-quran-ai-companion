@@ -230,7 +230,6 @@ export default function QuranScreen() {
       if (playerRef.current) {
         console.log('Replacing audio source and playing:', verse.audioUrl);
         playerRef.current.replace({ uri: verse.audioUrl });
-        await new Promise(resolve => setTimeout(resolve, 150));
         playerRef.current.play();
         console.log('Audio playing started');
       }
@@ -247,9 +246,7 @@ export default function QuranScreen() {
       const nextVerseIndex = currentPlayingVerse + 1;
       if (nextVerseIndex < surahData.length) {
         console.log('Verse finished, playing next verse:', nextVerseIndex);
-        setTimeout(() => {
-          playVerse(nextVerseIndex);
-        }, 150);
+        playVerse(nextVerseIndex);
       } else {
         console.log('Finished playing all verses');
         setIsPlayingAll(false);
