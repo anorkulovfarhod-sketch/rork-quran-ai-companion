@@ -190,7 +190,15 @@ export default function PrayersScreen() {
             </View>
           </View>
 
-
+          <View style={[styles.quoteCard, { backgroundColor: colors.parchment, borderLeftColor: colors.accent }]}>
+            <Text style={[styles.quoteText, { color: colors.text }]}>
+              &ldquo;{translate('prayer_verse_decreed')}&rdquo;
+            </Text>
+            <Text style={[styles.quoteArabic, { color: colors.primary }]}>
+              إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا
+            </Text>
+            <Text style={[styles.quoteReference, { color: colors.muted }]}>Surah An-Nisa (4:103)</Text>
+          </View>
 
           <View style={[styles.prayersSection, { backgroundColor: colors.card, shadowColor: colors.primary }]}>
             <View style={styles.prayersSectionHeader}>
@@ -545,6 +553,39 @@ const styles = StyleSheet.create({
   reminderReference: {
     fontSize: 13,
     marginTop: 12,
+    textAlign: "center",
+    letterSpacing: 0.3,
+    fontFamily: "Georgia",
+  },
+  quoteCard: {
+    padding: 20,
+    borderRadius: 18,
+    borderLeftWidth: 4,
+    marginBottom: 16,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.04,
+    shadowRadius: 8,
+    elevation: 2,
+  },
+  quoteText: {
+    fontSize: 14,
+    lineHeight: 22,
+    fontStyle: "italic" as const,
+    textAlign: "center",
+    letterSpacing: 0.2,
+    fontFamily: "Georgia",
+  },
+  quoteArabic: {
+    fontSize: 16,
+    lineHeight: 28,
+    marginTop: 12,
+    textAlign: "center",
+    fontWeight: "600" as const,
+  },
+  quoteReference: {
+    fontSize: 12,
+    marginTop: 8,
     textAlign: "center",
     letterSpacing: 0.3,
     fontFamily: "Georgia",

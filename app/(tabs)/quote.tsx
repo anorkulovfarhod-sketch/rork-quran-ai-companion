@@ -27,8 +27,7 @@ const verses: QuranVerse[] = [
       ar: "واستعينوا بالصبر والصلاة",
       ur: "اور صبر اور نماز کے ذریعے مدد طلب کرو۔",
       tr: "Sabır ve namaz ile yardım isteyin.",
-      fr: "Et cherchez de l'aide par la patience et la prière.",
-      uz: "Sabr va namoz orqali yordam so'rang."
+      fr: "Et cherchez de l'aide par la patience et la prière."
     },
     reference: "Surah Al-Baqarah (2:45)",
   },
@@ -39,8 +38,7 @@ const verses: QuranVerse[] = [
       ar: "إن مع العسر يسرا",
       ur: "بے شک مشکل کے ساتھ آسانی ہے۔",
       tr: "Şüphesiz ki zorlukla beraber kolaylık vardır.",
-      fr: "En vérité, avec la difficulté vient la facilité.",
-      uz: "Albatta, qiyinchilik bilan birga osonlik ham bor."
+      fr: "En vérité, avec la difficulté vient la facilité."
     },
     reference: "Surah Ash-Sharh (94:6)",
   },
@@ -51,8 +49,7 @@ const verses: QuranVerse[] = [
       ar: "فاذكروني أذكركم",
       ur: "مجھے یاد کرو میں تمہیں یاد کروں گا۔",
       tr: "Beni anın, ben de sizi anayım.",
-      fr: "Souvenez-vous de Moi; Je Me souviendrai de vous.",
-      uz: "Meni eslab turing, Men ham sizni eslayman."
+      fr: "Souvenez-vous de Moi; Je Me souviendrai de vous."
     },
     reference: "Surah Al-Baqarah (2:152)",
   },
@@ -63,8 +60,7 @@ const verses: QuranVerse[] = [
       ar: "وهو معكم أينما كنتم",
       ur: "اور وہ تمہارے ساتھ ہے جہاں کہیں بھی تم ہو۔",
       tr: "Ve O, nerede olursanız olun sizinle beraberdir.",
-      fr: "Et Il est avec vous où que vous soyez.",
-      uz: "Va U siz qaerda bo'lsangiz ham siz bilan birga."
+      fr: "Et Il est avec vous où que vous soyez."
     },
     reference: "Surah Al-Hadid (57:4)",
   },
@@ -75,8 +71,7 @@ const verses: QuranVerse[] = [
       ar: "فإن مع العسر يسرا",
       ur: "بے شک مشکل کے ساتھ آسانی ہے۔",
       tr: "Muhakkak ki zorlukla beraber kolaylık vardır.",
-      fr: "Car en vérité, avec la difficulté sera la facilité.",
-      uz: "Albatta, qiyinchilik bilan birga osonlik ham bor."
+      fr: "Car en vérité, avec la difficulté sera la facilité."
     },
     reference: "Surah Ash-Sharh (94:5)",
   },
@@ -87,8 +82,7 @@ const verses: QuranVerse[] = [
       ar: "ومن يتوكل على الله فهو حسبه",
       ur: "اور جو اللہ پر بھروسہ کرے تو وہ اس کے لیے کافی ہے۔",
       tr: "Kim Allah'a güvenirse, O ona yeter.",
-      fr: "Et quiconque place sa confiance en Allah, alors Il lui suffit.",
-      uz: "Kim Allohga tayanib ishlasa, U unga yetarli."
+      fr: "Et quiconque place sa confiance en Allah, alors Il lui suffit."
     },
     reference: "Surah At-Talaq (65:3)",
   },
@@ -99,8 +93,7 @@ const verses: QuranVerse[] = [
       ar: "إن الله مع الصابرين",
       ur: "بے شک اللہ صبر کرنے والوں کے ساتھ ہے۔",
       tr: "Şüphesiz Allah sabredenlerle beraberdir.",
-      fr: "En vérité, Allah est avec les patients.",
-      uz: "Albatta, Alloh sabrli odamlar bilan birga."
+      fr: "En vérité, Allah est avec les patients."
     },
     reference: "Surah Al-Baqarah (2:153)",
   },
@@ -111,8 +104,7 @@ const verses: QuranVerse[] = [
       ar: "ربنا آتنا في الدنيا حسنة وفي الآخرة حسنة",
       ur: "اے ہمارے رب ہمیں دنیا میں بھلائی عطا فرما اور آخرت میں بھی بھلائی۔",
       tr: "Rabbimiz! Bize dünyada da iyilik ver, ahirette de iyilik ver.",
-      fr: "Notre Seigneur, donne-nous le bien dans ce monde et le bien dans l'au-delà.",
-      uz: "Rabbimiz! Bizga dunyoda ham yaxshilik ber, oxiratda ham yaxshilik ber."
+      fr: "Notre Seigneur, donne-nous le bien dans ce monde et le bien dans l'au-delà."
     },
     reference: "Surah Al-Baqarah (2:201)",
   },
@@ -123,8 +115,7 @@ const verses: QuranVerse[] = [
       ar: "لا إكراه في الدين",
       ur: "دین میں کوئی جبر نہیں۔",
       tr: "Dinde zorlama yoktur.",
-      fr: "Nulle contrainte en religion.",
-      uz: "Dinda majburiyat yo'q."
+      fr: "Nulle contrainte en religion."
     },
     reference: "Surah Al-Baqarah (2:256)",
   },
@@ -135,8 +126,7 @@ const verses: QuranVerse[] = [
       ar: "وقل رب زدني علما",
       ur: "اور کہو: اے میرے رب! میرے علم میں اضافہ فرما۔",
       tr: "Ve de ki: 'Rabbim! İlmimi artır.'",
-      fr: "Et dis: 'Mon Seigneur, augmente mes connaissances.'",
-      uz: "Va ayting: 'Rabbim! Ilmimni oshir.'"
+      fr: "Et dis: 'Mon Seigneur, augmente mes connaissances.'"
     },
     reference: "Surah Ta-Ha (20:114)",
   },

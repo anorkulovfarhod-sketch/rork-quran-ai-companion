@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState, useEffect } from 'react';
 import { translate as translateFn } from '@/constants/translations';
 
-export type Language = 'en' | 'ar' | 'ur' | 'tr' | 'fr' | 'uz';
+export type Language = 'en' | 'ar' | 'ur' | 'tr' | 'fr';
 
 export const [LanguageProvider, useLanguage] = createContextHook(() => {
   const [language, setLanguage] = useState<Language | null>(null);

@@ -22,7 +22,6 @@ const languages = [
   { code: "ur" as Language, name: "اردو", nameArabic: "Urdu" },
   { code: "tr" as Language, name: "Türkçe", nameArabic: "Turkish" },
   { code: "fr" as Language, name: "Français", nameArabic: "French" },
-  { code: "uz" as Language, name: "O'zbek", nameArabic: "Uzbek" },
 ];
 
 export default function SettingsScreen() {
