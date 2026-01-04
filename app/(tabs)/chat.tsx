@@ -118,7 +118,7 @@ export default function ChatScreen() {
           >
             <ArrowLeft color="#ffffff" size={24} strokeWidth={2} />
           </TouchableOpacity>
-          <BookOpen color={colors.secondary} size={36} strokeWidth={1.5} />
+          <BookOpen color="#ffffff" size={36} strokeWidth={1.5} />
           <Text style={styles.headerText}>{translate('quranic_guidance')}</Text>
           <Text style={styles.headerSubtext}>
             {translate('scholarly_insights')}

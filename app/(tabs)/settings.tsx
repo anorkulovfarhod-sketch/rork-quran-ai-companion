@@ -98,7 +98,7 @@ export default function SettingsScreen() {
             },
           ]}
         >
-          <SettingsIcon color={colors.secondary} size={44} strokeWidth={1.5} />
+          <SettingsIcon color="#ffffff" size={44} strokeWidth={1.5} />
           <Text style={styles.headerTitle}>{translate('settings')}</Text>
           <Text style={styles.headerSubtext}>{translate('customize_experience')}</Text>
         </Animated.View>

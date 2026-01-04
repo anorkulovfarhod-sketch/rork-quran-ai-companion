@@ -185,7 +185,7 @@ export default function QuoteScreen() {
         style={styles.headerGradient}
       >
         <View style={styles.headerContent}>
-          <Sparkles color={colors.secondary} size={44} strokeWidth={1.5} />
+          <Sparkles color="#ffffff" size={44} strokeWidth={1.5} />
           <Text style={styles.headerTitle}>{translate('daily_quran_quote')}</Text>
           <Text style={styles.headerArabic}>اقتباس قرآني يومي</Text>
           <Text style={styles.headerSubtext}>
