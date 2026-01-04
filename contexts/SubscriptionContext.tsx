@@ -105,7 +105,7 @@ export const [SubscriptionProvider, useSubscription] = createContextHook(() => {
     },
   });
 
-  const isPremium = !isConfigured ? true : customerInfoQuery.data?.entitlements.active['premium'] !== undefined;
+  const isPremium = isConfigured && customerInfoQuery.data?.entitlements.active['premium'] !== undefined;
   const isLoading = !isConfigured ? false : (customerInfoQuery.isLoading || offeringsQuery.isLoading);
 
   return {

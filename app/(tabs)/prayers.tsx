@@ -8,6 +8,7 @@ import {
   Animated,
   Easing,
 } from "react-native";
+import Svg, { Circle } from "react-native-svg";
 import { LinearGradient } from "expo-linear-gradient";
 import { BookOpen, CheckCircle2, Clock, Compass } from "lucide-react-native";
 import Colors from "@/constants/colors";
@@ -79,17 +80,16 @@ export default function PrayersScreen() {
     );
   };
 
-  const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
   const colors = theme === 'light' ? Colors.light : Colors.dark;
 
-  const progressInterpolate = progressAnim.interpolate({
+  const AnimatedCircle = Animated.createAnimatedComponent(Circle);
+  const radius = 70;
+  const strokeWidth = 7;
+  const circumference = 2 * Math.PI * radius;
+  
+  const strokeDashoffset = progressAnim.interpolate({
     inputRange: [0, 5],
-    outputRange: ['0deg', '360deg'],
-  });
-
-  const scaleInterpolate = progressAnim.interpolate({
-    inputRange: [0, 2.5, 5],
-    outputRange: [0.95, 1.02, 1],
+    outputRange: [circumference, 0],
   });
 
   return (
@@ -148,36 +148,41 @@ export default function PrayersScreen() {
                 <Text style={[styles.progressTitle, { color: colors.text }]}>Today</Text>
               </View>
               <View style={styles.progressCircleContainer}>
-                <Animated.View
-                  style={[
-                    styles.progressCircle,
-                    {
-                      transform: [
-                        { rotate: progressInterpolate },
-                        { scale: scaleInterpolate },
-                      ],
-                    },
-                  ]}
-                >
-                  <AnimatedLinearGradient
-                    colors={[colors.primary, colors.accent, colors.primary]}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 1 }}
-                    style={styles.progressGradientBorder}
-                  >
-                    <View style={[styles.progressCircleInner, { backgroundColor: colors.parchment, shadowColor: colors.primary }]}>
-                      <Animated.Text
-                        style={[
-                          styles.progressFraction,
-                          { color: colors.primary, transform: [{ scale: scaleInterpolate }] },
-                        ]}
-                      >
-                        {completedPrayers}/{totalPrayers}
-                      </Animated.Text>
-                      <Text style={[styles.progressLabel, { color: colors.muted }]}>Prayers</Text>
-                    </View>
-                  </AnimatedLinearGradient>
-                </Animated.View>
+                <View style={styles.progressCircle}>
+                  <Svg width={160} height={160} style={styles.progressSvg}>
+                    <Circle
+                      cx="80"
+                      cy="80"
+                      r={radius}
+                      stroke={colors.parchment}
+                      strokeWidth={strokeWidth}
+                      fill="none"
+                    />
+                    <AnimatedCircle
+                      cx="80"
+                      cy="80"
+                      r={radius}
+                      stroke={colors.primary}
+                      strokeWidth={strokeWidth}
+                      fill="none"
+                      strokeDasharray={circumference}
+                      strokeDashoffset={strokeDashoffset}
+                      strokeLinecap="round"
+                      transform={`rotate(-90 80 80)`}
+                    />
+                  </Svg>
+                  <View style={[styles.progressCircleInner, { backgroundColor: colors.parchment, shadowColor: colors.primary }]}>
+                    <Text
+                      style={[
+                        styles.progressFraction,
+                        { color: colors.primary },
+                      ]}
+                    >
+                      {completedPrayers}/{totalPrayers}
+                    </Text>
+                    <Text style={[styles.progressLabel, { color: colors.muted }]}>Prayers</Text>
+                  </View>
+                </View>
               </View>
               <Text style={[styles.progressText, { color: colors.text }]}>
                 {completedPrayers === 5 ? 'Complete!' : `${5 - completedPrayers} remaining`}
@@ -385,17 +390,12 @@ const styles = StyleSheet.create({
   progressCircle: {
     width: 160,
     height: 160,
-    borderRadius: 80,
+    position: "relative" as const,
     alignItems: "center",
     justifyContent: "center",
   },
-  progressGradientBorder: {
-    width: 160,
-    height: 160,
-    borderRadius: 80,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 7,
+  progressSvg: {
+    position: "absolute" as const,
   },
   progressCircleInner: {
     width: 146,
