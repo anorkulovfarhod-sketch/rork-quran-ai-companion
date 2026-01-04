@@ -60,16 +60,16 @@ export default function PrayersScreen() {
   }, [location]);
 
   const completedPrayers = prayers.filter((p) => p.completed).length;
-  const percentage = Math.round((completedPrayers / prayers.length) * 100);
+  const totalPrayers = 5;
 
   useEffect(() => {
     Animated.timing(progressAnim, {
-      toValue: percentage,
-      duration: 1200,
-      easing: Easing.bezier(0.4, 0.0, 0.2, 1),
+      toValue: completedPrayers,
+      duration: 800,
+      easing: Easing.out(Easing.cubic),
       useNativeDriver: false,
     }).start();
-  }, [percentage, progressAnim]);
+  }, [completedPrayers, progressAnim]);
 
   const togglePrayer = (index: number) => {
     setPrayers((prev) =>
@@ -83,12 +83,12 @@ export default function PrayersScreen() {
   const colors = theme === 'light' ? Colors.light : Colors.dark;
 
   const progressInterpolate = progressAnim.interpolate({
-    inputRange: [0, 100],
+    inputRange: [0, 5],
     outputRange: ['0deg', '360deg'],
   });
 
   const scaleInterpolate = progressAnim.interpolate({
-    inputRange: [0, 50, 100],
+    inputRange: [0, 2.5, 5],
     outputRange: [0.95, 1.02, 1],
   });
 
@@ -168,19 +168,19 @@ export default function PrayersScreen() {
                     <View style={[styles.progressCircleInner, { backgroundColor: colors.parchment, shadowColor: colors.primary }]}>
                       <Animated.Text
                         style={[
-                          styles.progressPercentage,
+                          styles.progressFraction,
                           { color: colors.primary, transform: [{ scale: scaleInterpolate }] },
                         ]}
                       >
-                        {percentage}%
+                        {completedPrayers}/{totalPrayers}
                       </Animated.Text>
-                      <Text style={[styles.progressLabel, { color: colors.muted }]}>Complete</Text>
+                      <Text style={[styles.progressLabel, { color: colors.muted }]}>Prayers</Text>
                     </View>
                   </AnimatedLinearGradient>
                 </Animated.View>
               </View>
               <Text style={[styles.progressText, { color: colors.text }]}>
-                {completedPrayers} of 5 prayers
+                {completedPrayers === 5 ? 'Complete!' : `${5 - completedPrayers} remaining`}
               </Text>
             </View>
           </View>
@@ -407,6 +407,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 8,
     elevation: 4,
+  },
+  progressFraction: {
+    fontSize: 40,
+    fontWeight: "700" as const,
+    letterSpacing: -1,
+    fontFamily: "Georgia",
   },
   progressPercentage: {
     fontSize: 40,

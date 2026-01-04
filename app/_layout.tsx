@@ -9,6 +9,7 @@ import { LocationProvider } from "@/contexts/LocationContext";
 import { SubscriptionProvider } from "@/contexts/SubscriptionContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { ReciterProvider } from "@/contexts/ReciterContext";
+import { ChatLimitProvider } from "@/contexts/ChatLimitContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -38,9 +39,11 @@ export default function RootLayout() {
             <ReciterProvider>
               <LocationProvider>
                 <SubscriptionProvider>
-                  <GestureHandlerRootView>
-                    <RootLayoutNav />
-                  </GestureHandlerRootView>
+                  <ChatLimitProvider>
+                    <GestureHandlerRootView>
+                      <RootLayoutNav />
+                    </GestureHandlerRootView>
+                  </ChatLimitProvider>
                 </SubscriptionProvider>
               </LocationProvider>
             </ReciterProvider>

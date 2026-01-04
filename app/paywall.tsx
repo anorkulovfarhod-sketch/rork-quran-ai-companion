@@ -73,8 +73,8 @@ export default function PaywallScreen() {
   const price = monthlyPackage?.product?.priceString || '$4.99';
 
   const features = [
+    'Unlimited AI chat messages',
     'Unlimited access to all Quran content',
-    'AI-powered Quranic guidance',
     'Daily inspirational quotes',
     'Prayer time tracking',
     'Ad-free experience',
@@ -149,10 +149,10 @@ export default function PaywallScreen() {
               style={styles.priceCardGradient}
             >
               <Sparkles color={Colors.light.accent} size={32} strokeWidth={2} />
-              <Text style={styles.priceTitle}>Monthly Subscription</Text>
+              <Text style={styles.priceTitle}>Premium Access</Text>
               <Text style={styles.priceAmount}>{price}/month</Text>
               <Text style={styles.priceDescription}>
-                Cancel anytime • Secure payment
+                Unlimited chat + all features • Cancel anytime
               </Text>
             </LinearGradient>
           </View>

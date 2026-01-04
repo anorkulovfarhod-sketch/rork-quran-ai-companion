@@ -18,11 +18,13 @@ import { useRouter } from "expo-router";
 import Colors from "@/constants/colors";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useChatLimit } from "@/contexts/ChatLimitContext";
 
 export default function ChatScreen() {
   const { translate } = useLanguage();
   const { theme } = useTheme();
   const router = useRouter();
+  const { canSendMessage, remainingChats, hasUnlimitedChat, incrementChatCount } = useChatLimit();
   const [input, setInput] = useState("");
   
   const scrollViewRef = useRef<ScrollView>(null);
@@ -80,10 +82,19 @@ export default function ChatScreen() {
     scrollViewRef.current?.scrollToEnd({ animated: true });
   }, [messages]);
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (input.trim()) {
+      if (!canSendMessage) {
+        router.push('/paywall');
+        return;
+      }
+      
       sendMessage(input.trim());
       setInput("");
+      
+      if (!hasUnlimitedChat) {
+        await incrementChatCount();
+      }
     }
   };
 
@@ -213,27 +224,44 @@ export default function ChatScreen() {
       </Animated.View>
 
       <View style={[styles.inputContainer, { backgroundColor: colors.card }]}>
+        {!hasUnlimitedChat && (
+          <View style={[styles.limitBanner, { backgroundColor: colors.parchment }]}>
+            <Text style={[styles.limitText, { color: colors.text }]}>
+              {canSendMessage ? (
+                `${remainingChats} free message${remainingChats !== 1 ? 's' : ''} remaining`
+              ) : (
+                'Free messages used'
+              )}
+            </Text>
+            {!canSendMessage && (
+              <TouchableOpacity onPress={() => router.push('/paywall')}>
+                <Text style={[styles.unlockText, { color: colors.primary }]}>Unlock Chat</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        )}
         <View style={styles.inputWrapper}>
           <TextInput
             style={[styles.input, { backgroundColor: colors.parchment, color: colors.text }]}
             value={input}
             onChangeText={setInput}
-            placeholder={translate('ask_about_verse')}
+            placeholder={canSendMessage ? translate('ask_about_verse') : 'Upgrade to unlock chat'}
             placeholderTextColor={colors.muted}
             multiline
             maxLength={500}
+            editable={canSendMessage}
           />
           <TouchableOpacity
             style={[
               styles.sendButton,
-              !input.trim() && styles.sendButtonDisabled,
+              (!input.trim() || !canSendMessage) && styles.sendButtonDisabled,
             ]}
             onPress={handleSend}
-            disabled={!input.trim() || isLoading}
+            disabled={!input.trim() || isLoading || !canSendMessage}
           >
             <LinearGradient
               colors={
-                input.trim()
+                input.trim() && canSendMessage
                   ? [colors.primary, colors.primaryDark]
                   : [colors.muted, colors.muted]
               }
@@ -397,6 +425,27 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.04,
     shadowRadius: 8,
     elevation: 8,
+  },
+  limitBanner: {
+    flexDirection: "row" as const,
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderRadius: 12,
+    marginBottom: 12,
+  },
+  limitText: {
+    fontSize: 13,
+    fontWeight: "500" as const,
+    letterSpacing: 0.2,
+    fontFamily: "Georgia",
+  },
+  unlockText: {
+    fontSize: 13,
+    fontWeight: "600" as const,
+    letterSpacing: 0.3,
+    fontFamily: "Georgia",
   },
   inputWrapper: {
     flexDirection: "row",
