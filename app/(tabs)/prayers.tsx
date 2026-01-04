@@ -288,6 +288,7 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     marginTop: 20,
     letterSpacing: 0.8,
+    fontFamily: "Georgia",
   },
   headerArabic: {
     fontSize: 22,
@@ -355,6 +356,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600" as const,
     letterSpacing: 0.3,
+    fontFamily: "Georgia",
   },
   qiblaCompassWrapper: {
     alignItems: "center",
@@ -380,6 +382,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600" as const,
     letterSpacing: 0.3,
+    fontFamily: "Georgia",
   },
   progressCircleContainer: {
     marginBottom: 12,
@@ -420,6 +423,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
     letterSpacing: 0.5,
     fontWeight: "500" as const,
+    fontFamily: "Georgia",
   },
   progressText: {
     fontSize: 13,
@@ -461,6 +465,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "500" as const,
     letterSpacing: 0.2,
+    fontFamily: "Georgia",
   },
   prayersSection: {
     borderRadius: 20,
@@ -481,6 +486,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "600" as const,
     letterSpacing: 0.4,
+    fontFamily: "Georgia",
   },
   prayersContainer: {
     gap: 10,

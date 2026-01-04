@@ -281,6 +281,7 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     marginTop: 16,
     letterSpacing: 0.5,
+    fontFamily: "Georgia",
   },
   headerSubtext: {
     fontSize: 15,
@@ -289,6 +290,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
     textAlign: "center",
     letterSpacing: 0.3,
+    fontFamily: "Georgia",
   },
   messagesContainer: {
     flex: 1,
@@ -309,6 +311,7 @@ const styles = StyleSheet.create({
     fontWeight: "600" as const,
     marginTop: 24,
     letterSpacing: 0.4,
+    fontFamily: "Georgia",
   },
   emptyText: {
     fontSize: 16,
@@ -316,6 +319,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     lineHeight: 24,
     letterSpacing: 0.2,
+    fontFamily: "Georgia",
   },
   examplesContainer: {
     marginTop: 36,
@@ -336,6 +340,7 @@ const styles = StyleSheet.create({
     fontWeight: "500" as const,
     textAlign: "center",
     letterSpacing: 0.2,
+    fontFamily: "Georgia",
   },
   messageBubble: {
     maxWidth: "82%",

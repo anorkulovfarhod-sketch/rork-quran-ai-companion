@@ -182,6 +182,7 @@ export default function QuranScreen() {
   const [showReciterPicker, setShowReciterPicker] = useState(false);
   const [localReciter, setLocalReciter] = useState(selectedReciter);
   const playerRef = useRef<any>(null);
+  const isTransitioningRef = useRef(false);
   
   const player = useAudioPlayer();
   const status = useAudioPlayerStatus(player);
@@ -213,11 +214,12 @@ export default function QuranScreen() {
   }, []);
 
   const playVerse = useCallback(async (verseIndex: number) => {
-    if (!surahData || verseIndex >= surahData.length) {
-      console.log('Invalid verse index:', verseIndex);
+    if (!surahData || verseIndex >= surahData.length || isTransitioningRef.current) {
+      console.log('Invalid verse index or transitioning:', verseIndex);
       return;
     }
     
+    isTransitioningRef.current = true;
     const verse = surahData[verseIndex];
     console.log('Playing verse:', verseIndex, 'Audio URL:', verse.audioUrl);
     
@@ -228,25 +230,27 @@ export default function QuranScreen() {
       if (playerRef.current) {
         console.log('Replacing audio source and playing:', verse.audioUrl);
         playerRef.current.replace({ uri: verse.audioUrl });
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise(resolve => setTimeout(resolve, 800));
         playerRef.current.play();
         console.log('Audio playing started');
+        await new Promise(resolve => setTimeout(resolve, 200));
       }
     } catch (error) {
       console.error('Error playing audio:', error);
     } finally {
       setIsLoadingAudio(false);
+      isTransitioningRef.current = false;
     }
   }, [surahData]);
 
   useEffect(() => {
-    if (status.didJustFinish && isPlayingAll && surahData && currentPlayingVerse !== null) {
+    if (status.didJustFinish && isPlayingAll && surahData && currentPlayingVerse !== null && !isTransitioningRef.current) {
       const nextVerseIndex = currentPlayingVerse + 1;
       if (nextVerseIndex < surahData.length) {
         console.log('Verse finished, playing next verse:', nextVerseIndex);
         setTimeout(() => {
           playVerse(nextVerseIndex);
-        }, 400);
+        }, 600);
       } else {
         console.log('Finished playing all verses');
         setIsPlayingAll(false);
@@ -760,14 +764,16 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     marginTop: 20,
     letterSpacing: 1,
+    fontFamily: "Georgia",
   },
   headerEnglish: {
     fontSize: 19,
-    fontWeight: "300" as const,
+    fontWeight: "400" as const,
     color: "#ffffff",
     opacity: 0.95,
     marginTop: 8,
     letterSpacing: 1.5,
+    fontFamily: "Georgia",
   },
   headerSubtext: {
     fontSize: 15,

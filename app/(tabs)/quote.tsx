@@ -288,6 +288,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     letterSpacing: 0.8,
     textAlign: "center",
+    fontFamily: "Georgia",
   },
   headerArabic: {
     fontSize: 22,
@@ -303,6 +304,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: "center",
     letterSpacing: 0.3,
+    fontFamily: "Georgia",
   },
   contentContainer: {
     flex: 1,
@@ -344,6 +346,7 @@ const styles = StyleSheet.create({
     fontStyle: "italic" as const,
     letterSpacing: 0.3,
     marginBottom: 24,
+    fontFamily: "Georgia",
   },
   referenceContainer: {
     paddingTop: 16,

@@ -315,6 +315,7 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     marginTop: 20,
     letterSpacing: 0.8,
+    fontFamily: "Georgia",
   },
   headerArabic: {
     fontSize: 22,
@@ -330,6 +331,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: "center",
     letterSpacing: 0.3,
+    fontFamily: "Georgia",
   },
   contentContainer: {
     flex: 1,
@@ -351,6 +353,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "600" as const,
     letterSpacing: 0.4,
+    fontFamily: "Georgia",
   },
   sectionSubtext: {
     fontSize: 16,
@@ -382,6 +385,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "600" as const,
     letterSpacing: 0.2,
+    fontFamily: "Georgia",
   },
   themeCheckbox: {
     width: 24,
@@ -419,6 +423,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600" as const,
     letterSpacing: 0.2,
+    fontFamily: "Georgia",
   },
   languageNameSecondary: {
     fontSize: 14,
@@ -457,6 +462,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600" as const,
     letterSpacing: 0.2,
+    fontFamily: "Georgia",
   },
   reciterNameArabic: {
     fontSize: 14,
@@ -488,6 +494,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500" as const,
     letterSpacing: 0.2,
+    fontFamily: "Georgia",
   },
   locationStatus: {
     fontSize: 15,
@@ -512,6 +519,7 @@ const styles = StyleSheet.create({
     fontWeight: "600" as const,
     color: "#ffffff",
     letterSpacing: 0.3,
+    fontFamily: "Georgia",
   },
   locationDescription: {
     padding: 16,
