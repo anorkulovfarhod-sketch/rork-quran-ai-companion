@@ -128,7 +128,7 @@ export default function PrayersScreen() {
             },
           ]}
         >
-          <BookOpen color={colors.secondary} size={44} strokeWidth={1.5} />
+          <BookOpen color="#ffffff" size={44} strokeWidth={1.5} />
           <Text style={styles.headerTitle}>{translate('daily_prayers')}</Text>
           <Text style={styles.headerArabic}>الصلوات الخمس</Text>
           <Text style={styles.headerSubtext}>

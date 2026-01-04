@@ -698,7 +698,7 @@ export default function QuranScreen() {
             },
           ]}
         >
-          <BookOpen color={colors.secondary} size={44} strokeWidth={1.5} />
+          <BookOpen color="#ffffff" size={44} strokeWidth={1.5} />
           <Text style={styles.headerTitle}>القرآن الكريم</Text>
           <Text style={styles.headerEnglish}>{translate('noble_quran')}</Text>
           <Text style={styles.headerSubtext}>
