@@ -63,7 +63,30 @@ type TranslationKey =
   | "light_mode"
   | "dark_mode"
   | "reciter"
-  | "choose_reciter";
+  | "choose_reciter"
+  | "unlock_premium"
+  | "enhance_spiritual_journey"
+  | "unlimited_chat_messages"
+  | "ask_quran_questions"
+  | "scholarly_interpretations"
+  | "explore_islamic_teachings"
+  | "personal_spiritual_guidance"
+  | "support_development"
+  | "premium_access"
+  | "per_month"
+  | "unlimited_chat_cancel_anytime"
+  | "subscribe_now"
+  | "restore_purchases"
+  | "subscription_auto_renew_disclaimer"
+  | "purchase_success"
+  | "welcome_premium_chat"
+  | "purchase_failed"
+  | "restore_success"
+  | "restore_failed"
+  | "no_offerings_error"
+  | "no_packages_error"
+  | "internet_check_message"
+  | "contact_support";
 
 const translations: Record<Language, Record<TranslationKey, string>> = {
   en: {
@@ -130,6 +153,29 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     dark_mode: "Dark Mode",
     reciter: "Reciter",
     choose_reciter: "Choose Reciter",
+    unlock_premium: "Unlock Premium",
+    enhance_spiritual_journey: "Enhance your spiritual journey with full access",
+    unlimited_chat_messages: "Unlimited AI chat messages",
+    ask_quran_questions: "Ask questions about Quran verses",
+    scholarly_interpretations: "Get scholarly interpretations",
+    explore_islamic_teachings: "Explore Islamic teachings",
+    personal_spiritual_guidance: "Personal spiritual guidance",
+    support_development: "Support continued development",
+    premium_access: "Premium Access",
+    per_month: "/month",
+    unlimited_chat_cancel_anytime: "Unlimited AI chat messages • Cancel anytime",
+    subscribe_now: "Subscribe Now",
+    restore_purchases: "Restore Purchases",
+    subscription_auto_renew_disclaimer: "Your subscription will automatically renew unless cancelled at least 24 hours before the end of the current period.",
+    purchase_success: "Success",
+    welcome_premium_chat: "Welcome to Premium Chat! Enjoy unlimited messages.",
+    purchase_failed: "Purchase Failed",
+    restore_success: "Your purchases have been restored!",
+    restore_failed: "No previous purchases found",
+    no_offerings_error: "Unable to load subscription offerings. Please check your internet connection and try again.",
+    no_packages_error: "No subscription packages configured. Please contact support.",
+    internet_check_message: "Please check your internet connection and try again.",
+    contact_support: "Please contact support.",
   },
   ar: {
     quran: "القرآن",
@@ -195,6 +241,29 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     dark_mode: "الوضع الداكن",
     reciter: "القارئ",
     choose_reciter: "اختر القارئ",
+    unlock_premium: "افتح البريميوم",
+    enhance_spiritual_journey: "عزز رحلتك الروحية مع الوصول الكامل",
+    unlimited_chat_messages: "رسائل دردشة AI غير محدودة",
+    ask_quran_questions: "اطرح أسئلة حول آيات القرآن",
+    scholarly_interpretations: "احصل على تفسيرات علمية",
+    explore_islamic_teachings: "استكشف التعاليم الإسلامية",
+    personal_spiritual_guidance: "إرشاد روحي شخصي",
+    support_development: "دعم التطوير المستمر",
+    premium_access: "الوصول المميز",
+    per_month: "/شهر",
+    unlimited_chat_cancel_anytime: "رسائل دردشة AI غير محدودة • إلغاء في أي وقت",
+    subscribe_now: "اشترك الآن",
+    restore_purchases: "استعادة المشتريات",
+    subscription_auto_renew_disclaimer: "سيتم تجديد اشتراكك تلقائيًا ما لم يتم إلغاؤه قبل 24 ساعة على الأقل من نهاية الفترة الحالية.",
+    purchase_success: "نجاح",
+    welcome_premium_chat: "مرحبًا بك في الدردشة المميزة! استمتع برسائل غير محدودة.",
+    purchase_failed: "فشل الشراء",
+    restore_success: "تم استعادة مشترياتك!",
+    restore_failed: "لم يتم العثور على مشتريات سابقة",
+    no_offerings_error: "غير قادر على تحميل عروض الاشتراك. يرجى التحقق من اتصال الإنترنت والمحاولة مرة أخرى.",
+    no_packages_error: "لم يتم تكوين حزم الاشتراك. يرجى الاتصال بالدعم.",
+    internet_check_message: "يرجى التحقق من اتصال الإنترنت والمحاولة مرة أخرى.",
+    contact_support: "يرجى الاتصال بالدعم.",
   },
   ur: {
     quran: "قرآن",
@@ -260,6 +329,29 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     dark_mode: "ڈارک موڈ",
     reciter: "قاری",
     choose_reciter: "قاری منتخب کریں",
+    unlock_premium: "پریمیم کھولیں",
+    enhance_spiritual_journey: "مکمل رسائی کے ساتھ اپنے روحانی سفر کو بہتر بنائیں",
+    unlimited_chat_messages: "لامحدود AI چیٹ پیغامات",
+    ask_quran_questions: "قرآنی آیات کے بارے میں سوالات پوچھیں",
+    scholarly_interpretations: "علمی تشریحات حاصل کریں",
+    explore_islamic_teachings: "اسلامی تعلیمات کو دریافت کریں",
+    personal_spiritual_guidance: "ذاتی روحانی رہنمائی",
+    support_development: "مسلسل ترقی کی حمایت کریں",
+    premium_access: "پریمیم رسائی",
+    per_month: "/ماہ",
+    unlimited_chat_cancel_anytime: "لامحدود AI چیٹ پیغامات • کسی بھی وقت منسوخ کریں",
+    subscribe_now: "ابھی سبسکرائب کریں",
+    restore_purchases: "خریداریاں بحال کریں",
+    subscription_auto_renew_disclaimer: "آپ کی سبسکرپشن خودکار طور پر تجدید ہو جائے گی جب تک کہ موجودہ مدت کے اختتام سے کم از کم 24 گھنٹے پہلے منسوخ نہ کی جائے۔",
+    purchase_success: "کامیابی",
+    welcome_premium_chat: "پریمیم چیٹ میں خوش آمدید! لامحدود پیغامات سے لطف اٹھائیں۔",
+    purchase_failed: "خریداری ناکام",
+    restore_success: "آپ کی خریداریاں بحال ہو گئیں!",
+    restore_failed: "کوئی پچھلی خریداری نہیں ملی",
+    no_offerings_error: "سبسکرپشن پیشکشیں لوڈ کرنے میں ناکام۔ براہ کرم اپنے انٹرنیٹ کنکشن کی جانچ کریں اور دوبارہ کوشش کریں۔",
+    no_packages_error: "کوئی سبسکرپشن پیکیج ترتیب نہیں دیا گیا۔ براہ کرم سپورٹ سے رابطہ کریں۔",
+    internet_check_message: "براہ کرم اپنے انٹرنیٹ کنکشن کی جانچ کریں اور دوبارہ کوشش کریں۔",
+    contact_support: "براہ کرم سپورٹ سے رابطہ کریں۔",
   },
   tr: {
     quran: "Kuran",
@@ -325,6 +417,29 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     dark_mode: "Koyu Mod",
     reciter: "Hafız",
     choose_reciter: "Hafız Seçin",
+    unlock_premium: "Premium'u Aç",
+    enhance_spiritual_journey: "Tam erişimle ruhani yolculuğunuzu geliştirin",
+    unlimited_chat_messages: "Sınırsız AI sohbet mesajları",
+    ask_quran_questions: "Kuran ayetleri hakkında sorular sorun",
+    scholarly_interpretations: "Bilimsel yorumlar alın",
+    explore_islamic_teachings: "İslami öğretileri keşfedin",
+    personal_spiritual_guidance: "Kişisel ruhani rehberlik",
+    support_development: "Sürekli geliştirmeyi destekleyin",
+    premium_access: "Premium Erişim",
+    per_month: "/ay",
+    unlimited_chat_cancel_anytime: "Sınırsız AI sohbet mesajları • İstediğiniz zaman iptal edin",
+    subscribe_now: "Şimdi Abone Ol",
+    restore_purchases: "Satın Alımları Geri Yükle",
+    subscription_auto_renew_disclaimer: "Aboneliğiniz, mevcut dönemin sonundan en az 24 saat önce iptal edilmedikçe otomatik olarak yenilenecektir.",
+    purchase_success: "Başarılı",
+    welcome_premium_chat: "Premium Sohbet'e hoş geldiniz! Sınırsız mesajların keyfini çıkarın.",
+    purchase_failed: "Satın Alma Başarısız",
+    restore_success: "Satın alımlarınız geri yüklendi!",
+    restore_failed: "Önceki satın alım bulunamadı",
+    no_offerings_error: "Abonelik teklifleri yüklenemiyor. Lütfen internet bağlantınızı kontrol edin ve tekrar deneyin.",
+    no_packages_error: "Abonelik paketi yapılandırılmadı. Lütfen destek ile iletişime geçin.",
+    internet_check_message: "Lütfen internet bağlantınızı kontrol edin ve tekrar deneyin.",
+    contact_support: "Lütfen destek ile iletişime geçin.",
   },
   fr: {
     quran: "Coran",
@@ -390,6 +505,29 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     dark_mode: "Mode Sombre",
     reciter: "Récitateur",
     choose_reciter: "Choisir le Récitateur",
+    unlock_premium: "Débloquer Premium",
+    enhance_spiritual_journey: "Améliorez votre voyage spirituel avec un accès complet",
+    unlimited_chat_messages: "Messages de chat AI illimités",
+    ask_quran_questions: "Posez des questions sur les versets du Coran",
+    scholarly_interpretations: "Obtenez des interprétations savantes",
+    explore_islamic_teachings: "Explorez les enseignements islamiques",
+    personal_spiritual_guidance: "Guidance spirituelle personnelle",
+    support_development: "Soutenir le développement continu",
+    premium_access: "Accès Premium",
+    per_month: "/mois",
+    unlimited_chat_cancel_anytime: "Messages de chat AI illimités • Annulez à tout moment",
+    subscribe_now: "S'abonner Maintenant",
+    restore_purchases: "Restaurer les Achats",
+    subscription_auto_renew_disclaimer: "Votre abonnement se renouvellera automatiquement sauf s'il est annulé au moins 24 heures avant la fin de la période en cours.",
+    purchase_success: "Succès",
+    welcome_premium_chat: "Bienvenue dans le Chat Premium! Profitez de messages illimités.",
+    purchase_failed: "Échec de l'Achat",
+    restore_success: "Vos achats ont été restaurés!",
+    restore_failed: "Aucun achat précédent trouvé",
+    no_offerings_error: "Impossible de charger les offres d'abonnement. Veuillez vérifier votre connexion Internet et réessayer.",
+    no_packages_error: "Aucun forfait d'abonnement configuré. Veuillez contacter le support.",
+    internet_check_message: "Veuillez vérifier votre connexion Internet et réessayer.",
+    contact_support: "Veuillez contacter le support.",
   },
   uz: {
     quran: "Qur'on",
@@ -455,6 +593,29 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     dark_mode: "Qorong'u Rejim",
     reciter: "Qori",
     choose_reciter: "Qorini Tanlash",
+    unlock_premium: "Premium-ni Oching",
+    enhance_spiritual_journey: "To'liq kirish bilan ruhiy sayohatingizni yaxshilang",
+    unlimited_chat_messages: "Cheksiz AI suhbat xabarlari",
+    ask_quran_questions: "Qur'on oyatlari haqida savollar bering",
+    scholarly_interpretations: "Ilmiy sharhlar oling",
+    explore_islamic_teachings: "Islom ta'limotlarini o'rganing",
+    personal_spiritual_guidance: "Shaxsiy ruhiy yo'l-yo'riq",
+    support_development: "Doimiy rivojlanishni qo'llab-quvvatlang",
+    premium_access: "Premium Kirish",
+    per_month: "/oy",
+    unlimited_chat_cancel_anytime: "Cheksiz AI suhbat xabarlari • Istalgan vaqtda bekor qiling",
+    subscribe_now: "Hozir Obuna Bo'ling",
+    restore_purchases: "Xaridlarni Tiklash",
+    subscription_auto_renew_disclaimer: "Obunangiz joriy davr tugashidan kamida 24 soat oldin bekor qilinmasa, avtomatik ravishda yangilanadi.",
+    purchase_success: "Muvaffaqiyat",
+    welcome_premium_chat: "Premium Suhbatga xush kelibsiz! Cheksiz xabarlardan bahramand bo'ling.",
+    purchase_failed: "Xarid Muvaffaqiyatsiz",
+    restore_success: "Xaridlaringiz tiklandi!",
+    restore_failed: "Oldingi xaridlar topilmadi",
+    no_offerings_error: "Obuna takliflarini yuklash imkonsiz. Iltimos, internet aloqangizni tekshiring va qayta urinib ko'ring.",
+    no_packages_error: "Obuna paketlari sozlanmagan. Iltimos, qo'llab-quvvatlash bilan bog'laning.",
+    internet_check_message: "Iltimos, internet aloqangizni tekshiring va qayta urinib ko'ring.",
+    contact_support: "Iltimos, qo'llab-quvvatlash bilan bog'laning.",
   },
 };
 

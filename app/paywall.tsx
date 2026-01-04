@@ -14,10 +14,12 @@ import { useRouter } from 'expo-router';
 import { Crown, Check, X, Sparkles } from 'lucide-react-native';
 import Colors from '@/constants/colors';
 import { useSubscription } from '@/contexts/SubscriptionContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function PaywallScreen() {
   const router = useRouter();
   const { offerings, purchase, restore, isPurchasing, isRestoring, isPremium } = useSubscription();
+  const { translate } = useLanguage();
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(50)).current;
 
@@ -51,13 +53,13 @@ export default function PaywallScreen() {
       
       const currentOffering = offerings?.current;
       if (!currentOffering) {
-        Alert.alert('Error', 'Unable to load subscription offerings. Please check your internet connection and try again.');
+        Alert.alert(translate('purchase_failed'), translate('no_offerings_error'));
         console.error('No current offering available');
         return;
       }
       
       if (!currentOffering.availablePackages || currentOffering.availablePackages.length === 0) {
-        Alert.alert('Error', 'No subscription packages configured. Please contact support.');
+        Alert.alert(translate('purchase_failed'), translate('no_packages_error'));
         console.error('No packages in offering:', currentOffering);
         return;
       }
@@ -66,12 +68,12 @@ export default function PaywallScreen() {
       console.log('Purchasing package:', packageToPurchase.identifier);
       
       await purchase(packageToPurchase);
-      Alert.alert('Success', 'Welcome to Premium Chat! Enjoy unlimited messages.');
+      Alert.alert(translate('purchase_success'), translate('welcome_premium_chat'));
       router.replace('/(tabs)/chat' as any);
     } catch (error: any) {
       console.error('Purchase error:', error);
       if (error?.message !== 'Purchase cancelled') {
-        Alert.alert('Purchase Failed', error?.message || 'Please try again');
+        Alert.alert(translate('purchase_failed'), error?.message || translate('internet_check_message'));
       }
     }
   };
@@ -79,9 +81,9 @@ export default function PaywallScreen() {
   const handleRestore = async () => {
     try {
       await restore();
-      Alert.alert('Success', 'Your purchases have been restored!');
+      Alert.alert(translate('purchase_success'), translate('restore_success'));
     } catch {
-      Alert.alert('Restore Failed', 'No previous purchases found');
+      Alert.alert(translate('purchase_failed'), translate('restore_failed'));
     }
   };
 
@@ -89,12 +91,12 @@ export default function PaywallScreen() {
   const price = monthlyPackage?.product?.priceString || '$5.99';
 
   const features = [
-    'Unlimited AI chat messages',
-    'Ask questions about Quran verses',
-    'Get scholarly interpretations',
-    'Explore Islamic teachings',
-    'Personal spiritual guidance',
-    'Support continued development',
+    translate('unlimited_chat_messages'),
+    translate('ask_quran_questions'),
+    translate('scholarly_interpretations'),
+    translate('explore_islamic_teachings'),
+    translate('personal_spiritual_guidance'),
+    translate('support_development'),
   ];
 
   return (
@@ -127,9 +129,9 @@ export default function PaywallScreen() {
             <Crown color={Colors.light.secondary} size={64} strokeWidth={1.5} />
           </LinearGradient>
 
-          <Text style={styles.title}>Unlock Premium</Text>
+          <Text style={styles.title}>{translate('unlock_premium')}</Text>
           <Text style={styles.subtitle}>
-            Enhance your spiritual journey with full access
+            {translate('enhance_spiritual_journey')}
           </Text>
 
           <View style={styles.featuresContainer}>
@@ -165,10 +167,10 @@ export default function PaywallScreen() {
               style={styles.priceCardGradient}
             >
               <Sparkles color={Colors.light.accent} size={32} strokeWidth={2} />
-              <Text style={styles.priceTitle}>Premium Access</Text>
-              <Text style={styles.priceAmount}>{price}/month</Text>
+              <Text style={styles.priceTitle}>{translate('premium_access')}</Text>
+              <Text style={styles.priceAmount}>{price}{translate('per_month')}</Text>
               <Text style={styles.priceDescription}>
-                Unlimited AI chat messages • Cancel anytime
+                {translate('unlimited_chat_cancel_anytime')}
               </Text>
             </LinearGradient>
           </View>
@@ -188,7 +190,7 @@ export default function PaywallScreen() {
               ) : (
                 <>
                   <Crown color="#ffffff" size={24} strokeWidth={2} />
-                  <Text style={styles.subscribeButtonText}>Subscribe Now</Text>
+                  <Text style={styles.subscribeButtonText}>{translate('subscribe_now')}</Text>
                 </>
               )}
             </LinearGradient>
@@ -202,13 +204,12 @@ export default function PaywallScreen() {
             {isRestoring ? (
               <ActivityIndicator color={Colors.light.primary} size="small" />
             ) : (
-              <Text style={styles.restoreButtonText}>Restore Purchases</Text>
+              <Text style={styles.restoreButtonText}>{translate('restore_purchases')}</Text>
             )}
           </TouchableOpacity>
 
           <Text style={styles.disclaimer}>
-            Your subscription will automatically renew unless cancelled at least
-            24 hours before the end of the current period.
+            {translate('subscription_auto_renew_disclaimer')}
           </Text>
         </Animated.View>
       </ScrollView>
