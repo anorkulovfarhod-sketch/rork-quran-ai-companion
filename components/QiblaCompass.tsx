@@ -82,6 +82,10 @@ export default function QiblaCompass({ latitude, longitude }: QiblaCompassProps)
 
   const colors = theme === 'light' ? Colors.light : Colors.dark;
 
+  const degreesToTurn = Math.round(Math.abs(qiblaDirection - heading));
+  const turnDirection = (qiblaDirection - heading + 360) % 360 > 180 ? 'left' : 'right';
+  const normalizedDegreesToTurn = Math.min(degreesToTurn, 360 - degreesToTurn);
+
   return (
     <View style={styles.container}>
       <View style={styles.compassContainer}>
@@ -106,13 +110,29 @@ export default function QiblaCompass({ latitude, longitude }: QiblaCompassProps)
             />
           </View>
         </View>
-        <Text style={[styles.directionText, { color: colors.text }]}>
-          {Math.round(qiblaDirection)}° {getDirectionLabel(qiblaDirection)}
-        </Text>
+        <View style={styles.headingContainer}>
+          <Text style={[styles.headingLabel, { color: colors.muted, fontFamily: "Georgia" }]}>You&apos;re facing</Text>
+          <Text style={[styles.directionText, { color: colors.text, fontFamily: "Georgia" }]}>
+            {Math.round(heading)}° {getDirectionLabel(heading)}
+          </Text>
+        </View>
       </View>
       <View style={styles.infoContainer}>
-        <Text style={[styles.infoLabel, { color: colors.text }]}>{translate('mecca_direction')}</Text>
+        <Text style={[styles.infoLabel, { color: colors.text, fontFamily: "Georgia" }]}>{translate('mecca_direction')}</Text>
         <Text style={[styles.infoLabelArabic, { color: colors.primary }]}>اتجاه مكة المكرمة</Text>
+        <Text style={[styles.qiblaDirection, { color: colors.primary, fontFamily: "Georgia" }]}>
+          {Math.round(qiblaDirection)}° {getDirectionLabel(qiblaDirection)}
+        </Text>
+        {normalizedDegreesToTurn > 5 && (
+          <Text style={[styles.turnInstruction, { color: colors.accent, fontFamily: "Georgia" }]}>
+            Turn {turnDirection} {normalizedDegreesToTurn}°
+          </Text>
+        )}
+        {normalizedDegreesToTurn <= 5 && (
+          <Text style={[styles.alignedText, { color: colors.primary, fontFamily: "Georgia" }]}>
+            ✓ Aligned with Qibla
+          </Text>
+        )}
       </View>
     </View>
   );
@@ -205,5 +225,33 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600" as const,
     marginTop: 4,
+  },
+  headingContainer: {
+    marginTop: 16,
+    alignItems: "center" as const,
+  },
+  headingLabel: {
+    fontSize: 14,
+    fontWeight: "500" as const,
+    letterSpacing: 0.3,
+    marginBottom: 4,
+  },
+  qiblaDirection: {
+    fontSize: 24,
+    fontWeight: "700" as const,
+    marginTop: 8,
+    letterSpacing: 0.5,
+  },
+  turnInstruction: {
+    fontSize: 18,
+    fontWeight: "600" as const,
+    marginTop: 12,
+    letterSpacing: 0.5,
+  },
+  alignedText: {
+    fontSize: 18,
+    fontWeight: "600" as const,
+    marginTop: 12,
+    letterSpacing: 0.5,
   },
 });
