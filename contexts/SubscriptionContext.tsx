@@ -62,7 +62,17 @@ export const [SubscriptionProvider, useSubscription] = createContextHook(() => {
     queryFn: async () => {
       if (!isConfigured) return null;
       try {
+        console.log('Fetching RevenueCat offerings...');
         const offerings = await Purchases.getOfferings();
+        console.log('Offerings fetched:', {
+          current: offerings.current?.identifier,
+          packagesCount: offerings.current?.availablePackages.length,
+          packages: offerings.current?.availablePackages.map(p => ({
+            identifier: p.identifier,
+            productId: p.product.identifier,
+            price: p.product.priceString
+          }))
+        });
         return offerings;
       } catch (error) {
         console.error('Failed to get offerings:', error);

@@ -38,22 +38,38 @@ export default function PaywallScreen() {
 
   useEffect(() => {
     if (isPremium) {
-      router.replace('/(tabs)/quran' as any);
+      router.replace('/(tabs)/chat' as any);
     }
   }, [isPremium, router]);
 
   const handlePurchase = async () => {
     try {
+      console.log('Purchase button pressed');
+      console.log('Offerings available:', offerings);
+      console.log('Current offering:', offerings?.current);
+      console.log('Available packages:', offerings?.current?.availablePackages);
+      
       const currentOffering = offerings?.current;
-      if (!currentOffering?.availablePackages[0]) {
-        Alert.alert('Error', 'No subscription package available');
+      if (!currentOffering) {
+        Alert.alert('Error', 'Unable to load subscription offerings. Please check your internet connection and try again.');
+        console.error('No current offering available');
+        return;
+      }
+      
+      if (!currentOffering.availablePackages || currentOffering.availablePackages.length === 0) {
+        Alert.alert('Error', 'No subscription packages configured. Please contact support.');
+        console.error('No packages in offering:', currentOffering);
         return;
       }
 
-      await purchase(currentOffering.availablePackages[0]);
-      Alert.alert('Success', 'Welcome to Premium! Enjoy unlimited access.');
-      router.replace('/(tabs)/quran' as any);
+      const packageToPurchase = currentOffering.availablePackages[0];
+      console.log('Purchasing package:', packageToPurchase.identifier);
+      
+      await purchase(packageToPurchase);
+      Alert.alert('Success', 'Welcome to Premium Chat! Enjoy unlimited messages.');
+      router.replace('/(tabs)/chat' as any);
     } catch (error: any) {
+      console.error('Purchase error:', error);
       if (error?.message !== 'Purchase cancelled') {
         Alert.alert('Purchase Failed', error?.message || 'Please try again');
       }
@@ -70,14 +86,14 @@ export default function PaywallScreen() {
   };
 
   const monthlyPackage = offerings?.current?.availablePackages[0];
-  const price = monthlyPackage?.product?.priceString || '$4.99';
+  const price = monthlyPackage?.product?.priceString || '$5.99';
 
   const features = [
     'Unlimited AI chat messages',
-    'Unlimited access to all Quran content',
-    'Daily inspirational quotes',
-    'Prayer time tracking',
-    'Ad-free experience',
+    'Ask questions about Quran verses',
+    'Get scholarly interpretations',
+    'Explore Islamic teachings',
+    'Personal spiritual guidance',
     'Support continued development',
   ];
 
@@ -152,7 +168,7 @@ export default function PaywallScreen() {
               <Text style={styles.priceTitle}>Premium Access</Text>
               <Text style={styles.priceAmount}>{price}/month</Text>
               <Text style={styles.priceDescription}>
-                Unlimited chat + all features • Cancel anytime
+                Unlimited AI chat messages • Cancel anytime
               </Text>
             </LinearGradient>
           </View>
