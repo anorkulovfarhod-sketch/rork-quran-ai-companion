@@ -9,7 +9,7 @@ import {
   Easing,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { BookOpen, CheckCircle2, Clock, Compass } from "lucide-react-native";
+import { BookOpen, CheckCircle2, Clock, Compass, TrendingUp, Award } from "lucide-react-native";
 import Colors from "@/constants/colors";
 import { useLocation } from "@/contexts/LocationContext";
 import { calculatePrayerTimes, type Prayer } from "@/utils/prayerTimes";
@@ -22,6 +22,7 @@ export default function PrayersScreen() {
   const { translate } = useLanguage();
   const { theme } = useTheme();
   const [prayers, setPrayers] = useState<Prayer[]>([]);
+  const currentStreak = 7;
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.95)).current;
   const progressAnim = useRef(new Animated.Value(0)).current;
@@ -144,7 +145,7 @@ export default function PrayersScreen() {
             <View style={[styles.progressCard, { backgroundColor: colors.card, shadowColor: colors.primary }]}>
               <View style={styles.progressHeader}>
                 <CheckCircle2 color={colors.primary} size={20} strokeWidth={2} />
-                <Text style={[styles.progressTitle, { color: colors.text }]}>Progress</Text>
+                <Text style={[styles.progressTitle, { color: colors.text }]}>Today</Text>
               </View>
               <View style={styles.progressCircleContainer}>
                 <Animated.View
@@ -181,6 +182,24 @@ export default function PrayersScreen() {
               <Text style={[styles.progressText, { color: colors.text }]}>
                 {completedPrayers} of 5 prayers
               </Text>
+            </View>
+          </View>
+
+          <View style={styles.statsRow}>
+            <View style={[styles.statCard, { backgroundColor: colors.card }]}>
+              <View style={[styles.statIconContainer, { backgroundColor: colors.parchment }]}>
+                <TrendingUp color={colors.primary} size={20} strokeWidth={2} />
+              </View>
+              <Text style={[styles.statValue, { color: colors.text }]}>{currentStreak}</Text>
+              <Text style={[styles.statLabel, { color: colors.muted }]}>Day Streak</Text>
+            </View>
+            
+            <View style={[styles.statCard, { backgroundColor: colors.card }]}>
+              <View style={[styles.statIconContainer, { backgroundColor: colors.parchment }]}>
+                <Award color={colors.accent} size={20} strokeWidth={2} />
+              </View>
+              <Text style={[styles.statValue, { color: colors.text }]}>95%</Text>
+              <Text style={[styles.statLabel, { color: colors.muted }]}>This Week</Text>
             </View>
           </View>
 
@@ -323,7 +342,7 @@ const styles = StyleSheet.create({
   cardsRow: {
     flexDirection: "row",
     gap: 12,
-    marginBottom: 20,
+    marginBottom: 16,
   },
   qiblaCard: {
     flex: 1,
@@ -415,6 +434,41 @@ const styles = StyleSheet.create({
     fontWeight: "500" as const,
     letterSpacing: 0.2,
     textAlign: "center",
+  },
+  statsRow: {
+    flexDirection: "row",
+    gap: 12,
+    marginBottom: 16,
+  },
+  statCard: {
+    flex: 1,
+    borderRadius: 16,
+    padding: 16,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
+  },
+  statIconContainer: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+  },
+  statValue: {
+    fontSize: 26,
+    fontWeight: "700" as const,
+    letterSpacing: -0.5,
+    marginBottom: 4,
+  },
+  statLabel: {
+    fontSize: 12,
+    fontWeight: "500" as const,
+    letterSpacing: 0.2,
   },
   prayersSection: {
     borderRadius: 20,

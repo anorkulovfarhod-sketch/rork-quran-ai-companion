@@ -176,17 +176,23 @@ export default function QuranScreen() {
   const [hasScrolledToEnd, setHasScrolledToEnd] = useState(false);
   
   const [currentPlayingVerse, setCurrentPlayingVerse] = useState<number | null>(null);
-  const [currentAudioUrl, setCurrentAudioUrl] = useState<string | null>(null);
   const [isPlayingAll, setIsPlayingAll] = useState(false);
   const [isLoadingAudio, setIsLoadingAudio] = useState(false);
-  const [pendingVerse, setPendingVerse] = useState<number | null>(null);
   const verseRefs = useRef<{ [key: number]: number }>({});
-  const isTransitioningRef = useRef(false);
   const [showReciterPicker, setShowReciterPicker] = useState(false);
   const [localReciter, setLocalReciter] = useState(selectedReciter);
+  const playerRef = useRef<any>(null);
+  
+  const currentAudioUrl = currentPlayingVerse !== null && surahData
+    ? surahData[currentPlayingVerse]?.audioUrl
+    : null;
   
   const player = useAudioPlayer(currentAudioUrl ? { uri: currentAudioUrl } : null);
   const status = useAudioPlayerStatus(player);
+
+  useEffect(() => {
+    playerRef.current = player;
+  }, [player]);
 
   useEffect(() => {
     Animated.parallel([
@@ -210,67 +216,48 @@ export default function QuranScreen() {
     });
   }, []);
 
-  const playVerse = useCallback((verseIndex: number) => {
-    if (!surahData || verseIndex >= surahData.length || isTransitioningRef.current) {
-      console.log('Skipping playVerse - transitioning or invalid index:', verseIndex);
+  const playVerse = useCallback(async (verseIndex: number) => {
+    if (!surahData || verseIndex >= surahData.length) {
+      console.log('Invalid verse index:', verseIndex);
       return;
     }
     
     const verse = surahData[verseIndex];
     console.log('Playing verse:', verseIndex, 'Audio URL:', verse.audioUrl);
     
-    isTransitioningRef.current = true;
     setIsLoadingAudio(true);
-    setPendingVerse(verseIndex);
     setCurrentPlayingVerse(verseIndex);
     
-    if (currentAudioUrl === verse.audioUrl) {
-      player.seekTo(0);
-      player.play();
+    await new Promise(resolve => setTimeout(resolve, 150));
+    
+    try {
+      if (playerRef.current) {
+        playerRef.current.play();
+      }
+    } catch (error) {
+      console.error('Error playing audio:', error);
+    } finally {
       setIsLoadingAudio(false);
-      isTransitioningRef.current = false;
-      setPendingVerse(null);
-    } else {
-      setCurrentAudioUrl(verse.audioUrl);
     }
-  }, [surahData, currentAudioUrl, player]);
+  }, [surahData]);
 
   useEffect(() => {
-    if (status.didJustFinish && isPlayingAll && surahData && currentPlayingVerse !== null && !isTransitioningRef.current) {
+    if (status.didJustFinish && isPlayingAll && surahData && currentPlayingVerse !== null) {
       const nextVerseIndex = currentPlayingVerse + 1;
       if (nextVerseIndex < surahData.length) {
-        console.log('Verse finished, scheduling next verse:', nextVerseIndex);
+        console.log('Verse finished, playing next verse:', nextVerseIndex);
         setTimeout(() => {
           playVerse(nextVerseIndex);
-        }, 300);
+        }, 200);
       } else {
         console.log('Finished playing all verses');
         setIsPlayingAll(false);
         setCurrentPlayingVerse(null);
-        setCurrentAudioUrl(null);
       }
     }
   }, [status.didJustFinish, isPlayingAll, surahData, currentPlayingVerse, playVerse]);
 
-  useEffect(() => {
-    if (currentAudioUrl && player && pendingVerse !== null) {
-      const initializeAndPlay = async () => {
-        try {
-          await new Promise(resolve => setTimeout(resolve, 100));
-          player.seekTo(0);
-          player.play();
-          console.log('Started playing verse:', pendingVerse);
-        } catch (error) {
-          console.error('Error playing audio:', error);
-        } finally {
-          setIsLoadingAudio(false);
-          isTransitioningRef.current = false;
-          setPendingVerse(null);
-        }
-      };
-      initializeAndPlay();
-    }
-  }, [currentAudioUrl, player, pendingVerse]);
+
 
   useEffect(() => {
     if (currentPlayingVerse !== null && scrollViewRef.current) {
@@ -294,38 +281,35 @@ export default function QuranScreen() {
   }, [currentPlayingVerse, status.playing, player, playVerse]);
 
   const playAllVerses = useCallback(() => {
-    if (!surahData || surahData.length === 0 || isTransitioningRef.current) return;
+    if (!surahData || surahData.length === 0) return;
     
     if (isPlayingAll && status.playing) {
-      player.pause();
+      if (playerRef.current) playerRef.current.pause();
       return;
     }
     
     if (isPlayingAll && !status.playing && currentPlayingVerse !== null) {
-      player.play();
+      if (playerRef.current) playerRef.current.play();
       return;
     }
     
     console.log('Starting to play all verses');
     setIsPlayingAll(true);
-    isTransitioningRef.current = false;
     playVerse(0);
-  }, [surahData, isPlayingAll, status.playing, currentPlayingVerse, player, playVerse]);
+  }, [surahData, isPlayingAll, status.playing, currentPlayingVerse, playVerse]);
 
   const skipToNextVerse = useCallback(() => {
-    if (!surahData || currentPlayingVerse === null || isTransitioningRef.current) return;
+    if (!surahData || currentPlayingVerse === null) return;
     const nextIndex = currentPlayingVerse + 1;
     if (nextIndex < surahData.length) {
-      isTransitioningRef.current = false;
       playVerse(nextIndex);
     }
   }, [surahData, currentPlayingVerse, playVerse]);
 
   const skipToPreviousVerse = useCallback(() => {
-    if (!surahData || currentPlayingVerse === null || isTransitioningRef.current) return;
+    if (!surahData || currentPlayingVerse === null) return;
     const prevIndex = currentPlayingVerse - 1;
     if (prevIndex >= 0) {
-      isTransitioningRef.current = false;
       playVerse(prevIndex);
     }
   }, [surahData, currentPlayingVerse, playVerse]);
@@ -338,7 +322,6 @@ export default function QuranScreen() {
     setSelectedSurah(surahNumber);
     setIsLoading(true);
     setCurrentPlayingVerse(null);
-    setCurrentAudioUrl(null);
     setIsPlayingAll(false);
     
     try {
@@ -384,18 +367,15 @@ export default function QuranScreen() {
   };
 
   const handleBack = () => {
-    if (player) {
-      player.pause();
+    if (playerRef.current) {
+      playerRef.current.pause();
     }
     setSelectedSurah(null);
     setSurahData(null);
     setHasScrolledToEnd(false);
     setShowQuizModal(false);
     setCurrentPlayingVerse(null);
-    setCurrentAudioUrl(null);
     setIsPlayingAll(false);
-    isTransitioningRef.current = false;
-    setPendingVerse(null);
     setIsLoadingAudio(false);
   };
 
@@ -646,13 +626,12 @@ export default function QuranScreen() {
                       { backgroundColor: colors.background, borderColor: localReciter.id === reciter.id ? colors.primary : colors.border }
                     ]}
                     onPress={async () => {
-                      if (player) {
-                        player.pause();
+                      if (playerRef.current) {
+                        playerRef.current.pause();
                       }
                       setLocalReciter(reciter);
                       await setReciter(reciter);
                       setCurrentPlayingVerse(null);
-                      setCurrentAudioUrl(null);
                       setIsPlayingAll(false);
                       
                       if (surahData && selectedSurah) {
