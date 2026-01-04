@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
   View,
   Text,
@@ -10,7 +10,8 @@ import {
   Modal,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { BookOpen, ChevronRight, Trophy, X } from "lucide-react-native";
+import { BookOpen, ChevronRight, Trophy, X, Play, Pause, Volume2, SkipForward, SkipBack } from "lucide-react-native";
+import { useAudioPlayer, useAudioPlayerStatus, setAudioModeAsync } from "expo-audio";
 import Colors from "@/constants/colors";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useRouter } from "expo-router";
@@ -22,6 +23,19 @@ type Surah = {
   englishTranslation: string;
   verses: number;
   revelation: string;
+};
+
+type VerseData = {
+  arabic: string;
+  translation: string;
+  audioUrl: string;
+  ayahNumber: number;
+};
+
+const formatTime = (seconds: number): string => {
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
 };
 
 const surahs: Surah[] = [
@@ -145,13 +159,20 @@ export default function QuranScreen() {
   const { language, translate } = useLanguage();
   const router = useRouter();
   const [selectedSurah, setSelectedSurah] = useState<number | null>(null);
-  const [surahData, setSurahData] = useState<{ arabic: string; translation: string }[] | null>(null);
+  const [surahData, setSurahData] = useState<VerseData[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showQuizModal, setShowQuizModal] = useState(false);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.95)).current;
   const scrollViewRef = useRef<ScrollView>(null);
   const [hasScrolledToEnd, setHasScrolledToEnd] = useState(false);
+  
+  const [currentPlayingVerse, setCurrentPlayingVerse] = useState<number | null>(null);
+  const [currentAudioUrl, setCurrentAudioUrl] = useState<string | null>(null);
+  const [isPlayingAll, setIsPlayingAll] = useState(false);
+  
+  const player = useAudioPlayer(currentAudioUrl ? { uri: currentAudioUrl } : null);
+  const status = useAudioPlayerStatus(player);
 
   useEffect(() => {
     Animated.parallel([
@@ -169,9 +190,94 @@ export default function QuranScreen() {
     ]).start();
   }, [fadeAnim, scaleAnim]);
 
+  useEffect(() => {
+    setAudioModeAsync({
+      playsInSilentMode: true,
+    });
+  }, []);
+
+  const playVerse = useCallback((verseIndex: number) => {
+    if (!surahData || verseIndex >= surahData.length) return;
+    
+    const verse = surahData[verseIndex];
+    console.log('Playing verse:', verseIndex, 'Audio URL:', verse.audioUrl);
+    setCurrentPlayingVerse(verseIndex);
+    setCurrentAudioUrl(verse.audioUrl);
+  }, [surahData]);
+
+  useEffect(() => {
+    if (status.didJustFinish && isPlayingAll && surahData && currentPlayingVerse !== null) {
+      const nextVerseIndex = currentPlayingVerse + 1;
+      if (nextVerseIndex < surahData.length) {
+        console.log('Playing next verse:', nextVerseIndex);
+        playVerse(nextVerseIndex);
+      } else {
+        console.log('Finished playing all verses');
+        setIsPlayingAll(false);
+        setCurrentPlayingVerse(null);
+        setCurrentAudioUrl(null);
+      }
+    }
+  }, [status.didJustFinish, isPlayingAll, surahData, currentPlayingVerse, playVerse]);
+
+  useEffect(() => {
+    if (currentAudioUrl && player) {
+      player.seekTo(0);
+      player.play();
+    }
+  }, [currentAudioUrl, player]);
+
+  const togglePlayVerse = useCallback((verseIndex: number) => {
+    if (currentPlayingVerse === verseIndex && status.playing) {
+      player.pause();
+    } else if (currentPlayingVerse === verseIndex && !status.playing) {
+      player.play();
+    } else {
+      setIsPlayingAll(false);
+      playVerse(verseIndex);
+    }
+  }, [currentPlayingVerse, status.playing, player, playVerse]);
+
+  const playAllVerses = useCallback(() => {
+    if (!surahData || surahData.length === 0) return;
+    
+    if (isPlayingAll && status.playing) {
+      player.pause();
+      return;
+    }
+    
+    if (isPlayingAll && !status.playing && currentPlayingVerse !== null) {
+      player.play();
+      return;
+    }
+    
+    console.log('Starting to play all verses');
+    setIsPlayingAll(true);
+    playVerse(0);
+  }, [surahData, isPlayingAll, status.playing, currentPlayingVerse, player, playVerse]);
+
+  const skipToNextVerse = useCallback(() => {
+    if (!surahData || currentPlayingVerse === null) return;
+    const nextIndex = currentPlayingVerse + 1;
+    if (nextIndex < surahData.length) {
+      playVerse(nextIndex);
+    }
+  }, [surahData, currentPlayingVerse, playVerse]);
+
+  const skipToPreviousVerse = useCallback(() => {
+    if (!surahData || currentPlayingVerse === null) return;
+    const prevIndex = currentPlayingVerse - 1;
+    if (prevIndex >= 0) {
+      playVerse(prevIndex);
+    }
+  }, [surahData, currentPlayingVerse, playVerse]);
+
   const handleSurahPress = async (surahNumber: number) => {
     setSelectedSurah(surahNumber);
     setIsLoading(true);
+    setCurrentPlayingVerse(null);
+    setCurrentAudioUrl(null);
+    setIsPlayingAll(false);
     
     try {
       const arabicResponse = await fetch(`https://api.alquran.cloud/v1/surah/${surahNumber}`);
@@ -190,10 +296,15 @@ export default function QuranScreen() {
       const translationResponse = await fetch(`https://api.alquran.cloud/v1/surah/${surahNumber}/${edition}`);
       const translationData = await translationResponse.json();
       
-      const verses = arabicData.data.ayahs.map((ayah: any, index: number) => ({
+      const verses: VerseData[] = arabicData.data.ayahs.map((ayah: any, index: number) => ({
         arabic: ayah.text,
         translation: translationData.data.ayahs[index]?.text || '',
+        audioUrl: `https://cdn.islamic.network/quran/audio/128/ar.alafasy/${ayah.number}.mp3`,
+        ayahNumber: ayah.number,
       }));
+      
+      console.log('Loaded surah with', verses.length, 'verses');
+      console.log('First verse audio URL:', verses[0]?.audioUrl);
       
       setSurahData(verses);
     } catch (error) {
@@ -205,10 +316,16 @@ export default function QuranScreen() {
   };
 
   const handleBack = () => {
+    if (player) {
+      player.pause();
+    }
     setSelectedSurah(null);
     setSurahData(null);
     setHasScrolledToEnd(false);
     setShowQuizModal(false);
+    setCurrentPlayingVerse(null);
+    setCurrentAudioUrl(null);
+    setIsPlayingAll(false);
   };
 
   const handleScroll = (event: any) => {
@@ -245,6 +362,53 @@ export default function QuranScreen() {
           <Text style={styles.surahHeaderSubtext}>
             {surah?.verses} {translate('verses')} • {translate(surah?.revelation.toLowerCase() as any)}
           </Text>
+          
+          <View style={styles.audioControlsContainer}>
+            <View style={styles.reciterInfo}>
+              <Volume2 color="#ffffff" size={16} strokeWidth={2} />
+              <Text style={styles.reciterText}>Mishary Rashid Alafasy</Text>
+            </View>
+            <View style={styles.audioControls}>
+              <TouchableOpacity
+                style={styles.audioControlButton}
+                onPress={skipToPreviousVerse}
+                disabled={currentPlayingVerse === null || currentPlayingVerse === 0}
+              >
+                <SkipBack 
+                  color={currentPlayingVerse === null || currentPlayingVerse === 0 ? "rgba(255,255,255,0.4)" : "#ffffff"} 
+                  size={20} 
+                  strokeWidth={2} 
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.playAllButton}
+                onPress={playAllVerses}
+                activeOpacity={0.8}
+              >
+                {isPlayingAll && status.playing ? (
+                  <Pause color="#ffffff" size={24} strokeWidth={2} />
+                ) : (
+                  <Play color="#ffffff" size={24} strokeWidth={2} />
+                )}
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.audioControlButton}
+                onPress={skipToNextVerse}
+                disabled={currentPlayingVerse === null || (surahData && currentPlayingVerse >= surahData.length - 1)}
+              >
+                <SkipForward 
+                  color={currentPlayingVerse === null || (surahData && currentPlayingVerse >= surahData.length - 1) ? "rgba(255,255,255,0.4)" : "#ffffff"} 
+                  size={20} 
+                  strokeWidth={2} 
+                />
+              </TouchableOpacity>
+            </View>
+            {currentPlayingVerse !== null && (
+              <Text style={styles.nowPlayingText}>
+                {translate('verse')} {currentPlayingVerse + 1} / {surahData?.length}
+              </Text>
+            )}
+          </View>
         </LinearGradient>
 
         <ScrollView 
@@ -255,11 +419,48 @@ export default function QuranScreen() {
           scrollEventThrottle={400}
         >
           {surahData.map((verse, index) => (
-            <View key={index} style={styles.verseCard}>
-              <View style={styles.verseNumber}>
-                <Text style={styles.verseNumberText}>{index + 1}</Text>
+            <View 
+              key={index} 
+              style={[
+                styles.verseCard,
+                currentPlayingVerse === index && styles.verseCardPlaying
+              ]}
+            >
+              <View style={styles.verseHeader}>
+                <View style={styles.verseNumber}>
+                  <Text style={styles.verseNumberText}>{index + 1}</Text>
+                </View>
+                <TouchableOpacity
+                  style={[
+                    styles.versePlayButton,
+                    currentPlayingVerse === index && status.playing && styles.versePlayButtonActive
+                  ]}
+                  onPress={() => togglePlayVerse(index)}
+                  activeOpacity={0.7}
+                >
+                  {currentPlayingVerse === index && status.playing ? (
+                    <Pause color={Colors.light.primary} size={18} strokeWidth={2} />
+                  ) : (
+                    <Play color={Colors.light.primary} size={18} strokeWidth={2} />
+                  )}
+                </TouchableOpacity>
               </View>
               <Text style={styles.verseArabic}>{verse.arabic}</Text>
+              {currentPlayingVerse === index && status.duration > 0 && (
+                <View style={styles.progressContainer}>
+                  <View style={styles.progressBar}>
+                    <View 
+                      style={[
+                        styles.progressFill, 
+                        { width: `${(status.currentTime / status.duration) * 100}%` }
+                      ]} 
+                    />
+                  </View>
+                  <Text style={styles.progressText}>
+                    {formatTime(status.currentTime)} / {formatTime(status.duration)}
+                  </Text>
+                </View>
+              )}
               <Text style={styles.verseTranslation}>{verse.translation}</Text>
             </View>
           ))}
@@ -731,5 +932,93 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: Colors.light.muted,
     letterSpacing: 0.3,
+  },
+  audioControlsContainer: {
+    marginTop: 20,
+    alignItems: "center",
+  },
+  reciterInfo: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    marginBottom: 12,
+  },
+  reciterText: {
+    fontSize: 13,
+    color: "rgba(255,255,255,0.9)",
+    fontWeight: "500" as const,
+  },
+  audioControls: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 16,
+  },
+  audioControlButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "rgba(255,255,255,0.15)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  playAllButton: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: "rgba(255,255,255,0.25)",
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 2,
+    borderColor: "rgba(255,255,255,0.4)",
+  },
+  nowPlayingText: {
+    fontSize: 12,
+    color: "rgba(255,255,255,0.8)",
+    marginTop: 10,
+    fontWeight: "500" as const,
+  },
+  verseCardPlaying: {
+    borderWidth: 2,
+    borderColor: Colors.light.primary,
+    backgroundColor: Colors.light.parchment,
+  },
+  verseHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 16,
+  },
+  versePlayButton: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: Colors.light.parchment,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1.5,
+    borderColor: Colors.light.primary,
+  },
+  versePlayButtonActive: {
+    backgroundColor: "rgba(42, 87, 75, 0.1)",
+  },
+  progressContainer: {
+    marginBottom: 12,
+  },
+  progressBar: {
+    height: 4,
+    backgroundColor: "rgba(42, 87, 75, 0.15)",
+    borderRadius: 2,
+    overflow: "hidden",
+  },
+  progressFill: {
+    height: "100%",
+    backgroundColor: Colors.light.primary,
+    borderRadius: 2,
+  },
+  progressText: {
+    fontSize: 11,
+    color: Colors.light.muted,
+    marginTop: 4,
+    textAlign: "right" as const,
   },
 });
