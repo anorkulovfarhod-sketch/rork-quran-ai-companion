@@ -192,12 +192,12 @@ export default function PrayersScreen() {
 
           <View style={[styles.quoteCard, { backgroundColor: colors.parchment, borderLeftColor: colors.accent }]}>
             <Text style={[styles.quoteText, { color: colors.text }]}>
-              &ldquo;{translate('prayer_verse_decreed')}&rdquo;
+              &ldquo;Verily, in the remembrance of Allah do hearts find rest&rdquo;
             </Text>
             <Text style={[styles.quoteArabic, { color: colors.primary }]}>
-              إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا
+              أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ
             </Text>
-            <Text style={[styles.quoteReference, { color: colors.muted }]}>Surah An-Nisa (4:103)</Text>
+            <Text style={[styles.quoteReference, { color: colors.muted }]}>Surah Ar-Ra&apos;d (13:28)</Text>
           </View>
 
           <View style={[styles.prayersSection, { backgroundColor: colors.card, shadowColor: colors.primary }]}>
