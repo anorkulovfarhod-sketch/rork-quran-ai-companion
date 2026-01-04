@@ -43,16 +43,17 @@ export default function PrayersScreen() {
   }, [fadeAnim, scaleAnim]);
 
   useEffect(() => {
-    if (location) {
-      const times = calculatePrayerTimes(location.latitude, location.longitude);
-      setPrayers(times);
-    }
-
-    const interval = setInterval(() => {
+    const loadPrayerTimes = async () => {
       if (location) {
-        const times = calculatePrayerTimes(location.latitude, location.longitude);
+        const times = await calculatePrayerTimes(location.latitude, location.longitude);
         setPrayers(times);
       }
+    };
+
+    loadPrayerTimes();
+
+    const interval = setInterval(() => {
+      loadPrayerTimes();
     }, 60000);
 
     return () => clearInterval(interval);
