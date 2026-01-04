@@ -228,7 +228,7 @@ export default function QuranScreen() {
       if (playerRef.current) {
         console.log('Replacing audio source and playing:', verse.audioUrl);
         playerRef.current.replace({ uri: verse.audioUrl });
-        await new Promise(resolve => setTimeout(resolve, 300));
+        await new Promise(resolve => setTimeout(resolve, 500));
         playerRef.current.play();
         console.log('Audio playing started');
       }
@@ -246,7 +246,7 @@ export default function QuranScreen() {
         console.log('Verse finished, playing next verse:', nextVerseIndex);
         setTimeout(() => {
           playVerse(nextVerseIndex);
-        }, 200);
+        }, 400);
       } else {
         console.log('Finished playing all verses');
         setIsPlayingAll(false);
@@ -641,6 +641,10 @@ export default function QuranScreen() {
                           audioUrl: `https://everyayah.com/data/${reciter.folderName}/${selectedSurah.toString().padStart(3, '0')}${(index + 1).toString().padStart(3, '0')}.mp3`,
                         }));
                         setSurahData(updatedVerses);
+                        
+                        if (scrollViewRef.current) {
+                          scrollViewRef.current.scrollTo({ y: 0, animated: true });
+                        }
                       }
                       
                       setShowReciterPicker(false);
@@ -758,12 +762,12 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   },
   headerEnglish: {
-    fontSize: 18,
-    fontWeight: "500" as const,
+    fontSize: 19,
+    fontWeight: "300" as const,
     color: "#ffffff",
     opacity: 0.95,
     marginTop: 8,
-    letterSpacing: 0.4,
+    letterSpacing: 1.5,
   },
   headerSubtext: {
     fontSize: 15,

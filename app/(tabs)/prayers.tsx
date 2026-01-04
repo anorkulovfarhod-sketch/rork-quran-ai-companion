@@ -9,7 +9,7 @@ import {
   Easing,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { BookOpen, CheckCircle2, Clock, Compass, TrendingUp, Award } from "lucide-react-native";
+import { BookOpen, CheckCircle2, Clock, Compass, TrendingUp } from "lucide-react-native";
 import Colors from "@/constants/colors";
 import { useLocation } from "@/contexts/LocationContext";
 import { calculatePrayerTimes, type Prayer } from "@/utils/prayerTimes";
@@ -192,14 +192,6 @@ export default function PrayersScreen() {
               </View>
               <Text style={[styles.statValue, { color: colors.text }]}>{currentStreak}</Text>
               <Text style={[styles.statLabel, { color: colors.muted }]}>Day Streak</Text>
-            </View>
-            
-            <View style={[styles.statCard, { backgroundColor: colors.card }]}>
-              <View style={[styles.statIconContainer, { backgroundColor: colors.parchment }]}>
-                <Award color={colors.accent} size={20} strokeWidth={2} />
-              </View>
-              <Text style={[styles.statValue, { color: colors.text }]}>95%</Text>
-              <Text style={[styles.statLabel, { color: colors.muted }]}>This Week</Text>
             </View>
           </View>
 
