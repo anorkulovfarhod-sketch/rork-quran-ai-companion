@@ -10,7 +10,7 @@ import {
   Modal,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { BookOpen, ChevronRight, Trophy, X, Play, Pause, Volume2, SkipForward, SkipBack } from "lucide-react-native";
+import { BookOpen, ChevronRight, Trophy, X, Play, Pause, Volume2, SkipForward, SkipBack, ChevronDown } from "lucide-react-native";
 import { useAudioPlayer, useAudioPlayerStatus, setAudioModeAsync } from "expo-audio";
 import Colors from "@/constants/colors";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -163,7 +163,7 @@ const surahs: Surah[] = [
 export default function QuranScreen() {
   const { language, translate } = useLanguage();
   const { theme } = useTheme();
-  const { selectedReciter } = useReciter();
+  const { selectedReciter, reciters, setReciter } = useReciter();
   const router = useRouter();
   const colors = theme === 'light' ? Colors.light : Colors.dark;
   const [selectedSurah, setSelectedSurah] = useState<number | null>(null);
@@ -182,6 +182,8 @@ export default function QuranScreen() {
   const [pendingVerse, setPendingVerse] = useState<number | null>(null);
   const verseRefs = useRef<{ [key: number]: number }>({});
   const isTransitioningRef = useRef(false);
+  const [showReciterPicker, setShowReciterPicker] = useState(false);
+  const [localReciter, setLocalReciter] = useState(selectedReciter);
   
   const player = useAudioPlayer(currentAudioUrl ? { uri: currentAudioUrl } : null);
   const status = useAudioPlayerStatus(player);
@@ -328,6 +330,10 @@ export default function QuranScreen() {
     }
   }, [surahData, currentPlayingVerse, playVerse]);
 
+  useEffect(() => {
+    setLocalReciter(selectedReciter);
+  }, [selectedReciter]);
+
   const handleSurahPress = async (surahNumber: number) => {
     setSelectedSurah(surahNumber);
     setIsLoading(true);
@@ -360,12 +366,12 @@ export default function QuranScreen() {
         arabic: ayah.text,
         translation: translationData.data.ayahs[index]?.text || '',
         transliteration: transliterationData.data?.ayahs?.[index]?.text || '',
-        audioUrl: `https://cdn.islamic.network/quran/audio/128/${selectedReciter.id}/${ayah.number}.mp3`,
+        audioUrl: `https://cdn.islamic.network/quran/audio-gapless/128/${localReciter.id}/${surahNumber.toString().padStart(3, '0')}${(index + 1).toString().padStart(3, '0')}.mp3`,
         ayahNumber: ayah.number,
       }));
       
       console.log('Loaded surah with', verses.length, 'verses');
-      console.log('Using reciter:', selectedReciter.name, 'ID:', selectedReciter.id);
+      console.log('Using reciter:', localReciter.name, 'ID:', localReciter.id);
       console.log('First verse audio URL:', verses[0]?.audioUrl);
       
       setSurahData(verses);
@@ -433,10 +439,15 @@ export default function QuranScreen() {
           </Text>
           
           <View style={styles.audioControlsContainer}>
-            <View style={styles.reciterInfo}>
+            <TouchableOpacity 
+              style={styles.reciterSelector}
+              onPress={() => setShowReciterPicker(true)}
+              activeOpacity={0.7}
+            >
               <Volume2 color="#ffffff" size={16} strokeWidth={2} />
-              <Text style={styles.reciterText}>{selectedReciter.name}</Text>
-            </View>
+              <Text style={styles.reciterText}>{localReciter.name}</Text>
+              <ChevronDown color="#ffffff" size={16} strokeWidth={2} />
+            </TouchableOpacity>
             <View style={styles.audioControls}>
               <TouchableOpacity
                 style={styles.audioControlButton}
@@ -525,7 +536,7 @@ export default function QuranScreen() {
               </View>
               <Text style={[styles.verseArabic, { color: colors.text }]}>{verse.arabic}</Text>
               {verse.transliteration && (
-                <Text style={[styles.verseTransliteration, { color: colors.primary }]}>{verse.transliteration}</Text>
+                <Text style={[styles.verseTransliteration, { color: theme === 'dark' ? '#ffffff' : colors.primary }]}>{verse.transliteration}</Text>
               )}
               {currentPlayingVerse === index && status.duration > 0 && (
                 <View style={styles.progressContainer}>
@@ -609,6 +620,66 @@ export default function QuranScreen() {
                 <Text style={[styles.modalSkipText, { color: colors.muted }]}>{translate('maybe_later')}</Text>
               </TouchableOpacity>
             </Animated.View>
+          </View>
+        </Modal>
+
+        <Modal
+          visible={showReciterPicker}
+          transparent
+          animationType="slide"
+          onRequestClose={() => setShowReciterPicker(false)}
+        >
+          <View style={styles.reciterModalOverlay}>
+            <View style={[styles.reciterModalContent, { backgroundColor: colors.card }]}>
+              <View style={styles.reciterModalHeader}>
+                <Text style={[styles.reciterModalTitle, { color: colors.text }]}>Select Reciter</Text>
+                <TouchableOpacity onPress={() => setShowReciterPicker(false)}>
+                  <X color={colors.muted} size={24} strokeWidth={2} />
+                </TouchableOpacity>
+              </View>
+              <ScrollView style={styles.recitersList}>
+                {reciters.map((reciter) => (
+                  <TouchableOpacity
+                    key={reciter.id}
+                    style={[
+                      styles.reciterOption,
+                      { backgroundColor: colors.background, borderColor: localReciter.id === reciter.id ? colors.primary : colors.border }
+                    ]}
+                    onPress={async () => {
+                      if (player) {
+                        player.pause();
+                      }
+                      setLocalReciter(reciter);
+                      await setReciter(reciter);
+                      setCurrentPlayingVerse(null);
+                      setCurrentAudioUrl(null);
+                      setIsPlayingAll(false);
+                      
+                      if (surahData && selectedSurah) {
+                        const updatedVerses = surahData.map((verse, index) => ({
+                          ...verse,
+                          audioUrl: `https://cdn.islamic.network/quran/audio-gapless/128/${reciter.id}/${selectedSurah.toString().padStart(3, '0')}${(index + 1).toString().padStart(3, '0')}.mp3`,
+                        }));
+                        setSurahData(updatedVerses);
+                      }
+                      
+                      setShowReciterPicker(false);
+                    }}
+                    activeOpacity={0.7}
+                  >
+                    <View style={styles.reciterOptionContent}>
+                      <Text style={[styles.reciterOptionName, { color: colors.text }]}>{reciter.name}</Text>
+                      <Text style={[styles.reciterOptionArabic, { color: colors.muted }]}>{reciter.arabicName}</Text>
+                    </View>
+                    {localReciter.id === reciter.id && (
+                      <View style={[styles.reciterCheckmark, { backgroundColor: colors.parchment }]}>
+                        <ChevronRight color={colors.primary} size={20} strokeWidth={3} />
+                      </View>
+                    )}
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+            </View>
           </View>
         </Modal>
       </View>
@@ -1005,16 +1076,22 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignItems: "center",
   },
-  reciterInfo: {
+  reciterSelector: {
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
     marginBottom: 12,
+    backgroundColor: "rgba(255,255,255,0.15)",
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.2)",
   },
   reciterText: {
     fontSize: 13,
-    color: "rgba(255,255,255,0.9)",
-    fontWeight: "500" as const,
+    color: "rgba(255,255,255,0.95)",
+    fontWeight: "600" as const,
   },
   audioControls: {
     flexDirection: "row",
@@ -1082,5 +1159,71 @@ const styles = StyleSheet.create({
     fontSize: 11,
     marginTop: 4,
     textAlign: "right" as const,
+  },
+  reciterModalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
+    justifyContent: "flex-end",
+  },
+  reciterModalContent: {
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    maxHeight: "70%",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 16,
+    elevation: 10,
+  },
+  reciterModalHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: 24,
+    paddingBottom: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: "rgba(0, 0, 0, 0.05)",
+  },
+  reciterModalTitle: {
+    fontSize: 22,
+    fontWeight: "600" as const,
+    letterSpacing: 0.3,
+  },
+  recitersList: {
+    padding: 20,
+  },
+  reciterOption: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: 16,
+    borderRadius: 14,
+    marginBottom: 12,
+    borderWidth: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 6,
+    elevation: 2,
+  },
+  reciterOptionContent: {
+    flex: 1,
+  },
+  reciterOptionName: {
+    fontSize: 16,
+    fontWeight: "600" as const,
+    marginBottom: 4,
+    letterSpacing: 0.2,
+  },
+  reciterOptionArabic: {
+    fontSize: 14,
+    letterSpacing: 0.2,
+  },
+  reciterCheckmark: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

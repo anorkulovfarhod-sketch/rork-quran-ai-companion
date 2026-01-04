@@ -13,7 +13,7 @@ export type Reciter = {
 
 export const reciters: Reciter[] = [
   {
-    id: 'ar.alafasy',
+    id: '128',
     name: 'Mishary Rashid Alafasy',
     arabicName: 'مشاري بن راشد العفاسي',
     audioQuality: '128kbps',
@@ -21,7 +21,7 @@ export const reciters: Reciter[] = [
     attribution: 'Recitation by Mishary Rashid Alafasy. Audio provided by EveryAyah.com',
   },
   {
-    id: 'ar.abdulbasit',
+    id: '7',
     name: 'Abdul Basit Abdul Samad',
     arabicName: 'عبد الباسط عبد الصمد',
     audioQuality: '128kbps',
@@ -29,7 +29,7 @@ export const reciters: Reciter[] = [
     attribution: 'Recitation by Abdul Basit Abdul Samad. Audio provided by EveryAyah.com',
   },
   {
-    id: 'ar.minshawi',
+    id: '3',
     name: 'Mohamed Siddiq Al-Minshawi',
     arabicName: 'محمد صديق المنشاوي',
     audioQuality: '128kbps',
@@ -37,7 +37,7 @@ export const reciters: Reciter[] = [
     attribution: 'Recitation by Mohamed Siddiq Al-Minshawi. Audio provided by EveryAyah.com',
   },
   {
-    id: 'ar.husary',
+    id: '6',
     name: 'Mahmoud Khalil Al-Hussary',
     arabicName: 'محمود خليل الحصري',
     audioQuality: '128kbps',
@@ -45,7 +45,7 @@ export const reciters: Reciter[] = [
     attribution: 'Recitation by Mahmoud Khalil Al-Hussary. Audio provided by EveryAyah.com',
   },
   {
-    id: 'ar.saadalghamadi',
+    id: '10',
     name: "Saad Al-Ghamadi",
     arabicName: 'سعد الغامدي',
     audioQuality: '128kbps',
