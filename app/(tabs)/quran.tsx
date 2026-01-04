@@ -245,8 +245,11 @@ export default function QuranScreen() {
     if (status.didJustFinish && isPlayingAll && surahData && currentPlayingVerse !== null && !isTransitioningRef.current) {
       const nextVerseIndex = currentPlayingVerse + 1;
       if (nextVerseIndex < surahData.length) {
-        console.log('Verse finished, playing next verse:', nextVerseIndex);
-        playVerse(nextVerseIndex);
+        console.log('Verse finished, waiting before playing next verse:', nextVerseIndex);
+        setTimeout(() => {
+          console.log('Now playing next verse:', nextVerseIndex);
+          playVerse(nextVerseIndex);
+        }, 500);
       } else {
         console.log('Finished playing all verses');
         setIsPlayingAll(false);
