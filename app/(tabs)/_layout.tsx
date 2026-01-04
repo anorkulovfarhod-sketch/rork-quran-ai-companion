@@ -2,19 +2,27 @@ import { Tabs } from "expo-router";
 import { MessageCircle, Sparkles, Clock, Book, Settings } from "lucide-react-native";
 import React from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useTheme } from "@/contexts/ThemeContext";
 
 import Colors from "@/constants/colors";
 
 export default function TabLayout() {
   const { translate } = useLanguage();
+  const { theme } = useTheme();
+  const colors = theme === 'light' ? Colors.light : Colors.dark;
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors.light.tint,
+        tabBarActiveTintColor: colors.tint,
+        tabBarInactiveTintColor: colors.tabIconDefault,
+        tabBarStyle: {
+          backgroundColor: colors.card,
+          borderTopColor: colors.border,
+        },
         headerShown: true,
         headerStyle: {
-          backgroundColor: Colors.light.primary,
+          backgroundColor: colors.primary,
         },
         headerTintColor: '#ffffff',
         headerTitleStyle: {

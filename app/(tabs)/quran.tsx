@@ -14,6 +14,8 @@ import { BookOpen, ChevronRight, Trophy, X, Play, Pause, Volume2, SkipForward, S
 import { useAudioPlayer, useAudioPlayerStatus, setAudioModeAsync } from "expo-audio";
 import Colors from "@/constants/colors";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useTheme } from "@/contexts/ThemeContext";
+import { useReciter } from "@/contexts/ReciterContext";
 import { useRouter } from "expo-router";
 
 type Surah = {
@@ -160,7 +162,10 @@ const surahs: Surah[] = [
 
 export default function QuranScreen() {
   const { language, translate } = useLanguage();
+  const { theme } = useTheme();
+  const { selectedReciter } = useReciter();
   const router = useRouter();
+  const colors = theme === 'light' ? Colors.light : Colors.dark;
   const [selectedSurah, setSelectedSurah] = useState<number | null>(null);
   const [surahData, setSurahData] = useState<VerseData[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -355,11 +360,12 @@ export default function QuranScreen() {
         arabic: ayah.text,
         translation: translationData.data.ayahs[index]?.text || '',
         transliteration: transliterationData.data?.ayahs?.[index]?.text || '',
-        audioUrl: `https://cdn.islamic.network/quran/audio/128/ar.alafasy/${ayah.number}.mp3`,
+        audioUrl: `https://cdn.islamic.network/quran/audio/128/${selectedReciter.id}/${ayah.number}.mp3`,
         ayahNumber: ayah.number,
       }));
       
       console.log('Loaded surah with', verses.length, 'verses');
+      console.log('Using reciter:', selectedReciter.name, 'ID:', selectedReciter.id);
       console.log('First verse audio URL:', verses[0]?.audioUrl);
       
       setSurahData(verses);
@@ -412,9 +418,9 @@ export default function QuranScreen() {
   if (selectedSurah !== null && surahData) {
     const surah = surahs.find(s => s.number === selectedSurah);
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: colors.background }]}>
         <LinearGradient
-          colors={[Colors.light.primary, Colors.light.primaryDark]}
+          colors={[colors.primary, colors.primaryDark]}
           style={styles.surahHeader}
         >
           <TouchableOpacity style={styles.backButton} onPress={handleBack}>
@@ -429,7 +435,7 @@ export default function QuranScreen() {
           <View style={styles.audioControlsContainer}>
             <View style={styles.reciterInfo}>
               <Volume2 color="#ffffff" size={16} strokeWidth={2} />
-              <Text style={styles.reciterText}>Mishary Rashid Alafasy</Text>
+              <Text style={styles.reciterText}>{selectedReciter.name}</Text>
             </View>
             <View style={styles.audioControls}>
               <TouchableOpacity
@@ -486,7 +492,8 @@ export default function QuranScreen() {
               key={index} 
               style={[
                 styles.verseCard,
-                currentPlayingVerse === index && styles.verseCardPlaying
+                { backgroundColor: colors.card },
+                currentPlayingVerse === index && [styles.verseCardPlaying, { borderColor: colors.primary, backgroundColor: colors.parchment }]
               ]}
               onLayout={(event) => {
                 const { y } = event.nativeEvent.layout;
@@ -494,12 +501,13 @@ export default function QuranScreen() {
               }}
             >
               <View style={styles.verseHeader}>
-                <View style={styles.verseNumber}>
+                <View style={[styles.verseNumber, { backgroundColor: colors.primary }]}>
                   <Text style={styles.verseNumberText}>{index + 1}</Text>
                 </View>
                 <TouchableOpacity
                   style={[
                     styles.versePlayButton,
+                    { backgroundColor: colors.parchment, borderColor: colors.primary },
                     currentPlayingVerse === index && status.playing && styles.versePlayButtonActive
                   ]}
                   onPress={() => togglePlayVerse(index)}
@@ -507,17 +515,17 @@ export default function QuranScreen() {
                   disabled={isLoadingAudio}
                 >
                   {currentPlayingVerse === index && isLoadingAudio ? (
-                    <ActivityIndicator size="small" color={Colors.light.primary} />
+                    <ActivityIndicator size="small" color={colors.primary} />
                   ) : currentPlayingVerse === index && status.playing ? (
-                    <Pause color={Colors.light.primary} size={18} strokeWidth={2} />
+                    <Pause color={colors.primary} size={18} strokeWidth={2} />
                   ) : (
-                    <Play color={Colors.light.primary} size={18} strokeWidth={2} />
+                    <Play color={colors.primary} size={18} strokeWidth={2} />
                   )}
                 </TouchableOpacity>
               </View>
-              <Text style={styles.verseArabic}>{verse.arabic}</Text>
+              <Text style={[styles.verseArabic, { color: colors.text }]}>{verse.arabic}</Text>
               {verse.transliteration && (
-                <Text style={styles.verseTransliteration}>{verse.transliteration}</Text>
+                <Text style={[styles.verseTransliteration, { color: colors.primary }]}>{verse.transliteration}</Text>
               )}
               {currentPlayingVerse === index && status.duration > 0 && (
                 <View style={styles.progressContainer}>
@@ -525,31 +533,31 @@ export default function QuranScreen() {
                     <View 
                       style={[
                         styles.progressFill, 
-                        { width: `${(status.currentTime / status.duration) * 100}%` }
+                        { width: `${(status.currentTime / status.duration) * 100}%`, backgroundColor: colors.primary }
                       ]} 
                     />
                   </View>
-                  <Text style={styles.progressText}>
+                  <Text style={[styles.progressText, { color: colors.muted }]}>
                     {formatTime(status.currentTime)} / {formatTime(status.duration)}
                   </Text>
                 </View>
               )}
-              <Text style={styles.verseTranslation}>{verse.translation}</Text>
+              <Text style={[styles.verseTranslation, { color: colors.text }]}>{verse.translation}</Text>
             </View>
           ))}
           
           {surahData.length > 0 && (
-            <View style={styles.completionCard}>
-              <Trophy color={Colors.light.accent} size={32} strokeWidth={1.5} />
-              <Text style={styles.completionTitle}>{translate('surah_completed')}</Text>
-              <Text style={styles.completionText}>{translate('test_understanding')}</Text>
+            <View style={[styles.completionCard, { backgroundColor: colors.card }]}>
+              <Trophy color={colors.accent} size={32} strokeWidth={1.5} />
+              <Text style={[styles.completionTitle, { color: colors.text }]}>{translate('surah_completed')}</Text>
+              <Text style={[styles.completionText, { color: colors.muted }]}>{translate('test_understanding')}</Text>
               <TouchableOpacity
                 style={styles.quizButton}
                 onPress={() => setShowQuizModal(true)}
                 activeOpacity={0.8}
               >
                 <LinearGradient
-                  colors={[Colors.light.primary, Colors.light.primaryDark]}
+                  colors={[colors.primary, colors.primaryDark]}
                   style={styles.quizButtonGradient}
                 >
                   <Trophy color="#ffffff" size={20} strokeWidth={2} />
@@ -567,17 +575,17 @@ export default function QuranScreen() {
           onRequestClose={() => setShowQuizModal(false)}
         >
           <View style={styles.modalOverlay}>
-            <Animated.View style={styles.modalContent}>
+            <Animated.View style={[styles.modalContent, { backgroundColor: colors.card }]}>
               <TouchableOpacity
                 style={styles.modalClose}
                 onPress={() => setShowQuizModal(false)}
               >
-                <X color={Colors.light.muted} size={24} strokeWidth={2} />
+                <X color={colors.muted} size={24} strokeWidth={2} />
               </TouchableOpacity>
               
-              <Trophy color={Colors.light.accent} size={56} strokeWidth={1.5} />
-              <Text style={styles.modalTitle}>{translate('ready_for_quiz')}</Text>
-              <Text style={styles.modalText}>
+              <Trophy color={colors.accent} size={56} strokeWidth={1.5} />
+              <Text style={[styles.modalTitle, { color: colors.text }]}>{translate('ready_for_quiz')}</Text>
+              <Text style={[styles.modalText, { color: colors.muted }]}>
                 {translate('test_knowledge')} {surah?.name} with a quiz generated specifically for this Surah.
               </Text>
               
@@ -587,7 +595,7 @@ export default function QuranScreen() {
                 activeOpacity={0.8}
               >
                 <LinearGradient
-                  colors={[Colors.light.primary, Colors.light.primaryDark]}
+                  colors={[colors.primary, colors.primaryDark]}
                   style={styles.modalButtonGradient}
                 >
                   <Text style={styles.modalButtonText}>{translate('start_quiz')}</Text>
@@ -598,7 +606,7 @@ export default function QuranScreen() {
                 style={styles.modalSkipButton}
                 onPress={() => setShowQuizModal(false)}
               >
-                <Text style={styles.modalSkipText}>{translate('maybe_later')}</Text>
+                <Text style={[styles.modalSkipText, { color: colors.muted }]}>{translate('maybe_later')}</Text>
               </TouchableOpacity>
             </Animated.View>
           </View>
@@ -609,17 +617,17 @@ export default function QuranScreen() {
 
   if (selectedSurah !== null && isLoading) {
     return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color={Colors.light.primary} />
-        <Text style={styles.loadingText}>{translate('loading_surah')}</Text>
+      <View style={[styles.loadingContainer, { backgroundColor: colors.background }]}>
+        <ActivityIndicator size="large" color={colors.primary} />
+        <Text style={[styles.loadingText, { color: colors.muted }]}>{translate('loading_surah')}</Text>
       </View>
     );
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <LinearGradient
-        colors={[Colors.light.primary, Colors.light.primaryDark]}
+        colors={[colors.primary, colors.primaryDark]}
         style={styles.headerGradient}
       >
         <Animated.View
@@ -631,7 +639,7 @@ export default function QuranScreen() {
             },
           ]}
         >
-          <BookOpen color={Colors.light.secondary} size={44} strokeWidth={1.5} />
+          <BookOpen color={colors.secondary} size={44} strokeWidth={1.5} />
           <Text style={styles.headerTitle}>القرآن الكريم</Text>
           <Text style={styles.headerEnglish}>{translate('noble_quran')}</Text>
           <Text style={styles.headerSubtext}>
@@ -646,23 +654,23 @@ export default function QuranScreen() {
             {surahs.map((surah) => (
               <TouchableOpacity
                 key={surah.number}
-                style={styles.surahCard}
+                style={[styles.surahCard, { backgroundColor: colors.card }]}
                 onPress={() => handleSurahPress(surah.number)}
                 activeOpacity={0.7}
               >
                 <View style={styles.surahLeft}>
-                  <View style={styles.surahNumberBadge}>
-                    <Text style={styles.surahNumberBadgeText}>{surah.number}</Text>
+                  <View style={[styles.surahNumberBadge, { backgroundColor: colors.parchment, borderColor: colors.primary }]}>
+                    <Text style={[styles.surahNumberBadgeText, { color: colors.primary }]}>{surah.number}</Text>
                   </View>
                   <View style={styles.surahTextContainer}>
-                    <Text style={styles.surahNameArabic}>{surah.nameArabic}</Text>
-                    <Text style={styles.surahName}>{surah.name}</Text>
-                    <Text style={styles.surahMeta}>
+                    <Text style={[styles.surahNameArabic, { color: colors.text }]}>{surah.nameArabic}</Text>
+                    <Text style={[styles.surahName, { color: colors.text }]}>{surah.name}</Text>
+                    <Text style={[styles.surahMeta, { color: colors.muted }]}>
                       {surah.verses} verses • {surah.englishTranslation}
                     </Text>
                   </View>
                 </View>
-                <ChevronRight color={Colors.light.muted} size={20} strokeWidth={2} />
+                <ChevronRight color={colors.muted} size={20} strokeWidth={2} />
               </TouchableOpacity>
             ))}
           </View>
@@ -675,7 +683,6 @@ export default function QuranScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.light.background,
   },
   headerGradient: {
     paddingTop: 60,
@@ -729,7 +736,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: Colors.light.card,
     padding: 16,
     borderRadius: 16,
     shadowColor: "#000",
@@ -748,16 +754,13 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: Colors.light.parchment,
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 2,
-    borderColor: Colors.light.primary,
   },
   surahNumberBadgeText: {
     fontSize: 16,
     fontWeight: "600" as const,
-    color: Colors.light.primary,
   },
   surahTextContainer: {
     flex: 1,
@@ -765,19 +768,16 @@ const styles = StyleSheet.create({
   },
   surahNameArabic: {
     fontSize: 18,
-    color: Colors.light.text,
     fontWeight: "600" as const,
     letterSpacing: 0.3,
   },
   surahName: {
     fontSize: 14,
-    color: Colors.light.text,
     fontWeight: "500" as const,
     letterSpacing: 0.2,
   },
   surahMeta: {
     fontSize: 12,
-    color: Colors.light.muted,
     marginTop: 2,
   },
   surahHeader: {
@@ -832,7 +832,6 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   verseCard: {
-    backgroundColor: Colors.light.card,
     padding: 20,
     borderRadius: 18,
     marginBottom: 16,
@@ -846,7 +845,6 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: Colors.light.primary,
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 16,
@@ -859,7 +857,6 @@ const styles = StyleSheet.create({
   verseArabic: {
     fontSize: 22,
     lineHeight: 40,
-    color: Colors.light.text,
     fontWeight: "600" as const,
     textAlign: "right",
     marginBottom: 12,
@@ -868,7 +865,6 @@ const styles = StyleSheet.create({
   verseTransliteration: {
     fontSize: 15,
     lineHeight: 24,
-    color: Colors.light.primary,
     fontStyle: "italic" as const,
     marginBottom: 12,
     letterSpacing: 0.3,
@@ -877,27 +873,23 @@ const styles = StyleSheet.create({
   verseTranslation: {
     fontSize: 16,
     lineHeight: 26,
-    color: Colors.light.text,
     letterSpacing: 0.2,
   },
   loadingContainer: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: Colors.light.background,
     gap: 16,
   },
   loadingText: {
     fontSize: 16,
-    color: Colors.light.muted,
   },
   completionCard: {
-    backgroundColor: Colors.light.card,
     padding: 32,
     borderRadius: 20,
     alignItems: "center",
     marginTop: 24,
-    shadowColor: Colors.light.primary,
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.15,
     shadowRadius: 16,
@@ -906,13 +898,11 @@ const styles = StyleSheet.create({
   completionTitle: {
     fontSize: 24,
     fontWeight: "600" as const,
-    color: Colors.light.text,
     marginTop: 16,
     letterSpacing: 0.5,
   },
   completionText: {
     fontSize: 15,
-    color: Colors.light.muted,
     marginTop: 8,
     textAlign: "center",
     letterSpacing: 0.2,
@@ -921,7 +911,7 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     overflow: "hidden",
     marginTop: 20,
-    shadowColor: Colors.light.primary,
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.25,
     shadowRadius: 10,
@@ -949,7 +939,6 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   modalContent: {
-    backgroundColor: Colors.light.card,
     borderRadius: 24,
     padding: 32,
     width: "100%",
@@ -973,13 +962,11 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 26,
     fontWeight: "600" as const,
-    color: Colors.light.text,
     marginTop: 20,
     letterSpacing: 0.5,
   },
   modalText: {
     fontSize: 16,
-    color: Colors.light.muted,
     textAlign: "center",
     marginTop: 12,
     lineHeight: 24,
@@ -990,7 +977,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     marginTop: 24,
     width: "100%",
-    shadowColor: Colors.light.primary,
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.25,
     shadowRadius: 10,
@@ -1012,7 +999,6 @@ const styles = StyleSheet.create({
   },
   modalSkipText: {
     fontSize: 15,
-    color: Colors.light.muted,
     letterSpacing: 0.3,
   },
   audioControlsContainer: {
@@ -1061,8 +1047,6 @@ const styles = StyleSheet.create({
   },
   verseCardPlaying: {
     borderWidth: 2,
-    borderColor: Colors.light.primary,
-    backgroundColor: Colors.light.parchment,
   },
   verseHeader: {
     flexDirection: "row",
@@ -1074,11 +1058,9 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 18,
-    backgroundColor: Colors.light.parchment,
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1.5,
-    borderColor: Colors.light.primary,
   },
   versePlayButtonActive: {
     backgroundColor: "rgba(42, 87, 75, 0.1)",
@@ -1094,12 +1076,10 @@ const styles = StyleSheet.create({
   },
   progressFill: {
     height: "100%",
-    backgroundColor: Colors.light.primary,
     borderRadius: 2,
   },
   progressText: {
     fontSize: 11,
-    color: Colors.light.muted,
     marginTop: 4,
     textAlign: "right" as const,
   },
