@@ -9,11 +9,12 @@ import {
   Alert,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Settings as SettingsIcon, Globe, MapPin, Check, Moon, Sun } from "lucide-react-native";
+import { Settings as SettingsIcon, Globe, MapPin, Check, Moon, Sun, Volume2 } from "lucide-react-native";
 import * as Location from "expo-location";
 import Colors from "@/constants/colors";
 import { useLanguage, Language } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useReciter } from "@/contexts/ReciterContext";
 
 const languages = [
   { code: "en" as Language, name: "English", nameArabic: "الإنجليزية" },
@@ -27,6 +28,7 @@ const languages = [
 export default function SettingsScreen() {
   const { language, setLanguage, translate } = useLanguage();
   const { theme, toggleTheme } = useTheme();
+  const { selectedReciter, setReciter, reciters } = useReciter();
   const [locationStatus, setLocationStatus] = useState<string>("Not granted");
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.95)).current;
@@ -149,6 +151,44 @@ export default function SettingsScreen() {
                   </View>
                 )}
               </TouchableOpacity>
+            </View>
+          </View>
+
+          <View style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <Volume2 color={colors.primary} size={24} strokeWidth={2} />
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>Reciter</Text>
+            </View>
+
+            <View style={styles.recitersContainer}>
+              {reciters.map((reciter) => (
+                <TouchableOpacity
+                  key={reciter.id}
+                  style={[
+                    styles.reciterCard,
+                    { backgroundColor: colors.card, borderColor: selectedReciter.id === reciter.id ? colors.primary : 'transparent' },
+                    selectedReciter.id === reciter.id && styles.reciterCardSelected,
+                  ]}
+                  onPress={() => setReciter(reciter)}
+                  activeOpacity={0.7}
+                >
+                  <View style={styles.reciterTextContainer}>
+                    <Text style={[styles.reciterName, { color: colors.text }]}>{reciter.name}</Text>
+                    <Text style={[styles.reciterNameArabic, { color: colors.muted }]}>
+                      {reciter.arabicName}
+                    </Text>
+                  </View>
+                  {selectedReciter.id === reciter.id && (
+                    <View style={[styles.reciterCheckbox, { backgroundColor: colors.parchment }]}>
+                      <Check
+                        color={colors.primary}
+                        size={20}
+                        strokeWidth={3}
+                      />
+                    </View>
+                  )}
+                </TouchableOpacity>
+              ))}
             </View>
           </View>
 
@@ -385,6 +425,44 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   languageCheckbox: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  recitersContainer: {
+    gap: 12,
+  },
+  reciterCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: 18,
+    borderRadius: 16,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
+    borderWidth: 2,
+  },
+  reciterCardSelected: {
+    shadowOpacity: 0.15,
+  },
+  reciterTextContainer: {
+    flex: 1,
+  },
+  reciterName: {
+    fontSize: 16,
+    fontWeight: "600" as const,
+    letterSpacing: 0.2,
+  },
+  reciterNameArabic: {
+    fontSize: 14,
+    marginTop: 2,
+  },
+  reciterCheckbox: {
     width: 32,
     height: 32,
     borderRadius: 16,

@@ -17,9 +17,11 @@ import { Send, BookOpen, ArrowLeft } from "lucide-react-native";
 import { useRouter } from "expo-router";
 import Colors from "@/constants/colors";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useTheme } from "@/contexts/ThemeContext";
 
 export default function ChatScreen() {
   const { translate } = useLanguage();
+  const { theme } = useTheme();
   const router = useRouter();
   const [input, setInput] = useState("");
   
@@ -85,14 +87,16 @@ export default function ChatScreen() {
     }
   };
 
+  const colors = theme === 'light' ? Colors.light : Colors.dark;
+
   return (
     <KeyboardAvoidingView 
-      style={styles.container}
+      style={[styles.container, { backgroundColor: colors.background }]}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       keyboardVerticalOffset={0}
     >
       <LinearGradient
-        colors={[Colors.light.primary, Colors.light.primaryDark]}
+        colors={[colors.primary, colors.primaryDark]}
         style={styles.headerGradient}
       >
         <View style={styles.headerContent}>
@@ -103,7 +107,7 @@ export default function ChatScreen() {
           >
             <ArrowLeft color="#ffffff" size={24} strokeWidth={2} />
           </TouchableOpacity>
-          <BookOpen color={Colors.light.secondary} size={36} strokeWidth={1.5} />
+          <BookOpen color={colors.secondary} size={36} strokeWidth={1.5} />
           <Text style={styles.headerText}>{translate('quranic_guidance')}</Text>
           <Text style={styles.headerSubtext}>
             {translate('scholarly_insights')}
@@ -123,39 +127,39 @@ export default function ChatScreen() {
         >
           {messages.length === 1 && (
           <View style={styles.emptyState}>
-            <BookOpen color={Colors.light.accent} size={56} strokeWidth={1.5} />
-            <Text style={styles.emptyTitle}>{translate('your_learning_journey')}</Text>
-            <Text style={styles.emptyText}>
+            <BookOpen color={colors.accent} size={56} strokeWidth={1.5} />
+            <Text style={[styles.emptyTitle, { color: colors.text }]}>{translate('your_learning_journey')}</Text>
+            <Text style={[styles.emptyText, { color: colors.muted }]}>
               {translate('explore_verses')}
             </Text>
             <View style={styles.examplesContainer}>
               <TouchableOpacity
-                style={styles.exampleChip}
+                style={[styles.exampleChip, { backgroundColor: colors.card, shadowColor: colors.primary }]}
                 onPress={() =>
                   setInput("What is the meaning of Ayat al-Kursi?")
                 }
               >
-                <Text style={styles.exampleText}>
+                <Text style={[styles.exampleText, { color: colors.primary }]}>
                   Ayat al-Kursi meaning
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={styles.exampleChip}
+                style={[styles.exampleChip, { backgroundColor: colors.card, shadowColor: colors.primary }]}
                 onPress={() =>
                   setInput("Tell me about Surah Al-Fatiha")
                 }
               >
-                <Text style={styles.exampleText}>
+                <Text style={[styles.exampleText, { color: colors.primary }]}>
                   Surah Al-Fatiha
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={styles.exampleChip}
+                style={[styles.exampleChip, { backgroundColor: colors.card, shadowColor: colors.primary }]}
                 onPress={() =>
                   setInput("What does the Quran say about patience?")
                 }
               >
-                <Text style={styles.exampleText}>
+                <Text style={[styles.exampleText, { color: colors.primary }]}>
                   Patience in Quran
                 </Text>
               </TouchableOpacity>
@@ -168,7 +172,7 @@ export default function ChatScreen() {
             key={message.id}
             style={[
               styles.messageBubble,
-              message.role === "user" ? styles.userBubble : styles.aiBubble,
+              message.role === "user" ? [styles.userBubble, { backgroundColor: colors.primary, shadowColor: colors.primary }] : [styles.aiBubble, { backgroundColor: colors.card }],
             ]}
           >
             {message.parts.map((part, idx) => {
@@ -180,7 +184,7 @@ export default function ChatScreen() {
                       styles.messageText,
                       message.role === "user"
                         ? styles.userText
-                        : styles.aiText,
+                        : { color: colors.text },
                     ]}
                   >
                     {part.text}
@@ -193,8 +197,8 @@ export default function ChatScreen() {
         ))}
 
         {isLoading && (
-          <View style={[styles.messageBubble, styles.aiBubble]}>
-            <ActivityIndicator color={Colors.light.primary} />
+          <View style={[styles.messageBubble, styles.aiBubble, { backgroundColor: colors.card }]}>
+            <ActivityIndicator color={colors.primary} />
           </View>
         )}
 
@@ -208,14 +212,14 @@ export default function ChatScreen() {
         </ScrollView>
       </Animated.View>
 
-      <View style={styles.inputContainer}>
+      <View style={[styles.inputContainer, { backgroundColor: colors.card }]}>
         <View style={styles.inputWrapper}>
           <TextInput
-            style={styles.input}
+            style={[styles.input, { backgroundColor: colors.parchment, color: colors.text }]}
             value={input}
             onChangeText={setInput}
             placeholder={translate('ask_about_verse')}
-            placeholderTextColor={Colors.light.muted}
+            placeholderTextColor={colors.muted}
             multiline
             maxLength={500}
           />
@@ -230,8 +234,8 @@ export default function ChatScreen() {
             <LinearGradient
               colors={
                 input.trim()
-                  ? [Colors.light.primary, Colors.light.primaryDark]
-                  : [Colors.light.muted, Colors.light.muted]
+                  ? [colors.primary, colors.primaryDark]
+                  : [colors.muted, colors.muted]
               }
               style={styles.sendButtonGradient}
             >
@@ -247,7 +251,6 @@ export default function ChatScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.light.background,
   },
   headerGradient: {
     paddingTop: 60,
@@ -304,13 +307,11 @@ const styles = StyleSheet.create({
   emptyTitle: {
     fontSize: 26,
     fontWeight: "600" as const,
-    color: Colors.light.text,
     marginTop: 24,
     letterSpacing: 0.4,
   },
   emptyText: {
     fontSize: 16,
-    color: Colors.light.muted,
     textAlign: "center",
     marginTop: 10,
     lineHeight: 24,
@@ -322,11 +323,9 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   exampleChip: {
-    backgroundColor: Colors.light.card,
     paddingVertical: 16,
     paddingHorizontal: 24,
     borderRadius: 16,
-    shadowColor: Colors.light.primary,
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.08,
     shadowRadius: 8,
@@ -334,7 +333,6 @@ const styles = StyleSheet.create({
   },
   exampleText: {
     fontSize: 15,
-    color: Colors.light.primary,
     fontWeight: "500" as const,
     textAlign: "center",
     letterSpacing: 0.2,
@@ -348,9 +346,7 @@ const styles = StyleSheet.create({
   },
   userBubble: {
     alignSelf: "flex-end",
-    backgroundColor: Colors.light.primary,
     borderBottomRightRadius: 6,
-    shadowColor: Colors.light.primary,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.15,
     shadowRadius: 6,
@@ -358,7 +354,6 @@ const styles = StyleSheet.create({
   },
   aiBubble: {
     alignSelf: "flex-start",
-    backgroundColor: Colors.light.card,
     borderBottomLeftRadius: 6,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
@@ -374,9 +369,7 @@ const styles = StyleSheet.create({
   userText: {
     color: "#ffffff",
   },
-  aiText: {
-    color: Colors.light.text,
-  },
+
   errorContainer: {
     backgroundColor: "#fee",
     padding: 12,
@@ -391,7 +384,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 12,
     paddingBottom: 20,
-    backgroundColor: Colors.light.card,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.04,
@@ -405,12 +397,10 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    backgroundColor: Colors.light.parchment,
     borderRadius: 24,
     paddingHorizontal: 18,
     paddingVertical: 14,
     fontSize: 16,
-    color: Colors.light.text,
     maxHeight: 100,
     letterSpacing: 0.2,
   },
@@ -419,7 +409,6 @@ const styles = StyleSheet.create({
     height: 48,
     borderRadius: 24,
     overflow: "hidden",
-    shadowColor: Colors.light.primary,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,

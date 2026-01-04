@@ -11,6 +11,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { BookOpen, Sparkles } from "lucide-react-native";
 import Colors from "@/constants/colors";
 import { useLanguage, Language } from "@/contexts/LanguageContext";
+import { useTheme } from "@/contexts/ThemeContext";
 
 type QuranVerse = {
   arabic: string;
@@ -143,6 +144,7 @@ const verses: QuranVerse[] = [
 
 export default function QuoteScreen() {
   const { language, translate } = useLanguage();
+  const { theme } = useTheme();
   const [currentVerse, setCurrentVerse] = useState<QuranVerse | null>(null);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.95)).current;
@@ -175,25 +177,25 @@ export default function QuoteScreen() {
     setCurrentVerse(verses[verseIndex]);
   };
 
-
+  const colors = theme === 'light' ? Colors.light : Colors.dark;
 
   if (!currentVerse) {
     return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color={Colors.light.primary} />
-        <Text style={styles.loadingText}>{translate('loading')}</Text>
+      <View style={[styles.loadingContainer, { backgroundColor: colors.background }]}>
+        <ActivityIndicator size="large" color={colors.primary} />
+        <Text style={[styles.loadingText, { color: colors.muted }]}>{translate('loading')}</Text>
       </View>
     );
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <LinearGradient
-        colors={[Colors.light.primary, Colors.light.primaryDark]}
+        colors={[colors.primary, colors.primaryDark]}
         style={styles.headerGradient}
       >
         <View style={styles.headerContent}>
-          <Sparkles color={Colors.light.secondary} size={44} strokeWidth={1.5} />
+          <Sparkles color={colors.secondary} size={44} strokeWidth={1.5} />
           <Text style={styles.headerTitle}>{translate('daily_quran_quote')}</Text>
           <Text style={styles.headerArabic}>اقتباس قرآني يومي</Text>
           <Text style={styles.headerSubtext}>
@@ -206,6 +208,7 @@ export default function QuoteScreen() {
         <Animated.View
           style={[
             styles.verseCard,
+            { backgroundColor: colors.card, shadowColor: colors.primary },
             {
               opacity: fadeAnim,
               transform: [{ scale: scaleAnim }],
@@ -213,37 +216,37 @@ export default function QuoteScreen() {
           ]}
         >
           <View style={styles.decorativeTop}>
-            <BookOpen color={Colors.light.accent} size={32} strokeWidth={1.5} />
+            <BookOpen color={colors.accent} size={32} strokeWidth={1.5} />
           </View>
 
-          <Text style={styles.verseArabic}>{currentVerse.arabic}</Text>
+          <Text style={[styles.verseArabic, { color: colors.primary }]}>{currentVerse.arabic}</Text>
           
-          <View style={styles.divider} />
+          <View style={[styles.divider, { backgroundColor: colors.accent }]} />
           
-          <Text style={styles.verseTranslation}>{currentVerse.translations[language || 'en']}</Text>
+          <Text style={[styles.verseTranslation, { color: colors.text }]}>{currentVerse.translations[language || 'en']}</Text>
           
-          <View style={styles.referenceContainer}>
-            <Text style={styles.verseReference}>{currentVerse.reference}</Text>
+          <View style={[styles.referenceContainer, { borderTopColor: colors.border }]}>
+            <Text style={[styles.verseReference, { color: colors.muted }]}>{currentVerse.reference}</Text>
           </View>
 
           <View style={styles.decorativeBottom}>
-            <View style={styles.decorativeLine} />
+            <View style={[styles.decorativeLine, { backgroundColor: colors.accent }]} />
           </View>
         </Animated.View>
 
 
 
-        <View style={styles.infoCard}>
-          <Text style={styles.infoText}>
+        <View style={[styles.infoCard, { backgroundColor: colors.parchment, borderLeftColor: colors.accent }]}>
+          <Text style={[styles.infoText, { color: colors.text }]}>
             {translate('verse_guide_day')}
           </Text>
-          <Text style={styles.infoArabic}>
+          <Text style={[styles.infoArabic, { color: colors.primary }]}>
             وَذَكِّرْ فَإِنَّ الذِّكْرَىٰ تَنفَعُ الْمُؤْمِنِينَ
           </Text>
-          <Text style={styles.infoReference}>
+          <Text style={[styles.infoReference, { color: colors.text }]}>
             &ldquo;{translate('reminder_benefits')}&rdquo;
           </Text>
-          <Text style={styles.infoReferenceArabic}>Surah Adh-Dhariyat (51:55)</Text>
+          <Text style={[styles.infoReferenceArabic, { color: colors.muted }]}>Surah Adh-Dhariyat (51:55)</Text>
         </View>
       </ScrollView>
     </View>
@@ -253,18 +256,15 @@ export default function QuoteScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.light.background,
   },
   loadingContainer: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: Colors.light.background,
     gap: 16,
   },
   loadingText: {
     fontSize: 16,
-    color: Colors.light.muted,
   },
   headerGradient: {
     paddingTop: 48,
@@ -312,11 +312,9 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   verseCard: {
-    backgroundColor: Colors.light.card,
     padding: 32,
     borderRadius: 24,
     marginBottom: 24,
-    shadowColor: Colors.light.primary,
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.2,
     shadowRadius: 20,
@@ -329,7 +327,6 @@ const styles = StyleSheet.create({
   verseArabic: {
     fontSize: 26,
     lineHeight: 48,
-    color: Colors.light.primary,
     fontWeight: "700" as const,
     textAlign: "center",
     marginBottom: 24,
@@ -337,14 +334,12 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 2,
-    backgroundColor: Colors.light.accent,
     marginVertical: 24,
     opacity: 0.3,
   },
   verseTranslation: {
     fontSize: 18,
     lineHeight: 32,
-    color: Colors.light.text,
     textAlign: "center",
     fontStyle: "italic" as const,
     letterSpacing: 0.3,
@@ -353,12 +348,10 @@ const styles = StyleSheet.create({
   referenceContainer: {
     paddingTop: 16,
     borderTopWidth: 1,
-    borderTopColor: Colors.light.border,
     alignItems: "center",
   },
   verseReference: {
     fontSize: 14,
-    color: Colors.light.muted,
     fontWeight: "600" as const,
     letterSpacing: 0.5,
   },
@@ -369,7 +362,6 @@ const styles = StyleSheet.create({
   decorativeLine: {
     width: 60,
     height: 4,
-    backgroundColor: Colors.light.accent,
     borderRadius: 2,
   },
   refreshButton: {
@@ -397,11 +389,9 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
   infoCard: {
-    backgroundColor: Colors.light.parchment,
     padding: 24,
     borderRadius: 18,
     borderLeftWidth: 4,
-    borderLeftColor: Colors.light.accent,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.04,
@@ -410,7 +400,6 @@ const styles = StyleSheet.create({
   },
   infoText: {
     fontSize: 15,
-    color: Colors.light.text,
     lineHeight: 24,
     textAlign: "center",
     letterSpacing: 0.2,
@@ -418,7 +407,6 @@ const styles = StyleSheet.create({
   },
   infoArabic: {
     fontSize: 18,
-    color: Colors.light.primary,
     lineHeight: 32,
     marginTop: 8,
     textAlign: "center",
@@ -426,7 +414,6 @@ const styles = StyleSheet.create({
   },
   infoReference: {
     fontSize: 14,
-    color: Colors.light.text,
     marginTop: 12,
     textAlign: "center",
     fontStyle: "italic" as const,
@@ -434,7 +421,6 @@ const styles = StyleSheet.create({
   },
   infoReferenceArabic: {
     fontSize: 13,
-    color: Colors.light.muted,
     marginTop: 6,
     textAlign: "center",
     letterSpacing: 0.3,

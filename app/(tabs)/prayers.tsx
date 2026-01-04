@@ -15,10 +15,12 @@ import { useLocation } from "@/contexts/LocationContext";
 import { calculatePrayerTimes, type Prayer } from "@/utils/prayerTimes";
 import QiblaCompass from "@/components/QiblaCompass";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useTheme } from "@/contexts/ThemeContext";
 
 export default function PrayersScreen() {
   const { location, hasPermission } = useLocation();
   const { translate } = useLanguage();
+  const { theme } = useTheme();
   const [prayers, setPrayers] = useState<Prayer[]>([]);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.95)).current;
@@ -77,6 +79,7 @@ export default function PrayersScreen() {
   };
 
   const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
+  const colors = theme === 'light' ? Colors.light : Colors.dark;
 
   const progressInterpolate = progressAnim.interpolate({
     inputRange: [0, 100],
@@ -89,9 +92,9 @@ export default function PrayersScreen() {
   });
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <LinearGradient
-        colors={[Colors.light.primary, Colors.light.primaryDark]}
+        colors={[colors.primary, colors.primaryDark]}
         style={styles.headerGradient}
       >
         <Animated.View
@@ -103,7 +106,7 @@ export default function PrayersScreen() {
             },
           ]}
         >
-          <BookOpen color={Colors.light.secondary} size={44} strokeWidth={1.5} />
+          <BookOpen color={colors.secondary} size={44} strokeWidth={1.5} />
           <Text style={styles.headerTitle}>{translate('daily_prayers')}</Text>
           <Text style={styles.headerArabic}>الصلوات الخمس</Text>
           <Text style={styles.headerSubtext}>
@@ -118,14 +121,14 @@ export default function PrayersScreen() {
       <ScrollView style={styles.contentContainer} contentContainerStyle={styles.contentInner}>
         <Animated.View style={{ opacity: fadeAnim }}>
           {!hasPermission && (
-            <View style={styles.permissionCard}>
+            <View style={[styles.permissionCard, { backgroundColor: colors.accent }]}>
               <Text style={styles.permissionText}>
                 Enable location access in Settings for accurate prayer times
               </Text>
             </View>
           )}
 
-          <View style={styles.progressCard}>
+          <View style={[styles.progressCard, { backgroundColor: colors.card, shadowColor: colors.primary }]}>
             <View style={styles.progressCircleContainer}>
               <Animated.View
                 style={[
@@ -139,34 +142,32 @@ export default function PrayersScreen() {
                 ]}
               >
                 <AnimatedLinearGradient
-                  colors={[Colors.light.primary, Colors.light.accent, Colors.light.primary]}
+                  colors={[colors.primary, colors.accent, colors.primary]}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 1 }}
                   style={styles.progressGradientBorder}
                 >
-                  <View style={styles.progressCircleInner}>
+                  <View style={[styles.progressCircleInner, { backgroundColor: colors.parchment, shadowColor: colors.primary }]}>
                     <Animated.Text
                       style={[
                         styles.progressPercentage,
-                        {
-                          transform: [{ scale: scaleInterpolate }],
-                        },
+                        { color: colors.primary, transform: [{ scale: scaleInterpolate }] },
                       ]}
                     >
                       {percentage}%
                     </Animated.Text>
-                    <Text style={styles.progressLabel}>Complete</Text>
+                    <Text style={[styles.progressLabel, { color: colors.muted }]}>Complete</Text>
                   </View>
                 </AnimatedLinearGradient>
               </Animated.View>
             </View>
-            <Text style={styles.progressText}>
+            <Text style={[styles.progressText, { color: colors.text }]}>
               {completedPrayers} of 5 prayers completed
             </Text>
           </View>
 
           {location && hasPermission && (
-            <View style={styles.qiblaCard}>
+            <View style={[styles.qiblaCard, { backgroundColor: colors.card, shadowColor: colors.primary }]}>
               <QiblaCompass latitude={location.latitude} longitude={location.longitude} />
             </View>
           )}
@@ -180,6 +181,7 @@ export default function PrayersScreen() {
                   key={prayer.name}
                   style={[
                     styles.prayerCard,
+                    { backgroundColor: colors.card, borderColor: isNext ? colors.accent : 'transparent' },
                     isNext && styles.prayerCardNext,
                     prayer.completed && styles.prayerCardCompleted,
                   ]}
@@ -190,42 +192,42 @@ export default function PrayersScreen() {
                     <View
                       style={[
                         styles.prayerCheckbox,
-                        prayer.completed && styles.prayerCheckboxCompleted,
-                        isNext && styles.prayerCheckboxNext,
+                        { backgroundColor: colors.background, borderColor: prayer.completed ? colors.primary : isNext ? colors.accent : colors.border },
+                        prayer.completed && { backgroundColor: '#ffffff', borderColor: colors.primary },
                       ]}
                     >
                       {prayer.completed && (
                         <CheckCircle2
-                          color={Colors.light.primary}
+                          color={colors.primary}
                           size={22}
                           strokeWidth={3}
                         />
                       )}
                     </View>
                     <View style={styles.prayerTextContainer}>
-                      <Text style={styles.prayerNameArabic}>
+                      <Text style={[styles.prayerNameArabic, { color: colors.text }]}>
                         {prayer.nameArabic}
                       </Text>
-                      <Text style={styles.prayerName}>{prayer.name}</Text>
+                      <Text style={[styles.prayerName, { color: colors.muted }]}>{prayer.name}</Text>
                     </View>
                   </View>
                   <View style={styles.prayerRight}>
-                    <Clock color={Colors.light.muted} size={16} strokeWidth={2} />
-                    <Text style={styles.prayerTime}>{prayer.time}</Text>
+                    <Clock color={colors.muted} size={16} strokeWidth={2} />
+                    <Text style={[styles.prayerTime, { color: colors.muted }]}>{prayer.time}</Text>
                   </View>
                 </TouchableOpacity>
               );
             })}
           </View>
 
-          <View style={styles.reminderCard}>
-            <Text style={styles.reminderText}>
+          <View style={[styles.reminderCard, { backgroundColor: colors.parchment, borderLeftColor: colors.accent }]}>
+            <Text style={[styles.reminderText, { color: colors.text }]}>
               &ldquo;{translate('prayer_verse_decreed')}&rdquo;
             </Text>
-            <Text style={styles.reminderArabic}>
+            <Text style={[styles.reminderArabic, { color: colors.primary }]}>
               إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا
             </Text>
-            <Text style={styles.reminderReference}>Surah An-Nisa (4:103)</Text>
+            <Text style={[styles.reminderReference, { color: colors.muted }]}>Surah An-Nisa (4:103)</Text>
           </View>
         </Animated.View>
       </ScrollView>
@@ -236,7 +238,6 @@ export default function PrayersScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.light.background,
   },
   headerGradient: {
     paddingTop: 48,
@@ -291,7 +292,6 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   permissionCard: {
-    backgroundColor: Colors.light.accent,
     padding: 16,
     borderRadius: 12,
     marginBottom: 20,
@@ -304,7 +304,6 @@ const styles = StyleSheet.create({
     letterSpacing: 0.2,
   },
   progressCard: {
-    backgroundColor: Colors.light.card,
     padding: 32,
     borderRadius: 20,
     alignItems: "center",
@@ -337,10 +336,8 @@ const styles = StyleSheet.create({
     width: 148,
     height: 148,
     borderRadius: 74,
-    backgroundColor: Colors.light.parchment,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: Colors.light.primary,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 16,
@@ -349,24 +346,20 @@ const styles = StyleSheet.create({
   progressPercentage: {
     fontSize: 48,
     fontWeight: "700" as const,
-    color: Colors.light.primary,
     letterSpacing: -2,
   },
   progressLabel: {
     fontSize: 14,
-    color: Colors.light.muted,
     marginTop: 4,
     letterSpacing: 0.5,
     fontWeight: "500" as const,
   },
   progressText: {
     fontSize: 16,
-    color: Colors.light.text,
     fontWeight: "500" as const,
     letterSpacing: 0.2,
   },
   qiblaCard: {
-    backgroundColor: Colors.light.card,
     borderRadius: 20,
     marginBottom: 24,
     shadowColor: Colors.light.primary,
@@ -383,7 +376,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: Colors.light.card,
     padding: 20,
     borderRadius: 18,
     shadowColor: "#000",
@@ -395,8 +387,6 @@ const styles = StyleSheet.create({
     borderColor: "transparent",
   },
   prayerCardNext: {
-    borderColor: Colors.light.accent,
-    shadowColor: Colors.light.accent,
     shadowOpacity: 0.15,
   },
   prayerCardCompleted: {
@@ -412,30 +402,19 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 20,
     borderWidth: 3,
-    borderColor: Colors.light.border,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: Colors.light.background,
-  },
-  prayerCheckboxCompleted: {
-    backgroundColor: "#ffffff",
-    borderColor: Colors.light.primary,
-  },
-  prayerCheckboxNext: {
-    borderColor: Colors.light.accent,
   },
   prayerTextContainer: {
     gap: 4,
   },
   prayerNameArabic: {
     fontSize: 20,
-    color: Colors.light.text,
     fontWeight: "600" as const,
     letterSpacing: 0.3,
   },
   prayerName: {
     fontSize: 14,
-    color: Colors.light.muted,
     letterSpacing: 0.2,
   },
   prayerRight: {
@@ -445,16 +424,13 @@ const styles = StyleSheet.create({
   },
   prayerTime: {
     fontSize: 15,
-    color: Colors.light.muted,
     fontWeight: "600" as const,
     letterSpacing: 0.2,
   },
   reminderCard: {
-    backgroundColor: Colors.light.parchment,
     padding: 24,
     borderRadius: 18,
     borderLeftWidth: 4,
-    borderLeftColor: Colors.light.accent,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.04,
@@ -463,7 +439,6 @@ const styles = StyleSheet.create({
   },
   reminderText: {
     fontSize: 15,
-    color: Colors.light.text,
     lineHeight: 24,
     fontStyle: "italic" as const,
     textAlign: "center",
@@ -471,7 +446,6 @@ const styles = StyleSheet.create({
   },
   reminderArabic: {
     fontSize: 17,
-    color: Colors.light.primary,
     lineHeight: 32,
     marginTop: 16,
     textAlign: "center",
@@ -479,7 +453,6 @@ const styles = StyleSheet.create({
   },
   reminderReference: {
     fontSize: 13,
-    color: Colors.light.muted,
     marginTop: 12,
     textAlign: "center",
     letterSpacing: 0.3,

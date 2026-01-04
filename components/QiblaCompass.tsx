@@ -5,6 +5,7 @@ import * as Location from "expo-location";
 import { calculateQiblaDirection } from "@/utils/prayerTimes";
 import Colors from "@/constants/colors";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useTheme } from "@/contexts/ThemeContext";
 
 type QiblaCompassProps = {
   latitude: number;
@@ -13,6 +14,7 @@ type QiblaCompassProps = {
 
 export default function QiblaCompass({ latitude, longitude }: QiblaCompassProps) {
   const { translate } = useLanguage();
+  const { theme } = useTheme();
   const [heading, setHeading] = useState<number>(0);
   const currentRotationRef = useRef<number>(0);
   const rotateAnim = useRef(new Animated.Value(0)).current;
@@ -34,6 +36,7 @@ export default function QiblaCompass({ latitude, longitude }: QiblaCompassProps)
 
         subscription = await Location.watchHeadingAsync((data) => {
           const newHeading = data.trueHeading >= 0 ? data.trueHeading : data.magHeading;
+          console.log('Compass heading:', newHeading, 'Qibla direction:', qiblaDirection);
           setHeading(newHeading);
         });
       } catch (error) {
@@ -48,7 +51,7 @@ export default function QiblaCompass({ latitude, longitude }: QiblaCompassProps)
         subscription.remove();
       }
     };
-  }, []);
+  }, [qiblaDirection]);
 
   useEffect(() => {
     let rotation = qiblaDirection - heading;
@@ -73,15 +76,17 @@ export default function QiblaCompass({ latitude, longitude }: QiblaCompassProps)
   }, [heading, qiblaDirection, rotateAnim]);
 
   const interpolatedRotation = rotateAnim.interpolate({
-    inputRange: [-720, 720],
-    outputRange: ["-720deg", "720deg"],
+    inputRange: [-360, 360],
+    outputRange: ["-360deg", "360deg"],
   });
+
+  const colors = theme === 'light' ? Colors.light : Colors.dark;
 
   return (
     <View style={styles.container}>
       <View style={styles.compassContainer}>
-        <View style={styles.compassOuter}>
-          <View style={styles.compassInner}>
+        <View style={[styles.compassOuter, { backgroundColor: colors.parchment, borderColor: colors.accent, shadowColor: colors.primary }]}>
+          <View style={[styles.compassInner, { backgroundColor: colors.card, borderColor: colors.border }]}>
             <Animated.View
               style={[
                 styles.needle,
@@ -90,24 +95,24 @@ export default function QiblaCompass({ latitude, longitude }: QiblaCompassProps)
                 },
               ]}
             >
-              <View style={styles.needlePoint} />
-              <View style={styles.needleBase} />
+              <View style={[styles.needlePoint, { borderBottomColor: colors.primary, shadowColor: colors.primary }]} />
+              <View style={[styles.needleBase, { backgroundColor: colors.accent, shadowColor: colors.accent }]} />
             </Animated.View>
             <CompassIcon
-              color={Colors.light.muted}
+              color={colors.muted}
               size={32}
               strokeWidth={1.5}
               style={styles.compassIcon}
             />
           </View>
         </View>
-        <Text style={styles.directionText}>
+        <Text style={[styles.directionText, { color: colors.text }]}>
           {Math.round(qiblaDirection)}° {getDirectionLabel(qiblaDirection)}
         </Text>
       </View>
       <View style={styles.infoContainer}>
-        <Text style={styles.infoLabel}>{translate('mecca_direction')}</Text>
-        <Text style={styles.infoLabelArabic}>اتجاه مكة المكرمة</Text>
+        <Text style={[styles.infoLabel, { color: colors.text }]}>{translate('mecca_direction')}</Text>
+        <Text style={[styles.infoLabelArabic, { color: colors.primary }]}>اتجاه مكة المكرمة</Text>
       </View>
     </View>
   );
@@ -131,26 +136,21 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     borderRadius: 100,
-    backgroundColor: Colors.light.parchment,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: Colors.light.primary,
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.2,
     shadowRadius: 20,
     elevation: 8,
     borderWidth: 4,
-    borderColor: Colors.light.accent,
   },
   compassInner: {
     width: 180,
     height: 180,
     borderRadius: 90,
-    backgroundColor: "#ffffff",
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 3,
-    borderColor: Colors.light.border,
   },
   needle: {
     position: "absolute",
@@ -166,8 +166,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 40,
     borderLeftColor: "transparent",
     borderRightColor: "transparent",
-    borderBottomColor: Colors.light.primary,
-    shadowColor: Colors.light.primary,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.5,
     shadowRadius: 4,
@@ -177,9 +175,7 @@ const styles = StyleSheet.create({
     width: 12,
     height: 12,
     borderRadius: 6,
-    backgroundColor: Colors.light.accent,
     marginTop: 8,
-    shadowColor: Colors.light.accent,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.5,
     shadowRadius: 4,
@@ -191,7 +187,6 @@ const styles = StyleSheet.create({
   directionText: {
     fontSize: 20,
     fontWeight: "600" as const,
-    color: Colors.light.text,
     marginTop: 16,
     letterSpacing: 0.5,
   },
@@ -202,13 +197,11 @@ const styles = StyleSheet.create({
   infoLabel: {
     fontSize: 16,
     fontWeight: "600" as const,
-    color: Colors.light.text,
     letterSpacing: 0.3,
   },
   infoLabelArabic: {
     fontSize: 18,
     fontWeight: "600" as const,
-    color: Colors.light.primary,
     marginTop: 4,
   },
 });
