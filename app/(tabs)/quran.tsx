@@ -28,6 +28,7 @@ type Surah = {
 type VerseData = {
   arabic: string;
   translation: string;
+  transliteration: string;
   audioUrl: string;
   ayahNumber: number;
 };
@@ -37,6 +38,8 @@ const formatTime = (seconds: number): string => {
   const secs = Math.floor(seconds % 60);
   return `${mins}:${secs.toString().padStart(2, '0')}`;
 };
+
+const VERSE_CARD_HEIGHT = 280;
 
 const surahs: Surah[] = [
   { number: 1, name: "Al-Fatihah", nameArabic: "الفاتحة", englishTranslation: "The Opening", verses: 7, revelation: "Meccan" },
@@ -170,6 +173,10 @@ export default function QuranScreen() {
   const [currentPlayingVerse, setCurrentPlayingVerse] = useState<number | null>(null);
   const [currentAudioUrl, setCurrentAudioUrl] = useState<string | null>(null);
   const [isPlayingAll, setIsPlayingAll] = useState(false);
+  const [isLoadingAudio, setIsLoadingAudio] = useState(false);
+  const [pendingVerse, setPendingVerse] = useState<number | null>(null);
+  const verseRefs = useRef<{ [key: number]: number }>({});
+  const isTransitioningRef = useRef(false);
   
   const player = useAudioPlayer(currentAudioUrl ? { uri: currentAudioUrl } : null);
   const status = useAudioPlayerStatus(player);
@@ -197,20 +204,38 @@ export default function QuranScreen() {
   }, []);
 
   const playVerse = useCallback((verseIndex: number) => {
-    if (!surahData || verseIndex >= surahData.length) return;
+    if (!surahData || verseIndex >= surahData.length || isTransitioningRef.current) {
+      console.log('Skipping playVerse - transitioning or invalid index:', verseIndex);
+      return;
+    }
     
     const verse = surahData[verseIndex];
     console.log('Playing verse:', verseIndex, 'Audio URL:', verse.audioUrl);
+    
+    isTransitioningRef.current = true;
+    setIsLoadingAudio(true);
+    setPendingVerse(verseIndex);
     setCurrentPlayingVerse(verseIndex);
-    setCurrentAudioUrl(verse.audioUrl);
-  }, [surahData]);
+    
+    if (currentAudioUrl === verse.audioUrl) {
+      player.seekTo(0);
+      player.play();
+      setIsLoadingAudio(false);
+      isTransitioningRef.current = false;
+      setPendingVerse(null);
+    } else {
+      setCurrentAudioUrl(verse.audioUrl);
+    }
+  }, [surahData, currentAudioUrl, player]);
 
   useEffect(() => {
-    if (status.didJustFinish && isPlayingAll && surahData && currentPlayingVerse !== null) {
+    if (status.didJustFinish && isPlayingAll && surahData && currentPlayingVerse !== null && !isTransitioningRef.current) {
       const nextVerseIndex = currentPlayingVerse + 1;
       if (nextVerseIndex < surahData.length) {
-        console.log('Playing next verse:', nextVerseIndex);
-        playVerse(nextVerseIndex);
+        console.log('Verse finished, scheduling next verse:', nextVerseIndex);
+        setTimeout(() => {
+          playVerse(nextVerseIndex);
+        }, 300);
       } else {
         console.log('Finished playing all verses');
         setIsPlayingAll(false);
@@ -221,11 +246,34 @@ export default function QuranScreen() {
   }, [status.didJustFinish, isPlayingAll, surahData, currentPlayingVerse, playVerse]);
 
   useEffect(() => {
-    if (currentAudioUrl && player) {
-      player.seekTo(0);
-      player.play();
+    if (currentAudioUrl && player && pendingVerse !== null) {
+      const initializeAndPlay = async () => {
+        try {
+          await new Promise(resolve => setTimeout(resolve, 100));
+          player.seekTo(0);
+          player.play();
+          console.log('Started playing verse:', pendingVerse);
+        } catch (error) {
+          console.error('Error playing audio:', error);
+        } finally {
+          setIsLoadingAudio(false);
+          isTransitioningRef.current = false;
+          setPendingVerse(null);
+        }
+      };
+      initializeAndPlay();
     }
-  }, [currentAudioUrl, player]);
+  }, [currentAudioUrl, player, pendingVerse]);
+
+  useEffect(() => {
+    if (currentPlayingVerse !== null && scrollViewRef.current) {
+      const yOffset = verseRefs.current[currentPlayingVerse] || (currentPlayingVerse * VERSE_CARD_HEIGHT);
+      scrollViewRef.current.scrollTo({
+        y: Math.max(0, yOffset - 100),
+        animated: true,
+      });
+    }
+  }, [currentPlayingVerse]);
 
   const togglePlayVerse = useCallback((verseIndex: number) => {
     if (currentPlayingVerse === verseIndex && status.playing) {
@@ -239,7 +287,7 @@ export default function QuranScreen() {
   }, [currentPlayingVerse, status.playing, player, playVerse]);
 
   const playAllVerses = useCallback(() => {
-    if (!surahData || surahData.length === 0) return;
+    if (!surahData || surahData.length === 0 || isTransitioningRef.current) return;
     
     if (isPlayingAll && status.playing) {
       player.pause();
@@ -253,21 +301,24 @@ export default function QuranScreen() {
     
     console.log('Starting to play all verses');
     setIsPlayingAll(true);
+    isTransitioningRef.current = false;
     playVerse(0);
   }, [surahData, isPlayingAll, status.playing, currentPlayingVerse, player, playVerse]);
 
   const skipToNextVerse = useCallback(() => {
-    if (!surahData || currentPlayingVerse === null) return;
+    if (!surahData || currentPlayingVerse === null || isTransitioningRef.current) return;
     const nextIndex = currentPlayingVerse + 1;
     if (nextIndex < surahData.length) {
+      isTransitioningRef.current = false;
       playVerse(nextIndex);
     }
   }, [surahData, currentPlayingVerse, playVerse]);
 
   const skipToPreviousVerse = useCallback(() => {
-    if (!surahData || currentPlayingVerse === null) return;
+    if (!surahData || currentPlayingVerse === null || isTransitioningRef.current) return;
     const prevIndex = currentPlayingVerse - 1;
     if (prevIndex >= 0) {
+      isTransitioningRef.current = false;
       playVerse(prevIndex);
     }
   }, [surahData, currentPlayingVerse, playVerse]);
@@ -293,12 +344,17 @@ export default function QuranScreen() {
       };
       
       const edition = languageMap[language || 'en'] || 'en.sahih';
-      const translationResponse = await fetch(`https://api.alquran.cloud/v1/surah/${surahNumber}/${edition}`);
+      const [translationResponse, transliterationResponse] = await Promise.all([
+        fetch(`https://api.alquran.cloud/v1/surah/${surahNumber}/${edition}`),
+        fetch(`https://api.alquran.cloud/v1/surah/${surahNumber}/en.transliteration`)
+      ]);
       const translationData = await translationResponse.json();
+      const transliterationData = await transliterationResponse.json();
       
       const verses: VerseData[] = arabicData.data.ayahs.map((ayah: any, index: number) => ({
         arabic: ayah.text,
         translation: translationData.data.ayahs[index]?.text || '',
+        transliteration: transliterationData.data?.ayahs?.[index]?.text || '',
         audioUrl: `https://cdn.islamic.network/quran/audio/128/ar.alafasy/${ayah.number}.mp3`,
         ayahNumber: ayah.number,
       }));
@@ -326,6 +382,13 @@ export default function QuranScreen() {
     setCurrentPlayingVerse(null);
     setCurrentAudioUrl(null);
     setIsPlayingAll(false);
+    isTransitioningRef.current = false;
+    setPendingVerse(null);
+    setIsLoadingAudio(false);
+  };
+
+  const measureVerse = (index: number, y: number) => {
+    verseRefs.current[index] = y;
   };
 
   const handleScroll = (event: any) => {
@@ -425,6 +488,10 @@ export default function QuranScreen() {
                 styles.verseCard,
                 currentPlayingVerse === index && styles.verseCardPlaying
               ]}
+              onLayout={(event) => {
+                const { y } = event.nativeEvent.layout;
+                measureVerse(index, y);
+              }}
             >
               <View style={styles.verseHeader}>
                 <View style={styles.verseNumber}>
@@ -437,8 +504,11 @@ export default function QuranScreen() {
                   ]}
                   onPress={() => togglePlayVerse(index)}
                   activeOpacity={0.7}
+                  disabled={isLoadingAudio}
                 >
-                  {currentPlayingVerse === index && status.playing ? (
+                  {currentPlayingVerse === index && isLoadingAudio ? (
+                    <ActivityIndicator size="small" color={Colors.light.primary} />
+                  ) : currentPlayingVerse === index && status.playing ? (
                     <Pause color={Colors.light.primary} size={18} strokeWidth={2} />
                   ) : (
                     <Play color={Colors.light.primary} size={18} strokeWidth={2} />
@@ -446,6 +516,9 @@ export default function QuranScreen() {
                 </TouchableOpacity>
               </View>
               <Text style={styles.verseArabic}>{verse.arabic}</Text>
+              {verse.transliteration && (
+                <Text style={styles.verseTransliteration}>{verse.transliteration}</Text>
+              )}
               {currentPlayingVerse === index && status.duration > 0 && (
                 <View style={styles.progressContainer}>
                   <View style={styles.progressBar}>
@@ -789,8 +862,17 @@ const styles = StyleSheet.create({
     color: Colors.light.text,
     fontWeight: "600" as const,
     textAlign: "right",
-    marginBottom: 16,
+    marginBottom: 12,
     letterSpacing: 0.5,
+  },
+  verseTransliteration: {
+    fontSize: 15,
+    lineHeight: 24,
+    color: Colors.light.primary,
+    fontStyle: "italic" as const,
+    marginBottom: 12,
+    letterSpacing: 0.3,
+    opacity: 0.9,
   },
   verseTranslation: {
     fontSize: 16,
