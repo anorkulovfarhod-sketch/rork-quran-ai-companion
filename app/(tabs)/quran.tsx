@@ -350,12 +350,12 @@ export default function QuranScreen() {
         arabic: ayah.text,
         translation: translationData.data.ayahs[index]?.text || '',
         transliteration: transliterationData.data?.ayahs?.[index]?.text || '',
-        audioUrl: `https://cdn.islamic.network/quran/audio-gapless/128/${localReciter.id}/${surahNumber.toString().padStart(3, '0')}${(index + 1).toString().padStart(3, '0')}.mp3`,
+        audioUrl: `https://everyayah.com/data/${localReciter.folderName}/${surahNumber.toString().padStart(3, '0')}${(index + 1).toString().padStart(3, '0')}.mp3`,
         ayahNumber: ayah.number,
       }));
       
       console.log('Loaded surah with', verses.length, 'verses');
-      console.log('Using reciter:', localReciter.name, 'ID:', localReciter.id);
+      console.log('Using reciter:', localReciter.name, 'Folder:', localReciter.folderName);
       console.log('First verse audio URL:', verses[0]?.audioUrl);
       
       setSurahData(verses);
@@ -638,7 +638,7 @@ export default function QuranScreen() {
                       if (surahData && selectedSurah) {
                         const updatedVerses = surahData.map((verse, index) => ({
                           ...verse,
-                          audioUrl: `https://cdn.islamic.network/quran/audio-gapless/128/${reciter.id}/${selectedSurah.toString().padStart(3, '0')}${(index + 1).toString().padStart(3, '0')}.mp3`,
+                          audioUrl: `https://everyayah.com/data/${reciter.folderName}/${selectedSurah.toString().padStart(3, '0')}${(index + 1).toString().padStart(3, '0')}.mp3`,
                         }));
                         setSurahData(updatedVerses);
                       }

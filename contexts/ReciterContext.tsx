@@ -9,48 +9,54 @@ export type Reciter = {
   audioQuality: string;
   license: string;
   attribution: string;
+  folderName: string;
 };
 
 export const reciters: Reciter[] = [
   {
-    id: '128',
+    id: 'alafasy',
     name: 'Mishary Rashid Alafasy',
     arabicName: 'مشاري بن راشد العفاسي',
     audioQuality: '128kbps',
     license: 'Public Domain',
     attribution: 'Recitation by Mishary Rashid Alafasy. Audio provided by EveryAyah.com',
+    folderName: 'Alafasy_128kbps',
   },
   {
-    id: '7',
+    id: 'abdul_basit',
     name: 'Abdul Basit Abdul Samad',
     arabicName: 'عبد الباسط عبد الصمد',
-    audioQuality: '128kbps',
+    audioQuality: '192kbps',
     license: 'Public Domain',
     attribution: 'Recitation by Abdul Basit Abdul Samad. Audio provided by EveryAyah.com',
+    folderName: 'Abdul_Basit_Murattal_192kbps',
   },
   {
-    id: '3',
+    id: 'minshawi',
     name: 'Mohamed Siddiq Al-Minshawi',
     arabicName: 'محمد صديق المنشاوي',
     audioQuality: '128kbps',
     license: 'Public Domain',
     attribution: 'Recitation by Mohamed Siddiq Al-Minshawi. Audio provided by EveryAyah.com',
+    folderName: 'Minshawy_Murattal_128kbps',
   },
   {
-    id: '6',
+    id: 'hussary',
     name: 'Mahmoud Khalil Al-Hussary',
     arabicName: 'محمود خليل الحصري',
     audioQuality: '128kbps',
     license: 'Public Domain',
     attribution: 'Recitation by Mahmoud Khalil Al-Hussary. Audio provided by EveryAyah.com',
+    folderName: 'Husary_128kbps',
   },
   {
-    id: '10',
+    id: 'ghamadi',
     name: "Saad Al-Ghamadi",
     arabicName: 'سعد الغامدي',
-    audioQuality: '128kbps',
+    audioQuality: '40kbps',
     license: 'Public Domain',
     attribution: 'Recitation by Saad Al-Ghamadi. Audio provided by EveryAyah.com',
+    folderName: 'Ghamadi_40kbps',
   },
 ];
 
