@@ -370,9 +370,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
     letterSpacing: 0.2,
+    fontFamily: "Georgia",
   },
   userText: {
     color: "#ffffff",
+    fontFamily: "Georgia",
   },
 
   errorContainer: {
@@ -384,6 +386,7 @@ const styles = StyleSheet.create({
   errorText: {
     color: "#c33",
     fontSize: 14,
+    fontFamily: "Georgia",
   },
   inputContainer: {
     paddingHorizontal: 20,
@@ -408,6 +411,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     maxHeight: 100,
     letterSpacing: 0.2,
+    fontFamily: "Georgia",
   },
   sendButton: {
     width: 48,

@@ -936,11 +936,13 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     letterSpacing: 0.3,
     opacity: 0.9,
+    fontFamily: "Georgia",
   },
   verseTranslation: {
     fontSize: 16,
     lineHeight: 26,
     letterSpacing: 0.2,
+    fontFamily: "Georgia",
   },
   loadingContainer: {
     flex: 1,

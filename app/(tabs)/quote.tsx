@@ -265,6 +265,7 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     fontSize: 16,
+    fontFamily: "Georgia",
   },
   headerGradient: {
     paddingTop: 48,
@@ -357,6 +358,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "600" as const,
     letterSpacing: 0.5,
+    fontFamily: "Georgia",
   },
   decorativeBottom: {
     alignItems: "center",
@@ -390,6 +392,7 @@ const styles = StyleSheet.create({
     fontWeight: "600" as const,
     color: "#ffffff",
     letterSpacing: 0.5,
+    fontFamily: "Georgia",
   },
   infoCard: {
     padding: 24,
@@ -407,6 +410,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     letterSpacing: 0.2,
     marginBottom: 16,
+    fontFamily: "Georgia",
   },
   infoArabic: {
     fontSize: 18,
@@ -421,11 +425,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontStyle: "italic" as const,
     letterSpacing: 0.2,
+    fontFamily: "Georgia",
   },
   infoReferenceArabic: {
     fontSize: 13,
     marginTop: 6,
     textAlign: "center",
     letterSpacing: 0.3,
+    fontFamily: "Georgia",
   },
 });

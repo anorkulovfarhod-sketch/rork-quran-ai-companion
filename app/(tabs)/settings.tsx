@@ -530,6 +530,7 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     textAlign: "center",
     letterSpacing: 0.2,
+    fontFamily: "Georgia",
   },
   infoCard: {
     padding: 24,
@@ -547,6 +548,7 @@ const styles = StyleSheet.create({
     fontStyle: "italic" as const,
     textAlign: "center",
     letterSpacing: 0.2,
+    fontFamily: "Georgia",
   },
   infoArabic: {
     fontSize: 17,
@@ -560,5 +562,6 @@ const styles = StyleSheet.create({
     marginTop: 12,
     textAlign: "center",
     letterSpacing: 0.3,
+    fontFamily: "Georgia",
   },
 });
