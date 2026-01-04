@@ -26,6 +26,8 @@ export default function PrayersScreen() {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.95)).current;
   const progressAnim = useRef(new Animated.Value(0)).current;
+  const [affirmationVisible, setAffirmationVisible] = useState(false);
+  const affirmationOpacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     Animated.parallel([
@@ -73,11 +75,30 @@ export default function PrayersScreen() {
   }, [completedPrayers, progressAnim]);
 
   const togglePrayer = (index: number) => {
-    setPrayers((prev) =>
-      prev.map((prayer, i) =>
+    setPrayers((prev) => {
+      const updated = prev.map((prayer, i) =>
         i === index ? { ...prayer, completed: !prayer.completed } : prayer
-      )
-    );
+      );
+      
+      if (!prev[index].completed && updated[index].completed) {
+        setAffirmationVisible(true);
+        Animated.sequence([
+          Animated.timing(affirmationOpacity, {
+            toValue: 1,
+            duration: 400,
+            useNativeDriver: true,
+          }),
+          Animated.delay(2000),
+          Animated.timing(affirmationOpacity, {
+            toValue: 0,
+            duration: 400,
+            useNativeDriver: true,
+          }),
+        ]).start(() => setAffirmationVisible(false));
+      }
+      
+      return updated;
+    });
   };
 
   const colors = theme === 'light' ? Colors.light : Colors.dark;
@@ -260,6 +281,24 @@ export default function PrayersScreen() {
             </Text>
             <Text style={[styles.reminderReference, { color: colors.muted }]}>Surah An-Nisa (4:103)</Text>
           </View>
+          
+          {affirmationVisible && (
+            <Animated.View 
+              style={[
+                styles.affirmationOverlay,
+                { opacity: affirmationOpacity }
+              ]}
+            >
+              <View style={[styles.affirmationCard, { backgroundColor: colors.parchment }]}>
+                <Text style={[styles.affirmationText, { color: colors.primary }]}>
+                  May Allah accept it
+                </Text>
+                <Text style={[styles.affirmationArabic, { color: colors.primary }]}>
+                  تَقَبَّلَ ٱللَّٰهُ
+                </Text>
+              </View>
+            </Animated.View>
+          )}
         </Animated.View>
       </ScrollView>
     </View>
@@ -607,5 +646,35 @@ const styles = StyleSheet.create({
     textAlign: "center",
     letterSpacing: 0.3,
     fontFamily: "Georgia",
+  },
+  affirmationOverlay: {
+    position: "absolute" as const,
+    bottom: 40,
+    left: 20,
+    right: 20,
+    alignItems: "center",
+    zIndex: 1000,
+  },
+  affirmationCard: {
+    paddingVertical: 16,
+    paddingHorizontal: 24,
+    borderRadius: 16,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    elevation: 8,
+  },
+  affirmationText: {
+    fontSize: 16,
+    fontWeight: "600" as const,
+    letterSpacing: 0.3,
+    fontFamily: "Georgia",
+  },
+  affirmationArabic: {
+    fontSize: 18,
+    fontWeight: "600" as const,
+    marginTop: 4,
   },
 });

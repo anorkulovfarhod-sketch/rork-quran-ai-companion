@@ -688,6 +688,7 @@ export default function QuranScreen() {
         colors={[colors.primary, colors.primaryDark]}
         style={styles.headerGradient}
       >
+        <View style={styles.headerPattern} />
         <Animated.View
           style={[
             styles.headerContent,
@@ -753,6 +754,17 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 16,
     elevation: 12,
+    overflow: "hidden" as const,
+    position: "relative" as const,
+  },
+  headerPattern: {
+    position: "absolute" as const,
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    opacity: 0.03,
+    backgroundColor: "transparent",
   },
   headerContent: {
     alignItems: "center",
@@ -797,13 +809,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: 16,
+    padding: 18,
     borderRadius: 16,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 8,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.08,
+    shadowRadius: 10,
+    elevation: 3,
   },
   surahLeft: {
     flexDirection: "row",
@@ -825,12 +837,13 @@ const styles = StyleSheet.create({
   },
   surahTextContainer: {
     flex: 1,
-    gap: 2,
+    gap: 4,
   },
   surahNameArabic: {
     fontSize: 18,
     fontWeight: "600" as const,
     letterSpacing: 0.3,
+    marginBottom: 2,
   },
   surahName: {
     fontSize: 14,
