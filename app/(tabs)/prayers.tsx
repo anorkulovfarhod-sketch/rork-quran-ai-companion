@@ -187,6 +187,16 @@ export default function PrayersScreen() {
               <Text style={[styles.progressText, { color: colors.text }]}>
                 {completedPrayers === 5 ? 'Complete!' : `${5 - completedPrayers} remaining`}
               </Text>
+              {completedPrayers === 5 && (
+                <View style={styles.completionQuoteContainer}>
+                  <Text style={[styles.completionQuote, { color: colors.muted }]}>
+                    &ldquo;Successful indeed are the believers&rdquo;
+                  </Text>
+                  <Text style={[styles.completionQuoteArabic, { color: colors.primary }]}>
+                    قَدْ أَفْلَحَ الْمُؤْمِنُونَ
+                  </Text>
+                </View>
+              )}
             </View>
           </View>
 
@@ -441,6 +451,26 @@ const styles = StyleSheet.create({
     letterSpacing: 0.2,
     textAlign: "center",
     fontFamily: "Georgia",
+  },
+  completionQuoteContainer: {
+    marginTop: 12,
+    paddingTop: 12,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(0,0,0,0.05)',
+    width: '100%',
+  },
+  completionQuote: {
+    fontSize: 11,
+    fontStyle: "italic" as const,
+    textAlign: "center",
+    letterSpacing: 0.2,
+    fontFamily: "Georgia",
+  },
+  completionQuoteArabic: {
+    fontSize: 13,
+    marginTop: 4,
+    textAlign: "center",
+    fontWeight: "500" as const,
   },
 
   prayersSection: {
