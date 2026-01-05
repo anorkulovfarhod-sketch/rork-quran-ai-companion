@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Modal,
   Image,
+  Alert,
 } from "react-native";
 import { Audio } from 'expo-av';
 import { LinearGradient } from "expo-linear-gradient";
@@ -282,8 +283,10 @@ export default function PrayerGuideScreen() {
           staysActiveInBackground: false,
         });
         
+        const audioUrl = 'https://server13.mp3quran.net/husr/Rewayat-Hafs-A-n-Assem/001.mp3';
+        
         const { sound } = await Audio.Sound.createAsync(
-          { uri: 'https://www.everyayah.com/data/Mishary_Rashid_Alafasy_128kbps/001001.mp3' },
+          { uri: audioUrl },
           { shouldPlay: true },
           (status) => {
             if (status.isLoaded && status.didJustFinish) {
@@ -296,6 +299,12 @@ export default function PrayerGuideScreen() {
       }
     } catch (error) {
       console.error('Error playing audio:', error);
+      setIsPlaying(false);
+      Alert.alert(
+        'Audio Unavailable',
+        'Unable to load the audio file. Please check your internet connection and try again.',
+        [{ text: 'OK' }]
+      );
     }
   };
 
