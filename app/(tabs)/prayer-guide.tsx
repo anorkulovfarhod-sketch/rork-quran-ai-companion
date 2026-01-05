@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,9 +6,11 @@ import {
   ScrollView,
   TouchableOpacity,
   Modal,
+  Image,
 } from "react-native";
+import { Audio } from 'expo-av';
 import { LinearGradient } from "expo-linear-gradient";
-import { ChevronRight, CheckCircle, HandHeart, ChevronDown, Droplets } from "lucide-react-native";
+import { ChevronRight, CheckCircle, HandHeart, ChevronDown, Droplets, Play, Pause } from "lucide-react-native";
 import Colors from "@/constants/colors";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -255,6 +257,47 @@ export default function PrayerGuideScreen() {
   const [selectedPrayer, setSelectedPrayer] = useState<PrayerInfo>(prayers[0]);
   const [showPrayerPicker, setShowPrayerPicker] = useState(false);
   const [activeSection, setActiveSection] = useState<'wudu' | 'prayer'>('wudu');
+  const [isPlaying, setIsPlaying] = useState(false);
+  const soundRef = useRef<Audio.Sound | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (soundRef.current) {
+        soundRef.current.unloadAsync();
+      }
+    };
+  }, []);
+
+  const handlePlayWuduAudio = async () => {
+    try {
+      if (isPlaying && soundRef.current) {
+        await soundRef.current.pauseAsync();
+        setIsPlaying(false);
+      } else if (soundRef.current) {
+        await soundRef.current.playAsync();
+        setIsPlaying(true);
+      } else {
+        await Audio.setAudioModeAsync({
+          playsInSilentModeIOS: true,
+          staysActiveInBackground: false,
+        });
+        
+        const { sound } = await Audio.Sound.createAsync(
+          { uri: 'https://www.everyayah.com/data/Mishary_Rashid_Alafasy_128kbps/001001.mp3' },
+          { shouldPlay: true },
+          (status) => {
+            if (status.isLoaded && status.didJustFinish) {
+              setIsPlaying(false);
+            }
+          }
+        );
+        soundRef.current = sound;
+        setIsPlaying(true);
+      }
+    } catch (error) {
+      console.error('Error playing audio:', error);
+    }
+  };
 
   const colors = theme === 'light' ? Colors.light : Colors.dark;
 
@@ -391,6 +434,12 @@ export default function PrayerGuideScreen() {
                     <View style={styles.stepContent}>
                       <View style={[styles.divider, { backgroundColor: colors.border }]} />
                       
+                      <Image
+                        source={{ uri: `https://source.unsplash.com/400x300/?islamic,prayer,wudu,ablution&sig=${step.id}` }}
+                        style={styles.stepImage}
+                        resizeMode="cover"
+                      />
+                      
                       <Text style={[styles.stepDescription, { color: colors.text }]}>
                         {step.description}
                       </Text>
@@ -417,6 +466,21 @@ export default function PrayerGuideScreen() {
               <Text style={[styles.duaTranslation, { color: colors.muted }]}>
                 I bear witness that there is no god but Allah alone, with no partner, and I bear witness that Muhammad is His servant and messenger.
               </Text>
+              
+              <TouchableOpacity
+                style={[styles.audioButton, { backgroundColor: colors.primary }]}
+                onPress={handlePlayWuduAudio}
+                activeOpacity={0.8}
+              >
+                {isPlaying ? (
+                  <Pause color="#ffffff" size={20} fill="#ffffff" />
+                ) : (
+                  <Play color="#ffffff" size={20} fill="#ffffff" />
+                )}
+                <Text style={styles.audioButtonText}>
+                  {isPlaying ? 'Pause Dua' : 'Listen to Dua'}
+                </Text>
+              </TouchableOpacity>
             </View>
           </>
         ) : (
@@ -541,6 +605,12 @@ export default function PrayerGuideScreen() {
                   {isExpanded && (
                     <View style={styles.stepContent}>
                       <View style={[styles.divider, { backgroundColor: colors.border }]} />
+                      
+                      <Image
+                        source={{ uri: `https://source.unsplash.com/400x300/?muslim,prayer,salah,namaz&sig=${step.id}` }}
+                        style={styles.stepImage}
+                        resizeMode="cover"
+                      />
                       
                       <Text style={[styles.stepDescription, { color: colors.text }]}>
                         {step.description}
@@ -983,5 +1053,26 @@ const styles = StyleSheet.create({
   prayerOptionArabic: {
     fontSize: 20,
     fontWeight: "600" as const,
+  },
+  stepImage: {
+    width: '100%',
+    height: 200,
+    borderRadius: 12,
+    marginBottom: 16,
+  },
+  audioButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 12,
+    marginTop: 16,
+  },
+  audioButtonText: {
+    color: '#ffffff',
+    fontSize: 15,
+    fontWeight: '600' as const,
   },
 });

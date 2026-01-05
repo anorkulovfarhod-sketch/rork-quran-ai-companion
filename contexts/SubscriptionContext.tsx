@@ -56,37 +56,77 @@ export const [SubscriptionProvider, useSubscription] = createContextHook(() => {
       if (!isConfigured) return null;
       try {
         console.log('Fetching RevenueCat offerings...');
+        console.log('Using API key:', apiKey?.substring(0, 15) + '...');
+        console.log('Platform:', Platform.OS);
+        console.log('Is Dev:', __DEV__);
+        
         const offerings = await Purchases.getOfferings();
+        
         console.log('Offerings fetched:', {
           current: offerings.current?.identifier,
-          packagesCount: offerings.current?.availablePackages.length,
+          packagesCount: offerings.current?.availablePackages.length || 0,
+          allOfferings: Object.keys(offerings.all || {}),
           packages: offerings.current?.availablePackages.map(p => ({
             identifier: p.identifier,
             productId: p.product.identifier,
             price: p.product.priceString
-          }))
+          })) || []
         });
+        
+        if (!offerings.current || offerings.current.availablePackages.length === 0) {
+          console.warn('⚠️ No offerings available. This usually means:');
+          console.warn('  1. No products configured for this platform in RevenueCat');
+          console.warn('  2. Testing on web/dev requires Test Store app setup');
+          console.warn('  3. For real device testing, use iOS/Android build');
+        }
+        
         return offerings;
       } catch (error) {
         console.error('Failed to get offerings:', error);
-        return null;
+        throw error;
       }
     },
     enabled: isConfigured,
+    retry: 2,
+    staleTime: 300000,
   });
 
   const purchaseMutation = useMutation({
     mutationFn: async (packageToPurchase: any) => {
       if (!isConfigured) {
-        throw new Error('Purchases are not configured');
+        throw new Error('RevenueCat is not configured. Please check your API keys.');
       }
+      
+      if (!packageToPurchase) {
+        throw new Error('No package selected for purchase.');
+      }
+      
       try {
+        console.log('Attempting purchase:', {
+          packageId: packageToPurchase.identifier,
+          productId: packageToPurchase.product.identifier,
+          platform: Platform.OS,
+        });
+        
         const { customerInfo } = await Purchases.purchasePackage(packageToPurchase);
+        console.log('Purchase successful!');
         return customerInfo;
       } catch (error: any) {
+        console.error('Purchase error details:', {
+          message: error.message,
+          code: error.code,
+          userCancelled: error.userCancelled,
+          error: error,
+        });
+        
         if (error.userCancelled) {
           throw new Error('Purchase cancelled');
         }
+        
+        if (error.message?.includes('Unable to find') || error.message?.includes('No product')) {
+          throw new Error('Product not available. Testing requires a device with App Store/Play Store access.');
+        }
+        
         throw error;
       }
     },
