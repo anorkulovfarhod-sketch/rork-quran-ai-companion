@@ -441,7 +441,11 @@ export default function PrayerGuideScreen() {
 
             <View style={[styles.duaCard, { backgroundColor: colors.parchment }]}>
               <Text style={[styles.duaTitle, { color: colors.text }]}>
-                Dua After Wudu
+                After Completing Wudu
+              </Text>
+              
+              <Text style={[styles.duaSectionTitle, { color: colors.text }]}>
+                The Shahada
               </Text>
               <Text style={[styles.duaArabic, { color: '#2980B9' }]}>
                 أشهد أن لا إله إلا الله وأشهد أن محمدًا عبده ورسوله
@@ -450,7 +454,26 @@ export default function PrayerGuideScreen() {
                 Ash-hadu an la ilaha illal lahu wa ash-hadu anna Muhammadan &apos;abduhu wa rasuluh
               </Text>
               <Text style={[styles.duaTranslation, { color: colors.muted }]}>
-                I bear witness that there is no deity but Allah, and I bear witness that Muhammad is His servant and messenger.
+                I testify that there is no god but Allah, and I also testify that Muhammad is His servant and messenger.
+              </Text>
+
+              <View style={[styles.duaDivider, { backgroundColor: colors.border }]} />
+
+              <Text style={[styles.duaSectionTitle, { color: colors.text }]}>
+                Dua
+              </Text>
+              <Text style={[styles.duaArabic, { color: '#2980B9' }]}>
+                اللهم اجعلني من التوابين واجعلني من المتطهرين
+              </Text>
+              <Text style={[styles.duaTransliteration, { color: colors.primary, fontWeight: '600' }]}>
+                Allahuma j&apos;alnee mina tawabeen waj-&apos;alnee minal mutatahireen
+              </Text>
+              <Text style={[styles.duaTranslation, { color: colors.muted }]}>
+                O Allah, make me among those who seek repentance and make me among those who purify themselves.
+              </Text>
+
+              <Text style={[styles.duaNote, { color: colors.muted }]}>
+                At this point your wudu is complete and you can begin to pray.
               </Text>
             </View>
           </>
@@ -874,6 +897,24 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 22,
     textAlign: "center",
+    fontStyle: "italic",
+  },
+  duaSectionTitle: {
+    fontSize: 15,
+    fontWeight: "600" as const,
+    marginTop: 16,
+    marginBottom: 12,
+    textAlign: "center",
+  },
+  duaDivider: {
+    height: 1,
+    marginVertical: 16,
+  },
+  duaNote: {
+    fontSize: 13,
+    lineHeight: 20,
+    textAlign: "center",
+    marginTop: 16,
     fontStyle: "italic",
   },
   stepCard: {
