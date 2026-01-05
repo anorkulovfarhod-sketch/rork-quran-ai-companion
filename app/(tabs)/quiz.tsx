@@ -177,7 +177,7 @@ export default function QuizScreen() {
           <Text style={styles.headerArabic}>اختبار المعرفة</Text>
           <Text style={styles.headerTitle}>Knowledge Quiz</Text>
           <Text style={styles.headerSubtext}>
-            Test your understanding of Quranic teachings
+            Test Your Understanding Of Quranic Teachings
           </Text>
         </LinearGradient>
 
@@ -185,23 +185,23 @@ export default function QuizScreen() {
           <View style={styles.featuresContainer}>
             <View style={styles.featureCard}>
               <Sparkles color={Colors.light.accent} size={28} strokeWidth={1.5} />
-              <Text style={styles.featureTitle}>Freshly generated</Text>
+              <Text style={styles.featureTitle}>Freshly Generated</Text>
               <Text style={styles.featureText}>
-                Unique questions every session
+                Unique Questions Every Session
               </Text>
             </View>
             <View style={styles.featureCard}>
               <BookOpen color={Colors.light.accent} size={28} strokeWidth={1.5} />
-              <Text style={styles.featureTitle}>Scholarly explanations</Text>
+              <Text style={styles.featureTitle}>Scholarly Explanations</Text>
               <Text style={styles.featureText}>
-                Learn from each answer
+                Learn From Each Answer
               </Text>
             </View>
             <View style={styles.featureCard}>
               <Trophy color={Colors.light.accent} size={28} strokeWidth={1.5} />
-              <Text style={styles.featureTitle}>Your learning journey</Text>
+              <Text style={styles.featureTitle}>Your Learning Journey</Text>
               <Text style={styles.featureText}>
-                Track your progress
+                Track Your Progress
               </Text>
             </View>
           </View>
@@ -231,7 +231,7 @@ export default function QuizScreen() {
         {!generateQuizMutation.isError && (
           <>
             <ActivityIndicator size="large" color={Colors.light.primary} />
-            <Text style={styles.loadingText}>Generating your quiz...</Text>
+            <Text style={styles.loadingText}>Generating Your Quiz...</Text>
           </>
         )}
         {generateQuizMutation.isError && (
