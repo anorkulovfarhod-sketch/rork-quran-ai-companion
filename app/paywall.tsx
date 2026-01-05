@@ -47,8 +47,6 @@ export default function PaywallScreen() {
     }
   }, [isPremium, router]);
 
-  const hasNoOfferings = !offerings?.current || !offerings.current.availablePackages || offerings.current.availablePackages.length === 0;
-
   const monthlyPackage = offerings?.current?.availablePackages?.find(
     p => p.identifier === 'monthly' || p.identifier === '$rc_monthly'
   );
@@ -68,15 +66,6 @@ export default function PaywallScreen() {
       console.log('Purchase button pressed');
       console.log('Selected plan:', selectedPlan);
       console.log('Offerings available:', offerings);
-      
-      if (hasNoOfferings) {
-        Alert.alert(
-          'Testing Not Available',
-          'In-app purchases can only be tested on a real iOS or Android device with an active App Store/Play Store connection. Web and simulator testing is not supported by Apple/Google.\n\nPlease test on a physical device.',
-          [{ text: 'OK' }]
-        );
-        return;
-      }
       
       const currentOffering = offerings?.current;
       if (!currentOffering) {
@@ -185,15 +174,6 @@ export default function PaywallScreen() {
               </Animated.View>
             ))}
           </View>
-
-          {hasNoOfferings && (
-            <View style={styles.testingNotice}>
-              <Text style={styles.testingNoticeTitle}>Testing on Web/Simulator</Text>
-              <Text style={styles.testingNoticeText}>
-                In-app purchases require a real device. Please test on an iPhone or Android phone with App Store/Play Store access.
-              </Text>
-            </View>
-          )}
 
           <View style={styles.plansContainer}>
             <TouchableOpacity
@@ -508,24 +488,5 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     paddingHorizontal: 20,
   },
-  testingNotice: {
-    width: '100%',
-    backgroundColor: '#FFF4E6',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 20,
-    borderLeftWidth: 4,
-    borderLeftColor: '#F59E0B',
-  },
-  testingNoticeTitle: {
-    fontSize: 14,
-    fontWeight: '700' as const,
-    color: '#D97706',
-    marginBottom: 6,
-  },
-  testingNoticeText: {
-    fontSize: 13,
-    color: '#92400E',
-    lineHeight: 20,
-  },
+
 });
