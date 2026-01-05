@@ -4,7 +4,11 @@ import { useQuery, useMutation } from '@tanstack/react-query';
 import { Platform } from 'react-native';
 
 function getRCToken() {
-  if (__DEV__ || Platform.OS === 'web') {
+  if (Platform.OS === 'web') {
+    return process.env.EXPO_PUBLIC_REVENUECAT_WEB_API_KEY;
+  }
+  
+  if (__DEV__) {
     return process.env.EXPO_PUBLIC_REVENUECAT_TEST_API_KEY;
   }
   
