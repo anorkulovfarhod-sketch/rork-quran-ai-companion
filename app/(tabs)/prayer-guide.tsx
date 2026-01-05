@@ -687,7 +687,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
     letterSpacing: 0.5,
     textAlign: "center",
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   headerArabic: {
     fontSize: 24,
@@ -703,7 +703,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     textAlign: "center",
     letterSpacing: 0.3,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   scrollView: {
     flex: 1,
@@ -751,12 +751,12 @@ const styles = StyleSheet.create({
     marginBottom: 4,
     textTransform: "uppercase",
     letterSpacing: 0.5,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   prayerSelectorName: {
     fontSize: 20,
     fontWeight: "600" as const,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   prayerSelectorRight: {
     flexDirection: "row",
@@ -780,7 +780,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600" as const,
     marginBottom: 4,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   rakatArabic: {
     fontSize: 18,
@@ -803,13 +803,13 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "500" as const,
     marginTop: 4,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   rakatDescription: {
     fontSize: 14,
     lineHeight: 22,
     textAlign: "center",
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   introCard: {
     padding: 20,
@@ -826,7 +826,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600" as const,
     marginBottom: 4,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   introArabic: {
     fontSize: 18,
@@ -838,7 +838,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     textAlign: "center",
     letterSpacing: 0.2,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   duaCard: {
     padding: 20,
@@ -851,7 +851,7 @@ const styles = StyleSheet.create({
     fontWeight: "600" as const,
     marginBottom: 12,
     textAlign: "center",
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   duaArabic: {
     fontSize: 18,
@@ -865,14 +865,14 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     textAlign: "center",
     marginBottom: 8,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   duaTranslation: {
     fontSize: 14,
     lineHeight: 22,
     textAlign: "center",
     fontStyle: "italic",
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   duaSectionTitle: {
     fontSize: 15,
@@ -880,7 +880,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
     marginBottom: 12,
     textAlign: "center",
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   duaDivider: {
     height: 1,
@@ -892,7 +892,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 16,
     fontStyle: "italic",
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   stepCard: {
     borderRadius: 20,
@@ -933,7 +933,7 @@ const styles = StyleSheet.create({
     fontWeight: "600" as const,
     letterSpacing: 0.3,
     marginBottom: 4,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   stepArabicTitle: {
     fontSize: 16,
@@ -951,7 +951,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     marginBottom: 16,
     letterSpacing: 0.2,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   arabicBox: {
     padding: 20,
@@ -974,7 +974,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "500" as const,
     letterSpacing: 0.2,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   footerCard: {
     padding: 24,
@@ -992,7 +992,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 16,
     letterSpacing: 0.2,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   footerArabic: {
     fontSize: 18,
@@ -1005,7 +1005,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     textAlign: "center",
     letterSpacing: 0.3,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   modalOverlay: {
     flex: 1,
@@ -1025,13 +1025,13 @@ const styles = StyleSheet.create({
     fontWeight: "600" as const,
     textAlign: "center",
     marginBottom: 4,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   modalSubtitle: {
     fontSize: 14,
     textAlign: "center",
     marginBottom: 20,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   prayerOption: {
     flexDirection: "row",
@@ -1049,12 +1049,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600" as const,
     marginBottom: 4,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   prayerOptionDesc: {
     fontSize: 13,
     lineHeight: 18,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   prayerOptionArabic: {
     fontSize: 20,

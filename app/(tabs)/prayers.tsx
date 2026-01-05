@@ -377,7 +377,7 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     marginTop: 20,
     letterSpacing: 0.8,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   headerArabic: {
     fontSize: 22,
@@ -393,7 +393,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: "center",
     letterSpacing: 0.3,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   headerLocation: {
     fontSize: 13,
@@ -402,7 +402,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
     fontWeight: "600" as const,
     letterSpacing: 0.5,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   contentContainer: {
     flex: 1,
@@ -422,7 +422,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "500" as const,
     letterSpacing: 0.2,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   cardsRow: {
     flexDirection: "row",
@@ -448,7 +448,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600" as const,
     letterSpacing: 0.3,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   qiblaCompassWrapper: {
     alignItems: "center",
@@ -474,7 +474,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600" as const,
     letterSpacing: 0.3,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   progressCircleContainer: {
     marginBottom: 12,
@@ -504,27 +504,27 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: "700" as const,
     letterSpacing: -1,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   progressPercentage: {
     fontSize: 40,
     fontWeight: "700" as const,
     letterSpacing: -1,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   progressLabel: {
     fontSize: 11,
     marginTop: 2,
     letterSpacing: 0.5,
     fontWeight: "500" as const,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   progressText: {
     fontSize: 13,
     fontWeight: "500" as const,
     letterSpacing: 0.2,
     textAlign: "center",
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   completionQuoteContainer: {
     marginTop: 12,
@@ -538,7 +538,7 @@ const styles = StyleSheet.create({
     fontStyle: "italic" as const,
     textAlign: "center",
     letterSpacing: 0.2,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   completionQuoteArabic: {
     fontSize: 16,
@@ -566,7 +566,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "600" as const,
     letterSpacing: 0.4,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   prayersContainer: {
     gap: 10,
@@ -619,7 +619,7 @@ const styles = StyleSheet.create({
   prayerName: {
     fontSize: 13,
     letterSpacing: 0.2,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   prayerTimeContainer: {
     paddingHorizontal: 12,
@@ -630,7 +630,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "600" as const,
     letterSpacing: 0.2,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   reminderCard: {
     padding: 24,
@@ -648,7 +648,7 @@ const styles = StyleSheet.create({
     fontStyle: "italic" as const,
     textAlign: "center",
     letterSpacing: 0.2,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   reminderArabic: {
     fontSize: 17,
@@ -662,7 +662,7 @@ const styles = StyleSheet.create({
     marginTop: 12,
     textAlign: "center",
     letterSpacing: 0.3,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   quoteCard: {
     padding: 20,
@@ -681,7 +681,7 @@ const styles = StyleSheet.create({
     fontStyle: "italic" as const,
     textAlign: "center",
     letterSpacing: 0.2,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   quoteArabic: {
     fontSize: 16,
@@ -695,7 +695,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     textAlign: "center",
     letterSpacing: 0.3,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   affirmationOverlay: {
     position: "absolute" as const,
@@ -720,7 +720,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600" as const,
     letterSpacing: 0.3,
-    fontFamily: "Georgia",
+    fontFamily: "BrandonGrotesque",
   },
   affirmationArabic: {
     fontSize: 18,
