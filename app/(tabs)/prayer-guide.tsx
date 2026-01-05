@@ -687,6 +687,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
     letterSpacing: 0.5,
     textAlign: "center",
+    fontFamily: "Georgia",
   },
   headerArabic: {
     fontSize: 24,
@@ -702,6 +703,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     textAlign: "center",
     letterSpacing: 0.3,
+    fontFamily: "Georgia",
   },
   scrollView: {
     flex: 1,
@@ -749,10 +751,12 @@ const styles = StyleSheet.create({
     marginBottom: 4,
     textTransform: "uppercase",
     letterSpacing: 0.5,
+    fontFamily: "Georgia",
   },
   prayerSelectorName: {
     fontSize: 20,
     fontWeight: "600" as const,
+    fontFamily: "Georgia",
   },
   prayerSelectorRight: {
     flexDirection: "row",
@@ -776,6 +780,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600" as const,
     marginBottom: 4,
+    fontFamily: "Georgia",
   },
   rakatArabic: {
     fontSize: 18,
@@ -798,11 +803,13 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "500" as const,
     marginTop: 4,
+    fontFamily: "Georgia",
   },
   rakatDescription: {
     fontSize: 14,
     lineHeight: 22,
     textAlign: "center",
+    fontFamily: "Georgia",
   },
   introCard: {
     padding: 20,
@@ -819,6 +826,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600" as const,
     marginBottom: 4,
+    fontFamily: "Georgia",
   },
   introArabic: {
     fontSize: 18,
@@ -830,6 +838,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     textAlign: "center",
     letterSpacing: 0.2,
+    fontFamily: "Georgia",
   },
   duaCard: {
     padding: 20,
@@ -842,6 +851,7 @@ const styles = StyleSheet.create({
     fontWeight: "600" as const,
     marginBottom: 12,
     textAlign: "center",
+    fontFamily: "Georgia",
   },
   duaArabic: {
     fontSize: 18,
@@ -855,12 +865,14 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     textAlign: "center",
     marginBottom: 8,
+    fontFamily: "Georgia",
   },
   duaTranslation: {
     fontSize: 14,
     lineHeight: 22,
     textAlign: "center",
     fontStyle: "italic",
+    fontFamily: "Georgia",
   },
   duaSectionTitle: {
     fontSize: 15,
@@ -868,6 +880,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
     marginBottom: 12,
     textAlign: "center",
+    fontFamily: "Georgia",
   },
   duaDivider: {
     height: 1,
@@ -879,6 +892,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 16,
     fontStyle: "italic",
+    fontFamily: "Georgia",
   },
   stepCard: {
     borderRadius: 20,
@@ -919,6 +933,7 @@ const styles = StyleSheet.create({
     fontWeight: "600" as const,
     letterSpacing: 0.3,
     marginBottom: 4,
+    fontFamily: "Georgia",
   },
   stepArabicTitle: {
     fontSize: 16,
@@ -936,6 +951,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     marginBottom: 16,
     letterSpacing: 0.2,
+    fontFamily: "Georgia",
   },
   arabicBox: {
     padding: 20,
@@ -958,6 +974,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "500" as const,
     letterSpacing: 0.2,
+    fontFamily: "Georgia",
   },
   footerCard: {
     padding: 24,
@@ -975,6 +992,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 16,
     letterSpacing: 0.2,
+    fontFamily: "Georgia",
   },
   footerArabic: {
     fontSize: 18,
@@ -987,6 +1005,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     textAlign: "center",
     letterSpacing: 0.3,
+    fontFamily: "Georgia",
   },
   modalOverlay: {
     flex: 1,
@@ -1006,11 +1025,13 @@ const styles = StyleSheet.create({
     fontWeight: "600" as const,
     textAlign: "center",
     marginBottom: 4,
+    fontFamily: "Georgia",
   },
   modalSubtitle: {
     fontSize: 14,
     textAlign: "center",
     marginBottom: 20,
+    fontFamily: "Georgia",
   },
   prayerOption: {
     flexDirection: "row",
@@ -1028,10 +1049,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600" as const,
     marginBottom: 4,
+    fontFamily: "Georgia",
   },
   prayerOptionDesc: {
     fontSize: 13,
     lineHeight: 18,
+    fontFamily: "Georgia",
   },
   prayerOptionArabic: {
     fontSize: 20,
