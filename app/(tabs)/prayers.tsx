@@ -8,6 +8,7 @@ import {
   Animated,
   Easing,
 } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Svg, { Circle } from "react-native-svg";
 import { LinearGradient } from "expo-linear-gradient";
 import { BookOpen, CheckCircle2, Clock, Compass } from "lucide-react-native";
@@ -28,6 +29,7 @@ export default function PrayersScreen() {
   const progressAnim = useRef(new Animated.Value(0)).current;
   const [affirmationVisible, setAffirmationVisible] = useState(false);
   const affirmationOpacity = useRef(new Animated.Value(0)).current;
+  const [userCompletions, setUserCompletions] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     Animated.parallel([
@@ -46,10 +48,38 @@ export default function PrayersScreen() {
   }, [fadeAnim, scaleAnim]);
 
   useEffect(() => {
+    const loadCompletions = async () => {
+      try {
+        const today = new Date().toDateString();
+        const stored = await AsyncStorage.getItem('prayer-completions');
+        if (stored) {
+          const data = JSON.parse(stored);
+          if (data.date === today) {
+            setUserCompletions(data.completions);
+          } else {
+            setUserCompletions({});
+            await AsyncStorage.setItem('prayer-completions', JSON.stringify({ date: today, completions: {} }));
+          }
+        } else {
+          await AsyncStorage.setItem('prayer-completions', JSON.stringify({ date: today, completions: {} }));
+        }
+      } catch (error) {
+        console.error('Error loading prayer completions:', error);
+      }
+    };
+
+    loadCompletions();
+  }, []);
+
+  useEffect(() => {
     const loadPrayerTimes = async () => {
       if (location) {
         const times = await calculatePrayerTimes(location.latitude, location.longitude);
-        setPrayers(times);
+        const timesWithUserCompletions = times.map(prayer => ({
+          ...prayer,
+          completed: userCompletions[prayer.name] || false,
+        }));
+        setPrayers(timesWithUserCompletions);
       }
     };
 
@@ -60,7 +90,7 @@ export default function PrayersScreen() {
     }, 60000);
 
     return () => clearInterval(interval);
-  }, [location]);
+  }, [location, userCompletions]);
 
   const completedPrayers = prayers.filter((p) => p.completed).length;
   const totalPrayers = 5;
@@ -74,31 +104,42 @@ export default function PrayersScreen() {
     }).start();
   }, [completedPrayers, progressAnim]);
 
-  const togglePrayer = (index: number) => {
-    setPrayers((prev) => {
-      const updated = prev.map((prayer, i) =>
-        i === index ? { ...prayer, completed: !prayer.completed } : prayer
-      );
-      
-      if (!prev[index].completed && updated[index].completed) {
-        setAffirmationVisible(true);
-        Animated.sequence([
-          Animated.timing(affirmationOpacity, {
-            toValue: 1,
-            duration: 400,
-            useNativeDriver: true,
-          }),
-          Animated.delay(2000),
-          Animated.timing(affirmationOpacity, {
-            toValue: 0,
-            duration: 400,
-            useNativeDriver: true,
-          }),
-        ]).start(() => setAffirmationVisible(false));
-      }
-      
-      return updated;
-    });
+  const togglePrayer = async (index: number) => {
+    const prayer = prayers[index];
+    const now = Date.now();
+    
+    if (now < prayer.timestamp) {
+      return;
+    }
+    
+    const newCompleted = !prayer.completed;
+    const newCompletions = { ...userCompletions, [prayer.name]: newCompleted };
+    
+    setUserCompletions(newCompletions);
+    
+    try {
+      const today = new Date().toDateString();
+      await AsyncStorage.setItem('prayer-completions', JSON.stringify({ date: today, completions: newCompletions }));
+    } catch (error) {
+      console.error('Error saving prayer completion:', error);
+    }
+    
+    if (!prayer.completed && newCompleted) {
+      setAffirmationVisible(true);
+      Animated.sequence([
+        Animated.timing(affirmationOpacity, {
+          toValue: 1,
+          duration: 400,
+          useNativeDriver: true,
+        }),
+        Animated.delay(2000),
+        Animated.timing(affirmationOpacity, {
+          toValue: 0,
+          duration: 400,
+          useNativeDriver: true,
+        }),
+      ]).start(() => setAffirmationVisible(false));
+    }
   };
 
   const colors = theme === 'light' ? Colors.light : Colors.dark;
@@ -226,7 +267,10 @@ export default function PrayersScreen() {
             </View>
             <View style={styles.prayersContainer}>
               {prayers.map((prayer, index) => {
-                const isNext = !prayer.completed && prayers.slice(0, index).every(p => p.completed);
+                const now = Date.now();
+                const isPast = now >= prayer.timestamp;
+                const isNext = !prayer.completed && prayers.slice(0, index).every(p => p.completed) && isPast;
+                const isDisabled = !isPast;
                 
                 return (
                   <TouchableOpacity
@@ -236,9 +280,11 @@ export default function PrayersScreen() {
                       { backgroundColor: colors.background, borderColor: isNext ? colors.accent : 'transparent' },
                       isNext && styles.prayerCardNext,
                       prayer.completed && styles.prayerCardCompleted,
+                      isDisabled && styles.prayerCardDisabled,
                     ]}
                     onPress={() => togglePrayer(index)}
-                    activeOpacity={0.7}
+                    activeOpacity={isDisabled ? 1 : 0.7}
+                    disabled={isDisabled}
                   >
                     <View style={styles.prayerLeft}>
                       <View
@@ -246,6 +292,7 @@ export default function PrayersScreen() {
                           styles.prayerCheckbox,
                           { backgroundColor: colors.card, borderColor: prayer.completed ? colors.primary : isNext ? colors.accent : colors.border },
                           prayer.completed && { backgroundColor: colors.primary, borderColor: colors.primary },
+                          isDisabled && { opacity: 0.3 },
                         ]}
                       >
                         {prayer.completed && (
@@ -543,6 +590,9 @@ const styles = StyleSheet.create({
   },
   prayerCardCompleted: {
     opacity: 0.6,
+  },
+  prayerCardDisabled: {
+    opacity: 0.4,
   },
   prayerLeft: {
     flexDirection: "row",
