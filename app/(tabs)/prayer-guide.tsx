@@ -283,7 +283,7 @@ export default function PrayerGuideScreen() {
           staysActiveInBackground: false,
         });
         
-        const audioUrl = 'https://server13.mp3quran.net/husr/Rewayat-Hafs-A-n-Assem/001.mp3';
+        const audioUrl = 'https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3';
         
         const { sound } = await Audio.Sound.createAsync(
           { uri: audioUrl },
