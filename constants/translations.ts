@@ -86,7 +86,18 @@ type TranslationKey =
   | "no_offerings_error"
   | "no_packages_error"
   | "internet_check_message"
-  | "contact_support";
+  | "contact_support"
+  | "prayer_guide"
+  | "story_chat"
+  | "step_by_step_prayer"
+  | "prayer_guide_intro"
+  | "prayer_guide_footer"
+  | "story_chat_welcome"
+  | "story_chat_system_prompt"
+  | "personalized_stories"
+  | "share_your_challenge"
+  | "story_chat_description"
+  | "share_your_situation";
 
 const translations: Record<Language, Record<TranslationKey, string>> = {
   en: {
@@ -176,6 +187,17 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     no_packages_error: "No subscription packages configured. Please contact support.",
     internet_check_message: "Please check your internet connection and try again.",
     contact_support: "Please contact support.",
+    prayer_guide: "Prayer Guide",
+    story_chat: "Stories",
+    step_by_step_prayer: "Learn How To Pray Namaz Step By Step",
+    prayer_guide_intro: "Prayer is the pillar of faith. Follow these steps to perform your Salah with devotion and understanding.",
+    prayer_guide_footer: "Prayer is a beautiful connection with Allah. Practice with sincerity and devotion.",
+    story_chat_welcome: "السلام عليكم ورحمة الله وبركاته\n\nWelcome! Share what's on your heart, and I'll guide you with stories from the Quran and Hadiths that relate to your situation.",
+    story_chat_system_prompt: "You are a compassionate Islamic storyteller. Listen to the user's challenges, feelings, or situations, and respond with relevant stories from the Quran and authentic Hadiths. Make the stories relatable, offering comfort and wisdom. Always be empathetic and respectful. Respond in the user's language.",
+    personalized_stories: "Stories From The Quran & Hadiths",
+    share_your_challenge: "Share Your Challenge",
+    story_chat_description: "Receive personalized stories and wisdom from Islamic teachings",
+    share_your_situation: "Share what's on your heart...",
   },
   ar: {
     quran: "القرآن",
@@ -264,6 +286,17 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     no_packages_error: "لم يتم تكوين حزم الاشتراك. يرجى الاتصال بالدعم.",
     internet_check_message: "يرجى التحقق من اتصال الإنترنت والمحاولة مرة أخرى.",
     contact_support: "يرجى الاتصال بالدعم.",
+    prayer_guide: "دليل الصلاة",
+    story_chat: "قصص",
+    step_by_step_prayer: "تعلم كيفية أداء الصلاة خطوة بخطوة",
+    prayer_guide_intro: "الصلاة عماد الدين. اتبع هذه الخطوات لأداء صلاتك بخشوع وفهم.",
+    prayer_guide_footer: "الصلاة صلة جميلة مع الله. مارسها بإخلاص وخشوع.",
+    story_chat_welcome: "السلام عليكم ورحمة الله وبركاته\n\nمرحبًا! شارك ما في قلبك، وسأرشدك بقصص من القرآن والأحاديث التي تتعلق بحالتك.",
+    story_chat_system_prompt: "أنت راوي قصص إسلامي رحيم. استمع إلى تحديات المستخدم ومشاعره أو مواقفه، وأجب بقصص ذات صلة من القرآن والأحاديث الصحيحة. اجعل القصص قريبة من القلب، وقدم الراحة والحكمة. كن دائمًا متعاطفًا ومحترمًا. قم بالرد بلغة المستخدم.",
+    personalized_stories: "قصص من القرآن والأحاديث",
+    share_your_challenge: "شارك تحديك",
+    story_chat_description: "احصل على قصص وحكمة شخصية من التعاليم الإسلامية",
+    share_your_situation: "شارك ما في قلبك...",
   },
   ur: {
     quran: "قرآن",
@@ -352,6 +385,17 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     no_packages_error: "کوئی سبسکرپشن پیکیج ترتیب نہیں دیا گیا۔ براہ کرم سپورٹ سے رابطہ کریں۔",
     internet_check_message: "براہ کرم اپنے انٹرنیٹ کنکشن کی جانچ کریں اور دوبارہ کوشش کریں۔",
     contact_support: "براہ کرم سپورٹ سے رابطہ کریں۔",
+    prayer_guide: "نماز کی رہنمائی",
+    story_chat: "کہانیاں",
+    step_by_step_prayer: "قدم بہ قدم نماز پڑھنا سیکھیں",
+    prayer_guide_intro: "نماز دین کا ستون ہے۔ اپنی نماز عقیدت اور سمجھ کے ساتھ ادا کرنے کے لیے ان اقدامات پر عمل کریں۔",
+    prayer_guide_footer: "نماز اللہ کے ساتھ ایک خوبصورت تعلق ہے۔ اخلاص اور عقیدت کے ساتھ مشق کریں۔",
+    story_chat_welcome: "السلام علیکم ورحمۃ اللہ وبرکاتہ\n\nخوش آمدید! اپنے دل کی بات شیئر کریں، اور میں آپ کو قرآن اور احادیث کی کہانیوں سے رہنمائی کروں گا جو آپ کی صورتحال سے متعلق ہیں۔",
+    story_chat_system_prompt: "آپ ایک ہمدرد اسلامی کہانی سنانے والے ہیں۔ صارف کے چیلنجز، احساسات، یا حالات سنیں، اور قرآن اور مستند احادیث سے متعلقہ کہانیوں سے جواب دیں۔ کہانیوں کو قابل فہم بنائیں، تسلی اور حکمت پیش کریں۔ ہمیشہ ہمدرد اور باعزت رہیں۔ صارف کی زبان میں جواب دیں۔",
+    personalized_stories: "قرآن اور احادیث سے کہانیاں",
+    share_your_challenge: "اپنا چیلنج شیئر کریں",
+    story_chat_description: "اسلامی تعلیمات سے ذاتی کہانیاں اور حکمت حاصل کریں",
+    share_your_situation: "اپنے دل کی بات شیئر کریں...",
   },
   tr: {
     quran: "Kuran",
@@ -440,6 +484,17 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     no_packages_error: "Abonelik paketi yapılandırılmadı. Lütfen destek ile iletişime geçin.",
     internet_check_message: "Lütfen internet bağlantınızı kontrol edin ve tekrar deneyin.",
     contact_support: "Lütfen destek ile iletişime geçin.",
+    prayer_guide: "Namaz Rehberi",
+    story_chat: "Hikayeler",
+    step_by_step_prayer: "Adım Adım Namaz Kılmayı Öğrenin",
+    prayer_guide_intro: "Namaz dinin direğidir. Namazınızı huşu ve anlayışla kılmak için bu adımları izleyin.",
+    prayer_guide_footer: "Namaz, Allah ile güzel bir bağlantıdır. Samimiyetle ve huşuyla pratik yapın.",
+    story_chat_welcome: "السلام عليكم ورحمة الله وبركاته\n\nHoş geldiniz! Kalbinizdeki şeyleri paylaşın, sizi durumunuzla ilgili Kuran ve Hadislerden hikayelerle yönlendireceğim.",
+    story_chat_system_prompt: "Şefkatli bir İslami hikaye anlatıcısısınız. Kullanıcının zorluklarını, duygularını veya durumlarını dinleyin ve Kuran ve sahih Hadislerden ilgili hikayelerle yanıt verin. Hikayeleri ilişkilendirilebilir yapın, rahatlık ve bilgelik sunun. Her zaman empatik ve saygılı olun. Kullanıcının dilinde yanıt verin.",
+    personalized_stories: "Kuran ve Hadislerden Hikayeler",
+    share_your_challenge: "Zorluğunuzu Paylaşın",
+    story_chat_description: "İslami öğretilerden kişiselleştirilmiş hikayeler ve bilgelik alın",
+    share_your_situation: "Kalbinizdeki şeyleri paylaşın...",
   },
   fr: {
     quran: "Coran",
@@ -528,6 +583,17 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     no_packages_error: "Aucun forfait d'abonnement configuré. Veuillez contacter le support.",
     internet_check_message: "Veuillez vérifier votre connexion Internet et réessayer.",
     contact_support: "Veuillez contacter le support.",
+    prayer_guide: "Guide de Prière",
+    story_chat: "Histoires",
+    step_by_step_prayer: "Apprenez à Prier Étape Par Étape",
+    prayer_guide_intro: "La prière est le pilier de la foi. Suivez ces étapes pour effectuer votre Salat avec dévotion et compréhension.",
+    prayer_guide_footer: "La prière est une belle connexion avec Allah. Pratiquez avec sincérité et dévotion.",
+    story_chat_welcome: "السلام عليكم ورحمة الله وبركاته\n\nBienvenue! Partagez ce qui vous préoccupe, et je vous guiderai avec des histoires du Coran et des Hadiths liées à votre situation.",
+    story_chat_system_prompt: "Vous êtes un conteur islamique compatissant. Écoutez les défis, les sentiments ou les situations de l'utilisateur, et répondez avec des histoires pertinentes du Coran et des Hadiths authentiques. Rendez les histoires pertinentes, offrant réconfort et sagesse. Soyez toujours empathique et respectueux. Répondez dans la langue de l'utilisateur.",
+    personalized_stories: "Histoires du Coran et des Hadiths",
+    share_your_challenge: "Partagez Votre Défi",
+    story_chat_description: "Recevez des histoires personnalisées et de la sagesse des enseignements islamiques",
+    share_your_situation: "Partagez ce qui vous préoccupe...",
   },
 
 };

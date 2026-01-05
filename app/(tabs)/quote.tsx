@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { BookOpen, Sparkles } from "lucide-react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Colors from "@/constants/colors";
 import { useLanguage, Language } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -139,9 +140,47 @@ export default function QuoteScreen() {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.95)).current;
 
+  const getCurrentDateEST = useCallback(() => {
+    const now = new Date();
+    const estOffset = -5 * 60;
+    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+    const estDate = new Date(utc + (estOffset * 60000));
+    return estDate.toISOString().split('T')[0];
+  }, []);
+
+  const loadDailyVerse = useCallback(async () => {
+    try {
+      const currentDateEST = getCurrentDateEST();
+      const dateHash = currentDateEST.split('-').reduce((acc, val) => acc + parseInt(val), 0);
+      const verseIndex = dateHash % verses.length;
+      setCurrentVerse(verses[verseIndex]);
+    } catch (error) {
+      console.error('Failed to load daily verse:', error);
+      const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
+      const verseIndex = dayOfYear % verses.length;
+      setCurrentVerse(verses[verseIndex]);
+    }
+  }, [getCurrentDateEST]);
+
+  const checkAndUpdateVerse = useCallback(async () => {
+    try {
+      const lastUpdate = await AsyncStorage.getItem('last_quote_update');
+      const currentDateEST = getCurrentDateEST();
+      
+      if (!lastUpdate || lastUpdate !== currentDateEST) {
+        await AsyncStorage.setItem('last_quote_update', currentDateEST);
+        loadDailyVerse();
+      }
+    } catch (error) {
+      console.error('Failed to check verse update:', error);
+    }
+  }, [getCurrentDateEST, loadDailyVerse]);
+
   useEffect(() => {
     loadDailyVerse();
-  }, []);
+    const interval = setInterval(checkAndUpdateVerse, 60000);
+    return () => clearInterval(interval);
+  }, [loadDailyVerse, checkAndUpdateVerse]);
 
   useEffect(() => {
     if (currentVerse) {
@@ -160,12 +199,6 @@ export default function QuoteScreen() {
       ]).start();
     }
   }, [currentVerse, fadeAnim, scaleAnim]);
-
-  const loadDailyVerse = () => {
-    const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
-    const verseIndex = dayOfYear % verses.length;
-    setCurrentVerse(verses[verseIndex]);
-  };
 
   const colors = theme === 'light' ? Colors.light : Colors.dark;
 

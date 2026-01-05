@@ -1,5 +1,5 @@
 import { Tabs } from "expo-router";
-import { MessageCircle, Sparkles, Clock, Book, Settings } from "lucide-react-native";
+import { MessageCircle, Sparkles, Clock, Book, Settings, HandHeart, BookHeart } from "lucide-react-native";
 import React from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -14,11 +14,12 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: '#ffffff',
-        tabBarInactiveTintColor: 'rgba(255, 255, 255, 0.6)',
+        tabBarActiveTintColor: theme === 'light' ? colors.primary : '#ffffff',
+        tabBarInactiveTintColor: theme === 'light' ? colors.muted : 'rgba(255, 255, 255, 0.6)',
         tabBarStyle: {
           backgroundColor: colors.card,
           borderTopColor: colors.border,
+          borderTopWidth: 1,
         },
         headerShown: true,
         headerStyle: {
@@ -51,6 +52,22 @@ export default function TabLayout() {
         options={{
           title: translate('quote'),
           tabBarIcon: ({ color }) => <Sparkles color={color} size={24} />,
+          headerShown: false,
+        }}
+      />
+      <Tabs.Screen
+        name="prayer-guide"
+        options={{
+          title: translate('prayer_guide'),
+          tabBarIcon: ({ color }) => <HandHeart color={color} size={24} />,
+          headerShown: false,
+        }}
+      />
+      <Tabs.Screen
+        name="story-chat"
+        options={{
+          title: translate('story_chat'),
+          tabBarIcon: ({ color }) => <BookHeart color={color} size={24} />,
           headerShown: false,
         }}
       />
