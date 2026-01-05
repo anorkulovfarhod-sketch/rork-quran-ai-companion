@@ -43,230 +43,230 @@ type PrayerInfo = {
   description: string;
 };
 
-const prayers: PrayerInfo[] = [
+const getPrayers = (translate: (key: string) => string): PrayerInfo[] => [
   {
     id: "fajr",
-    name: "Fajr",
+    name: translate('fajr_prayer'),
     arabicName: "الفجر",
     rakats: 2,
     sunnahBefore: 2,
-    description: "Dawn prayer - 2 Fard rakats (plus 2 Sunnah before)",
+    description: translate('fajr_desc'),
   },
   {
     id: "dhuhr",
-    name: "Dhuhr",
+    name: translate('dhuhr_prayer'),
     arabicName: "الظهر",
     rakats: 4,
     sunnahBefore: 4,
     sunnahAfter: 2,
-    description: "Noon prayer - 4 Fard rakats (plus 4 Sunnah before, 2 after)",
+    description: translate('dhuhr_desc'),
   },
   {
     id: "asr",
-    name: "Asr",
+    name: translate('asr_prayer'),
     arabicName: "العصر",
     rakats: 4,
-    description: "Afternoon prayer - 4 Fard rakats",
+    description: translate('asr_desc'),
   },
   {
     id: "maghrib",
-    name: "Maghrib",
+    name: translate('maghrib_prayer'),
     arabicName: "المغرب",
     rakats: 3,
     sunnahAfter: 2,
-    description: "Sunset prayer - 3 Fard rakats (plus 2 Sunnah after)",
+    description: translate('maghrib_desc'),
   },
   {
     id: "isha",
-    name: "Isha",
+    name: translate('isha_prayer'),
     arabicName: "العشاء",
     rakats: 4,
     sunnahAfter: 2,
-    description: "Night prayer - 4 Fard rakats (plus 2 Sunnah after + 3 Witr)",
+    description: translate('isha_desc'),
   },
 ];
 
-const wuduSteps: WuduStep[] = [
+const getWuduSteps = (translate: (key: string) => string): WuduStep[] => [
   {
     id: 1,
-    title: "Intention (Niyyah)",
+    title: translate('intention_niyyah'),
     arabicTitle: "النية",
-    description: "Make the intention in your heart to perform wudu for the purpose of prayer and purification.",
-    repetition: "Once",
+    description: translate('intention_niyyah_desc'),
+    repetition: translate('once_text'),
     imageUrl: "https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=800&auto=format&fit=crop",
   },
   {
     id: 2,
-    title: "Say Bismillah",
+    title: translate('say_bismillah'),
     arabicTitle: "بسم الله",
-    description: "Begin by saying 'Bismillah' (In the name of Allah) before starting.",
-    repetition: "Once",
+    description: translate('say_bismillah_desc'),
+    repetition: translate('once_text'),
     imageUrl: "https://images.unsplash.com/photo-1542816417-0983c9c9ad53?w=800&auto=format&fit=crop",
   },
   {
     id: 3,
-    title: "Wash Hands",
+    title: translate('wash_hands'),
     arabicTitle: "غسل اليدين",
-    description: "Wash both hands up to the wrists thoroughly, ensuring water reaches between the fingers.",
-    repetition: "3 times",
+    description: translate('wash_hands_desc'),
+    repetition: translate('three_times'),
     imageUrl: "https://images.unsplash.com/photo-1584852882722-d9f896c6e3cb?w=800&auto=format&fit=crop",
   },
   {
     id: 4,
-    title: "Rinse Mouth",
+    title: translate('rinse_mouth'),
     arabicTitle: "المضمضة",
-    description: "Take water into your mouth, swirl it around thoroughly, and then spit it out.",
-    repetition: "3 times",
+    description: translate('rinse_mouth_desc'),
+    repetition: translate('three_times'),
     imageUrl: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&auto=format&fit=crop",
   },
   {
     id: 5,
-    title: "Clean Nose",
+    title: translate('clean_nose'),
     arabicTitle: "الاستنشاق",
-    description: "Sniff water into your nostrils and then blow it out, using the left hand to clean.",
-    repetition: "3 times",
+    description: translate('clean_nose_desc'),
+    repetition: translate('three_times'),
     imageUrl: "https://images.unsplash.com/photo-1610276198568-edd8cb7c8593?w=800&auto=format&fit=crop",
   },
   {
     id: 6,
-    title: "Wash Face",
+    title: translate('wash_face'),
     arabicTitle: "غسل الوجه",
-    description: "Wash the entire face from the hairline to the chin, and from ear to ear.",
-    repetition: "3 times",
+    description: translate('wash_face_desc'),
+    repetition: translate('three_times'),
     imageUrl: "https://images.unsplash.com/photo-1560750588-73207b1ef5b8?w=800&auto=format&fit=crop",
   },
   {
     id: 7,
-    title: "Wash Arms",
+    title: translate('wash_arms'),
     arabicTitle: "غسل اليدين إلى المرفقين",
-    description: "Wash both arms from fingertips to elbows, starting with the right arm.",
-    repetition: "3 times each",
+    description: translate('wash_arms_desc'),
+    repetition: translate('three_times_each'),
     imageUrl: "https://images.unsplash.com/photo-1584555684040-bad07f5c0d1e?w=800&auto=format&fit=crop",
   },
   {
     id: 8,
-    title: "Wipe Head",
+    title: translate('wipe_head'),
     arabicTitle: "مسح الرأس",
-    description: "Wet your hands and wipe over your head from front to back and back to front.",
-    repetition: "Once",
+    description: translate('wipe_head_desc'),
+    repetition: translate('once_text'),
     imageUrl: "https://images.unsplash.com/photo-1519689680058-324335c77eba?w=800&auto=format&fit=crop",
   },
   {
     id: 9,
-    title: "Clean Ears",
+    title: translate('clean_ears'),
     arabicTitle: "مسح الأذنين",
-    description: "Use your wet fingers to wipe the inside and outside of both ears.",
-    repetition: "Once",
+    description: translate('clean_ears_desc'),
+    repetition: translate('once_text'),
     imageUrl: "https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=800&auto=format&fit=crop",
   },
   {
     id: 10,
-    title: "Wash Feet",
+    title: translate('wash_feet'),
     arabicTitle: "غسل القدمين",
-    description: "Wash both feet up to the ankles, including between the toes, starting with the right foot.",
-    repetition: "3 times each",
+    description: translate('wash_feet_desc'),
+    repetition: translate('three_times_each'),
     imageUrl: "https://images.unsplash.com/photo-1585932534551-c4c8b0c8c40b?w=800&auto=format&fit=crop",
   },
 ];
 
-const prayerSteps: PrayerStep[] = [
+const getPrayerSteps = (translate: (key: string) => string): PrayerStep[] => [
   {
     id: 1,
-    title: "Intention (Niyyah)",
+    title: translate('prayer_intention'),
     arabicTitle: "النية",
-    description: "Begin by making the intention in your heart to pray the specific prayer.",
+    description: translate('prayer_intention_desc'),
     arabicText: "نَوَيْتُ أَنْ أُصَلِّيَ",
-    repetition: "Once",
+    repetition: translate('once_text'),
     imageUrl: "https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=800&auto=format&fit=crop",
   },
   {
     id: 2,
-    title: "Takbir (Allahu Akbar)",
+    title: translate('takbir_allahu_akbar'),
     arabicTitle: "تَكْبِيرَةُ الإِحْرَام",
-    description: "Raise your hands to your ears and say 'Allahu Akbar' (Allah is the Greatest).",
+    description: translate('takbir_desc'),
     arabicText: "اللَّهُ أَكْبَر",
-    repetition: "Once",
+    repetition: translate('once_text'),
     imageUrl: "https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=800&auto=format&fit=crop",
   },
   {
     id: 3,
-    title: "Opening Supplication",
+    title: translate('opening_supplication'),
     arabicTitle: "دُعَاءُ الاسْتِفْتَاح",
-    description: "Place your right hand over your left on your chest and recite the opening supplication.",
+    description: translate('opening_supplication_desc'),
     arabicText: "سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ وَتَبَارَكَ اسْمُكَ وَتَعَالَى جَدُّكَ وَلَا إِلَهَ غَيْرُكَ",
-    repetition: "Once",
+    repetition: translate('once_text'),
     imageUrl: "https://images.unsplash.com/photo-1585932534551-c4c8b0c8c40b?w=800&auto=format&fit=crop",
   },
   {
     id: 4,
-    title: "Surah Al-Fatihah",
+    title: translate('surah_al_fatihah'),
     arabicTitle: "سُورَةُ الفَاتِحَة",
-    description: "Recite Surah Al-Fatihah, the opening chapter of the Quran.",
+    description: translate('surah_al_fatihah_desc'),
     arabicText: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ\nالْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ",
-    repetition: "Once",
+    repetition: translate('once_text'),
     imageUrl: "https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=800&auto=format&fit=crop",
   },
   {
     id: 5,
-    title: "Recite Quran",
+    title: translate('recite_quran'),
     arabicTitle: "قِرَاءَةُ القُرْآن",
-    description: "Recite any chapter or verses from the Quran that you have memorized.",
+    description: translate('recite_quran_desc'),
     arabicText: "قُلْ هُوَ اللَّهُ أَحَدٌ\nاللَّهُ الصَّمَدُ",
-    repetition: "Once or more",
+    repetition: translate('once_or_more'),
     imageUrl: "https://images.unsplash.com/photo-1609599006353-e629aaabfeae?w=800&auto=format&fit=crop",
   },
   {
     id: 6,
-    title: "Ruku (Bowing)",
+    title: translate('ruku_bowing'),
     arabicTitle: "الرُّكُوع",
-    description: "Bow down, placing your hands on your knees, and say the glorification.",
+    description: translate('ruku_desc'),
     arabicText: "سُبْحَانَ رَبِّيَ الْعَظِيم",
-    repetition: "3 times minimum",
+    repetition: translate('three_times_minimum'),
     imageUrl: "https://images.unsplash.com/photo-1593113646773-028c64a8f1b8?w=800&auto=format&fit=crop",
   },
   {
     id: 7,
-    title: "Rising from Ruku",
+    title: translate('rising_from_ruku'),
     arabicTitle: "الاعْتِدَال",
-    description: "Stand up straight and say the words of praise.",
+    description: translate('rising_from_ruku_desc'),
     arabicText: "سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ\nرَبَّنَا وَلَكَ الْحَمْد",
-    repetition: "Once",
+    repetition: translate('once_text'),
     imageUrl: "https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=800&auto=format&fit=crop",
   },
   {
     id: 8,
-    title: "Sujud (Prostration)",
+    title: translate('sujud_prostration'),
     arabicTitle: "السُّجُود",
-    description: "Prostrate with your forehead, nose, palms, knees, and toes touching the ground.",
+    description: translate('sujud_desc'),
     arabicText: "سُبْحَانَ رَبِّيَ الْأَعْلَى",
-    repetition: "3 times minimum (2 prostrations)",
+    repetition: translate('three_times_min_two_prostrations'),
     imageUrl: "https://images.unsplash.com/photo-1564769625905-50e93615e769?w=800&auto=format&fit=crop",
   },
   {
     id: 9,
-    title: "Sitting Between Prostrations",
+    title: translate('sitting_between_prostrations'),
     arabicTitle: "الجَلْسَة بَيْنَ السَّجْدَتَيْن",
-    description: "Sit up between the two prostrations and make a brief supplication.",
+    description: translate('sitting_between_prostrations_desc'),
     arabicText: "رَبِّ اغْفِرْ لِي",
-    repetition: "Once",
+    repetition: translate('once_text'),
     imageUrl: "https://images.unsplash.com/photo-1583468323330-9032ad490fed?w=800&auto=format&fit=crop",
   },
   {
     id: 10,
-    title: "Tashahhud",
+    title: translate('tashahhud'),
     arabicTitle: "التَّشَهُّد",
-    description: "After two rakats, sit and recite the Tashahhud.",
+    description: translate('tashahhud_desc'),
     arabicText: "التَّحِيَّاتُ لِلَّهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ\nالسَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ",
-    repetition: "Once per sitting",
+    repetition: translate('once_per_sitting'),
     imageUrl: "https://images.unsplash.com/photo-1583468323330-9032ad490fed?w=800&auto=format&fit=crop",
   },
   {
     id: 11,
-    title: "Taslim (Salutation)",
+    title: translate('taslim_salutation'),
     arabicTitle: "التَّسْلِيم",
-    description: "Turn your head to the right and then to the left, saying the salutation.",
+    description: translate('taslim_desc'),
     arabicText: "السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللَّه",
-    repetition: "Twice (right and left)",
+    repetition: translate('twice_right_and_left'),
     imageUrl: "https://images.unsplash.com/photo-1609599006353-e629aaabfeae?w=800&auto=format&fit=crop",
   },
 ];
@@ -276,6 +276,9 @@ export default function PrayerGuideScreen() {
   const { translate } = useLanguage();
   const [expandedStep, setExpandedStep] = useState<number | null>(null);
   const [expandedWuduStep, setExpandedWuduStep] = useState<number | null>(null);
+  const prayers = getPrayers(translate);
+  const wuduSteps = getWuduSteps(translate);
+  const prayerSteps = getPrayerSteps(translate);
   const [selectedPrayer, setSelectedPrayer] = useState<PrayerInfo>(prayers[0]);
   const [showPrayerPicker, setShowPrayerPicker] = useState(false);
   const [activeSection, setActiveSection] = useState<'wudu' | 'prayer'>('wudu');
@@ -286,11 +289,11 @@ export default function PrayerGuideScreen() {
     const { rakats } = prayer;
     
     if (rakats === 2) {
-      return "Complete 2 rakats: After the second rakat, recite Tashahhud and end with Taslim.";
+      return translate('rakat_instructions_2');
     } else if (rakats === 3) {
-      return "Complete 3 rakats: After the second rakat, recite Tashahhud, then stand for the third rakat (only Fatihah), sit again for final Tashahhud and end with Taslim.";
+      return translate('rakat_instructions_3');
     } else if (rakats === 4) {
-      return "Complete 4 rakats: After the second rakat, recite Tashahhud, then stand for the third and fourth rakats (only Fatihah in each), sit for final Tashahhud and end with Taslim.";
+      return translate('rakat_instructions_4');
     }
     return "";
   };
