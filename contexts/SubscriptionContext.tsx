@@ -4,42 +4,35 @@ import { useQuery, useMutation } from '@tanstack/react-query';
 import { Platform } from 'react-native';
 
 function getRCToken() {
-  if (Platform.OS === 'web') {
-    return process.env.EXPO_PUBLIC_REVENUECAT_IOS_API_KEY;
-  }
-  
-  if (__DEV__) {
-    return process.env.EXPO_PUBLIC_REVENUECAT_IOS_API_KEY;
+  if (__DEV__ || Platform.OS === 'web') {
+    return process.env.EXPO_PUBLIC_REVENUECAT_TEST_API_KEY;
   }
   
   return Platform.select({
     ios: process.env.EXPO_PUBLIC_REVENUECAT_IOS_API_KEY,
     android: process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_API_KEY,
-    default: process.env.EXPO_PUBLIC_REVENUECAT_IOS_API_KEY,
+    default: process.env.EXPO_PUBLIC_REVENUECAT_TEST_API_KEY,
   });
 }
 
 let purchasesConfigured = false;
 
-if (Platform.OS !== 'web') {
-  const apiKey = getRCToken();
-  if (apiKey) {
-    try {
-      Purchases.configure({ apiKey });
-      purchasesConfigured = true;
-      console.log('RevenueCat configured successfully');
-    } catch (error) {
-      console.error('Error configuring Purchases:', error);
-      purchasesConfigured = false;
-    }
-  } else {
-    console.log('No RevenueCat API key found, skipping configuration');
+const apiKey = getRCToken();
+if (apiKey) {
+  try {
+    Purchases.configure({ apiKey });
+    purchasesConfigured = true;
+    console.log('RevenueCat configured successfully with key:', apiKey?.substring(0, 10) + '...');
+  } catch (error) {
+    console.error('Error configuring Purchases:', error);
+    purchasesConfigured = false;
   }
+} else {
+  console.log('No RevenueCat API key found, skipping configuration');
 }
 
 export const [SubscriptionProvider, useSubscription] = createContextHook(() => {
-  const isWeb = Platform.OS === 'web';
-  const isConfigured = purchasesConfigured && !isWeb;
+  const isConfigured = purchasesConfigured;
 
   const customerInfoQuery = useQuery({
     queryKey: ['customerInfo', isConfigured],
