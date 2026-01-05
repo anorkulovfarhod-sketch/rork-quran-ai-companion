@@ -412,13 +412,13 @@ export default function PrayerGuideScreen() {
                 Dua After Wudu
               </Text>
               <Text style={[styles.duaArabic, { color: '#2980B9' }]}>
-                أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ
+                أشهد أن لا إله إلا الله وأشهد أن محمدًا عبده ورسوله
               </Text>
               <Text style={[styles.duaTransliteration, { color: colors.primary, fontWeight: '600' }]}>
-                Ash-hadu an la ilaha illa Allah wahdahu la sharika lahu, wa ash-hadu anna Muhammadan &apos;abduhu wa rasuluhu.
+                Ash-hadu an la ilaha illal lahu wa ash-hadu anna Muhammadan &apos;abduhu wa rasuluh
               </Text>
               <Text style={[styles.duaTranslation, { color: colors.muted }]}>
-                I bear witness that there is no god but Allah alone, with no partner, and I bear witness that Muhammad is His servant and messenger.
+                I bear witness that there is no deity but Allah, and I bear witness that Muhammad is His servant and messenger.
               </Text>
             </View>
           </>
