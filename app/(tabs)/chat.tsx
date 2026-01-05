@@ -309,7 +309,7 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     marginTop: 16,
     letterSpacing: 0.5,
-    fontFamily: "BrandonGrotesque",
+    fontFamily: "Georgia",
   },
   headerSubtext: {
     fontSize: 15,
@@ -318,7 +318,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
     textAlign: "center",
     letterSpacing: 0.3,
-    fontFamily: "BrandonGrotesque",
+    fontFamily: "Georgia",
   },
   messagesContainer: {
     flex: 1,
@@ -339,7 +339,7 @@ const styles = StyleSheet.create({
     fontWeight: "600" as const,
     marginTop: 24,
     letterSpacing: 0.4,
-    fontFamily: "BrandonGrotesque",
+    fontFamily: "Georgia",
   },
   emptyText: {
     fontSize: 16,
@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     lineHeight: 24,
     letterSpacing: 0.2,
-    fontFamily: "BrandonGrotesque",
+    fontFamily: "Georgia",
   },
   examplesContainer: {
     marginTop: 36,
@@ -368,7 +368,7 @@ const styles = StyleSheet.create({
     fontWeight: "500" as const,
     textAlign: "center",
     letterSpacing: 0.2,
-    fontFamily: "BrandonGrotesque",
+    fontFamily: "Georgia",
   },
   messageBubble: {
     maxWidth: "82%",
@@ -398,11 +398,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
     letterSpacing: 0.2,
-    fontFamily: "BrandonGrotesque",
+    fontFamily: "Georgia",
   },
   userText: {
     color: "#ffffff",
-    fontFamily: "BrandonGrotesque",
+    fontFamily: "Georgia",
   },
 
   errorContainer: {
@@ -414,7 +414,7 @@ const styles = StyleSheet.create({
   errorText: {
     color: "#c33",
     fontSize: 14,
-    fontFamily: "BrandonGrotesque",
+    fontFamily: "Georgia",
   },
   inputContainer: {
     paddingHorizontal: 20,
@@ -439,13 +439,13 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: "500" as const,
     letterSpacing: 0.2,
-    fontFamily: "BrandonGrotesque",
+    fontFamily: "Georgia",
   },
   unlockText: {
     fontSize: 13,
     fontWeight: "600" as const,
     letterSpacing: 0.3,
-    fontFamily: "BrandonGrotesque",
+    fontFamily: "Georgia",
   },
   inputWrapper: {
     flexDirection: "row",
@@ -460,7 +460,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     maxHeight: 100,
     letterSpacing: 0.2,
-    fontFamily: "BrandonGrotesque",
+    fontFamily: "Georgia",
   },
   sendButton: {
     width: 48,
