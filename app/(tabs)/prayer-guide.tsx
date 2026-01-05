@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,12 +6,9 @@ import {
   ScrollView,
   TouchableOpacity,
   Modal,
-  Image,
-  Alert,
 } from "react-native";
-import { Audio } from 'expo-av';
 import { LinearGradient } from "expo-linear-gradient";
-import { ChevronRight, CheckCircle, HandHeart, ChevronDown, Droplets, Play, Pause } from "lucide-react-native";
+import { ChevronRight, CheckCircle, HandHeart, ChevronDown, Droplets } from "lucide-react-native";
 import Colors from "@/constants/colors";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -23,7 +20,6 @@ type PrayerStep = {
   description: string;
   arabicText: string;
   repetition?: string;
-  imageUrl: string;
 };
 
 type WuduStep = {
@@ -32,7 +28,6 @@ type WuduStep = {
   arabicTitle: string;
   description: string;
   repetition: string;
-  imageUrl: string;
 };
 
 type PrayerInfo = {
@@ -95,7 +90,6 @@ const wuduSteps: WuduStep[] = [
     arabicTitle: "النية",
     description: "Make the intention in your heart to perform wudu for the purpose of prayer and purification.",
     repetition: "Once",
-    imageUrl: "https://images.unsplash.com/photo-1591604021695-0c69b7c05981?w=400&h=300&fit=crop",
   },
   {
     id: 2,
@@ -103,7 +97,6 @@ const wuduSteps: WuduStep[] = [
     arabicTitle: "بسم الله",
     description: "Begin by saying 'Bismillah' (In the name of Allah) before starting.",
     repetition: "Once",
-    imageUrl: "https://images.unsplash.com/photo-1574169208507-84376144848b?w=400&h=300&fit=crop",
   },
   {
     id: 3,
@@ -111,7 +104,6 @@ const wuduSteps: WuduStep[] = [
     arabicTitle: "غسل اليدين",
     description: "Wash both hands up to the wrists thoroughly, ensuring water reaches between the fingers.",
     repetition: "3 times",
-    imageUrl: "https://images.unsplash.com/photo-1584515933487-779824d29309?w=400&h=300&fit=crop",
   },
   {
     id: 4,
@@ -119,7 +111,6 @@ const wuduSteps: WuduStep[] = [
     arabicTitle: "المضمضة",
     description: "Take water into your mouth, swirl it around thoroughly, and then spit it out.",
     repetition: "3 times",
-    imageUrl: "https://images.unsplash.com/photo-1560015534-cee980ba7e13?w=400&h=300&fit=crop",
   },
   {
     id: 5,
@@ -127,7 +118,6 @@ const wuduSteps: WuduStep[] = [
     arabicTitle: "الاستنشاق",
     description: "Sniff water into your nostrils and then blow it out, using the left hand to clean.",
     repetition: "3 times",
-    imageUrl: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=400&h=300&fit=crop",
   },
   {
     id: 6,
@@ -135,7 +125,6 @@ const wuduSteps: WuduStep[] = [
     arabicTitle: "غسل الوجه",
     description: "Wash the entire face from the hairline to the chin, and from ear to ear.",
     repetition: "3 times",
-    imageUrl: "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=300&fit=crop",
   },
   {
     id: 7,
@@ -143,7 +132,6 @@ const wuduSteps: WuduStep[] = [
     arabicTitle: "غسل اليدين إلى المرفقين",
     description: "Wash both arms from fingertips to elbows, starting with the right arm.",
     repetition: "3 times each",
-    imageUrl: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=400&h=300&fit=crop",
   },
   {
     id: 8,
@@ -151,7 +139,6 @@ const wuduSteps: WuduStep[] = [
     arabicTitle: "مسح الرأس",
     description: "Wet your hands and wipe over your head from front to back and back to front.",
     repetition: "Once",
-    imageUrl: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=400&h=300&fit=crop",
   },
   {
     id: 9,
@@ -159,7 +146,6 @@ const wuduSteps: WuduStep[] = [
     arabicTitle: "مسح الأذنين",
     description: "Use your wet fingers to wipe the inside and outside of both ears.",
     repetition: "Once",
-    imageUrl: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop",
   },
   {
     id: 10,
@@ -167,7 +153,6 @@ const wuduSteps: WuduStep[] = [
     arabicTitle: "غسل القدمين",
     description: "Wash both feet up to the ankles, including between the toes, starting with the right foot.",
     repetition: "3 times each",
-    imageUrl: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=300&fit=crop",
   },
 ];
 
@@ -179,7 +164,6 @@ const prayerSteps: PrayerStep[] = [
     description: "Begin by making the intention in your heart to pray the specific prayer.",
     arabicText: "نَوَيْتُ أَنْ أُصَلِّيَ",
     repetition: "Once",
-    imageUrl: "https://images.unsplash.com/photo-1591604021695-0c69b7c05981?w=400&h=300&fit=crop",
   },
   {
     id: 2,
@@ -188,7 +172,6 @@ const prayerSteps: PrayerStep[] = [
     description: "Raise your hands to your ears and say 'Allahu Akbar' (Allah is the Greatest).",
     arabicText: "اللَّهُ أَكْبَر",
     repetition: "Once",
-    imageUrl: "https://images.unsplash.com/photo-1574169208507-84376144848b?w=400&h=300&fit=crop",
   },
   {
     id: 3,
@@ -197,7 +180,6 @@ const prayerSteps: PrayerStep[] = [
     description: "Place your right hand over your left on your chest and recite the opening supplication.",
     arabicText: "سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ وَتَبَارَكَ اسْمُكَ وَتَعَالَى جَدُّكَ وَلَا إِلَهَ غَيْرُكَ",
     repetition: "Once",
-    imageUrl: "https://images.unsplash.com/photo-1542816417-0983c9c9ad53?w=400&h=300&fit=crop",
   },
   {
     id: 4,
@@ -206,7 +188,6 @@ const prayerSteps: PrayerStep[] = [
     description: "Recite Surah Al-Fatihah, the opening chapter of the Quran.",
     arabicText: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ\nالْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ",
     repetition: "Once",
-    imageUrl: "https://images.unsplash.com/photo-1564769625905-50e93615e769?w=400&h=300&fit=crop",
   },
   {
     id: 5,
@@ -215,7 +196,6 @@ const prayerSteps: PrayerStep[] = [
     description: "Recite any chapter or verses from the Quran that you have memorized.",
     arabicText: "قُلْ هُوَ اللَّهُ أَحَدٌ\nاللَّهُ الصَّمَدُ",
     repetition: "Once or more",
-    imageUrl: "https://images.unsplash.com/photo-1609599006353-e629aaabfeae?w=400&h=300&fit=crop",
   },
   {
     id: 6,
@@ -224,7 +204,6 @@ const prayerSteps: PrayerStep[] = [
     description: "Bow down, placing your hands on your knees, and say the glorification.",
     arabicText: "سُبْحَانَ رَبِّيَ الْعَظِيم",
     repetition: "3 times minimum",
-    imageUrl: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&h=300&fit=crop",
   },
   {
     id: 7,
@@ -233,7 +212,6 @@ const prayerSteps: PrayerStep[] = [
     description: "Stand up straight and say the words of praise.",
     arabicText: "سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ\nرَبَّنَا وَلَكَ الْحَمْد",
     repetition: "Once",
-    imageUrl: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=400&h=300&fit=crop",
   },
   {
     id: 8,
@@ -242,7 +220,6 @@ const prayerSteps: PrayerStep[] = [
     description: "Prostrate with your forehead, nose, palms, knees, and toes touching the ground.",
     arabicText: "سُبْحَانَ رَبِّيَ الْأَعْلَى",
     repetition: "3 times minimum (2 prostrations)",
-    imageUrl: "https://images.unsplash.com/photo-1596925746956-9c7f7ff7f89e?w=400&h=300&fit=crop",
   },
   {
     id: 9,
@@ -251,7 +228,6 @@ const prayerSteps: PrayerStep[] = [
     description: "Sit up between the two prostrations and make a brief supplication.",
     arabicText: "رَبِّ اغْفِرْ لِي",
     repetition: "Once",
-    imageUrl: "https://images.unsplash.com/photo-1609599006353-e629aaabfeae?w=400&h=300&fit=crop",
   },
   {
     id: 10,
@@ -260,7 +236,6 @@ const prayerSteps: PrayerStep[] = [
     description: "After two rakats, sit and recite the Tashahhud.",
     arabicText: "التَّحِيَّاتُ لِلَّهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ\nالسَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ",
     repetition: "Once per sitting",
-    imageUrl: "https://images.unsplash.com/photo-1542816417-0983c9c9ad53?w=400&h=300&fit=crop",
   },
   {
     id: 11,
@@ -269,7 +244,6 @@ const prayerSteps: PrayerStep[] = [
     description: "Turn your head to the right and then to the left, saying the salutation.",
     arabicText: "السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللَّه",
     repetition: "Twice (right and left)",
-    imageUrl: "https://images.unsplash.com/photo-1519834785169-98be25ec3f84?w=400&h=300&fit=crop",
   },
 ];
 
@@ -281,55 +255,6 @@ export default function PrayerGuideScreen() {
   const [selectedPrayer, setSelectedPrayer] = useState<PrayerInfo>(prayers[0]);
   const [showPrayerPicker, setShowPrayerPicker] = useState(false);
   const [activeSection, setActiveSection] = useState<'wudu' | 'prayer'>('wudu');
-  const [isPlaying, setIsPlaying] = useState(false);
-  const soundRef = useRef<Audio.Sound | null>(null);
-
-  useEffect(() => {
-    return () => {
-      if (soundRef.current) {
-        soundRef.current.unloadAsync();
-      }
-    };
-  }, []);
-
-  const handlePlayWuduAudio = async () => {
-    try {
-      if (isPlaying && soundRef.current) {
-        await soundRef.current.pauseAsync();
-        setIsPlaying(false);
-      } else if (soundRef.current) {
-        await soundRef.current.playAsync();
-        setIsPlaying(true);
-      } else {
-        await Audio.setAudioModeAsync({
-          playsInSilentModeIOS: true,
-          staysActiveInBackground: false,
-        });
-        
-        const audioUrl = 'https://server6.mp3quran.net/mishary/Rewayat-Warsh-A-n-Nafi/128/Prayer.mp3';
-        
-        const { sound } = await Audio.Sound.createAsync(
-          { uri: audioUrl },
-          { shouldPlay: true },
-          (status) => {
-            if (status.isLoaded && status.didJustFinish) {
-              setIsPlaying(false);
-            }
-          }
-        );
-        soundRef.current = sound;
-        setIsPlaying(true);
-      }
-    } catch (error) {
-      console.error('Error playing audio:', error);
-      setIsPlaying(false);
-      Alert.alert(
-        'Audio Unavailable',
-        'Unable to load the audio file. Please check your internet connection and try again.',
-        [{ text: 'OK' }]
-      );
-    }
-  };
 
   const colors = theme === 'light' ? Colors.light : Colors.dark;
 
@@ -466,12 +391,6 @@ export default function PrayerGuideScreen() {
                     <View style={styles.stepContent}>
                       <View style={[styles.divider, { backgroundColor: colors.border }]} />
                       
-                      <Image
-                        source={{ uri: step.imageUrl }}
-                        style={styles.stepImage}
-                        resizeMode="cover"
-                      />
-                      
                       <Text style={[styles.stepDescription, { color: colors.text }]}>
                         {step.description}
                       </Text>
@@ -501,21 +420,6 @@ export default function PrayerGuideScreen() {
               <Text style={[styles.duaTranslation, { color: colors.muted }]}>
                 I bear witness that there is no god but Allah alone, with no partner, and I bear witness that Muhammad is His servant and messenger.
               </Text>
-              
-              <TouchableOpacity
-                style={[styles.audioButton, { backgroundColor: colors.primary }]}
-                onPress={handlePlayWuduAudio}
-                activeOpacity={0.8}
-              >
-                {isPlaying ? (
-                  <Pause color="#ffffff" size={20} fill="#ffffff" />
-                ) : (
-                  <Play color="#ffffff" size={20} fill="#ffffff" />
-                )}
-                <Text style={styles.audioButtonText}>
-                  {isPlaying ? 'Pause Dua' : 'Listen to Dua'}
-                </Text>
-              </TouchableOpacity>
             </View>
           </>
         ) : (
@@ -640,12 +544,6 @@ export default function PrayerGuideScreen() {
                   {isExpanded && (
                     <View style={styles.stepContent}>
                       <View style={[styles.divider, { backgroundColor: colors.border }]} />
-                      
-                      <Image
-                        source={{ uri: step.imageUrl }}
-                        style={styles.stepImage}
-                        resizeMode="cover"
-                      />
                       
                       <Text style={[styles.stepDescription, { color: colors.text }]}>
                         {step.description}
@@ -1095,25 +993,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "600" as const,
   },
-  stepImage: {
-    width: '100%',
-    height: 200,
-    borderRadius: 12,
-    marginBottom: 16,
-  },
-  audioButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 12,
-    marginTop: 16,
-  },
-  audioButtonText: {
-    color: '#ffffff',
-    fontSize: 15,
-    fontWeight: '600' as const,
-  },
+
 });
