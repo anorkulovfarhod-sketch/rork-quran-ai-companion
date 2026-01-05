@@ -6,7 +6,6 @@ import {
   ScrollView,
   TouchableOpacity,
   Modal,
-  Image,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { ChevronRight, CheckCircle, HandHeart, ChevronDown, Droplets } from "lucide-react-native";
@@ -21,7 +20,6 @@ type PrayerStep = {
   description: string;
   arabicText: string;
   repetition?: string;
-  imageUrl?: string;
 };
 
 type WuduStep = {
@@ -30,7 +28,6 @@ type WuduStep = {
   arabicTitle: string;
   description: string;
   repetition: string;
-  imageUrl: string;
 };
 
 type PrayerInfo = {
@@ -93,7 +90,6 @@ const getWuduSteps = (translate: (key: string) => string): WuduStep[] => [
     arabicTitle: "النية",
     description: translate('intention_niyyah_desc'),
     repetition: translate('once_text'),
-    imageUrl: "https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=800&auto=format&fit=crop",
   },
   {
     id: 2,
@@ -101,7 +97,6 @@ const getWuduSteps = (translate: (key: string) => string): WuduStep[] => [
     arabicTitle: "بسم الله",
     description: translate('say_bismillah_desc'),
     repetition: translate('once_text'),
-    imageUrl: "https://images.unsplash.com/photo-1542816417-0983c9c9ad53?w=800&auto=format&fit=crop",
   },
   {
     id: 3,
@@ -109,7 +104,6 @@ const getWuduSteps = (translate: (key: string) => string): WuduStep[] => [
     arabicTitle: "غسل اليدين",
     description: translate('wash_hands_desc'),
     repetition: translate('three_times'),
-    imageUrl: "https://images.unsplash.com/photo-1584852882722-d9f896c6e3cb?w=800&auto=format&fit=crop",
   },
   {
     id: 4,
@@ -117,7 +111,6 @@ const getWuduSteps = (translate: (key: string) => string): WuduStep[] => [
     arabicTitle: "المضمضة",
     description: translate('rinse_mouth_desc'),
     repetition: translate('three_times'),
-    imageUrl: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&auto=format&fit=crop",
   },
   {
     id: 5,
@@ -125,7 +118,6 @@ const getWuduSteps = (translate: (key: string) => string): WuduStep[] => [
     arabicTitle: "الاستنشاق",
     description: translate('clean_nose_desc'),
     repetition: translate('three_times'),
-    imageUrl: "https://images.unsplash.com/photo-1610276198568-edd8cb7c8593?w=800&auto=format&fit=crop",
   },
   {
     id: 6,
@@ -133,7 +125,6 @@ const getWuduSteps = (translate: (key: string) => string): WuduStep[] => [
     arabicTitle: "غسل الوجه",
     description: translate('wash_face_desc'),
     repetition: translate('three_times'),
-    imageUrl: "https://images.unsplash.com/photo-1560750588-73207b1ef5b8?w=800&auto=format&fit=crop",
   },
   {
     id: 7,
@@ -141,7 +132,6 @@ const getWuduSteps = (translate: (key: string) => string): WuduStep[] => [
     arabicTitle: "غسل اليدين إلى المرفقين",
     description: translate('wash_arms_desc'),
     repetition: translate('three_times_each'),
-    imageUrl: "https://images.unsplash.com/photo-1584555684040-bad07f5c0d1e?w=800&auto=format&fit=crop",
   },
   {
     id: 8,
@@ -149,7 +139,6 @@ const getWuduSteps = (translate: (key: string) => string): WuduStep[] => [
     arabicTitle: "مسح الرأس",
     description: translate('wipe_head_desc'),
     repetition: translate('once_text'),
-    imageUrl: "https://images.unsplash.com/photo-1519689680058-324335c77eba?w=800&auto=format&fit=crop",
   },
   {
     id: 9,
@@ -157,7 +146,6 @@ const getWuduSteps = (translate: (key: string) => string): WuduStep[] => [
     arabicTitle: "مسح الأذنين",
     description: translate('clean_ears_desc'),
     repetition: translate('once_text'),
-    imageUrl: "https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=800&auto=format&fit=crop",
   },
   {
     id: 10,
@@ -165,7 +153,6 @@ const getWuduSteps = (translate: (key: string) => string): WuduStep[] => [
     arabicTitle: "غسل القدمين",
     description: translate('wash_feet_desc'),
     repetition: translate('three_times_each'),
-    imageUrl: "https://images.unsplash.com/photo-1585932534551-c4c8b0c8c40b?w=800&auto=format&fit=crop",
   },
 ];
 
@@ -177,7 +164,6 @@ const getPrayerSteps = (translate: (key: string) => string): PrayerStep[] => [
     description: translate('prayer_intention_desc'),
     arabicText: "نَوَيْتُ أَنْ أُصَلِّيَ",
     repetition: translate('once_text'),
-    imageUrl: "https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=800&auto=format&fit=crop",
   },
   {
     id: 2,
@@ -186,7 +172,6 @@ const getPrayerSteps = (translate: (key: string) => string): PrayerStep[] => [
     description: translate('takbir_desc'),
     arabicText: "اللَّهُ أَكْبَر",
     repetition: translate('once_text'),
-    imageUrl: "https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=800&auto=format&fit=crop",
   },
   {
     id: 3,
@@ -195,7 +180,6 @@ const getPrayerSteps = (translate: (key: string) => string): PrayerStep[] => [
     description: translate('opening_supplication_desc'),
     arabicText: "سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ وَتَبَارَكَ اسْمُكَ وَتَعَالَى جَدُّكَ وَلَا إِلَهَ غَيْرُكَ",
     repetition: translate('once_text'),
-    imageUrl: "https://images.unsplash.com/photo-1585932534551-c4c8b0c8c40b?w=800&auto=format&fit=crop",
   },
   {
     id: 4,
@@ -204,7 +188,6 @@ const getPrayerSteps = (translate: (key: string) => string): PrayerStep[] => [
     description: translate('surah_al_fatihah_desc'),
     arabicText: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ\nالْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ",
     repetition: translate('once_text'),
-    imageUrl: "https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=800&auto=format&fit=crop",
   },
   {
     id: 5,
@@ -213,7 +196,6 @@ const getPrayerSteps = (translate: (key: string) => string): PrayerStep[] => [
     description: translate('recite_quran_desc'),
     arabicText: "قُلْ هُوَ اللَّهُ أَحَدٌ\nاللَّهُ الصَّمَدُ",
     repetition: translate('once_or_more'),
-    imageUrl: "https://images.unsplash.com/photo-1609599006353-e629aaabfeae?w=800&auto=format&fit=crop",
   },
   {
     id: 6,
@@ -222,7 +204,6 @@ const getPrayerSteps = (translate: (key: string) => string): PrayerStep[] => [
     description: translate('ruku_desc'),
     arabicText: "سُبْحَانَ رَبِّيَ الْعَظِيم",
     repetition: translate('three_times_minimum'),
-    imageUrl: "https://images.unsplash.com/photo-1593113646773-028c64a8f1b8?w=800&auto=format&fit=crop",
   },
   {
     id: 7,
@@ -231,7 +212,6 @@ const getPrayerSteps = (translate: (key: string) => string): PrayerStep[] => [
     description: translate('rising_from_ruku_desc'),
     arabicText: "سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ\nرَبَّنَا وَلَكَ الْحَمْد",
     repetition: translate('once_text'),
-    imageUrl: "https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=800&auto=format&fit=crop",
   },
   {
     id: 8,
@@ -240,7 +220,6 @@ const getPrayerSteps = (translate: (key: string) => string): PrayerStep[] => [
     description: translate('sujud_desc'),
     arabicText: "سُبْحَانَ رَبِّيَ الْأَعْلَى",
     repetition: translate('three_times_min_two_prostrations'),
-    imageUrl: "https://images.unsplash.com/photo-1564769625905-50e93615e769?w=800&auto=format&fit=crop",
   },
   {
     id: 9,
@@ -249,7 +228,6 @@ const getPrayerSteps = (translate: (key: string) => string): PrayerStep[] => [
     description: translate('sitting_between_prostrations_desc'),
     arabicText: "رَبِّ اغْفِرْ لِي",
     repetition: translate('once_text'),
-    imageUrl: "https://images.unsplash.com/photo-1583468323330-9032ad490fed?w=800&auto=format&fit=crop",
   },
   {
     id: 10,
@@ -258,7 +236,6 @@ const getPrayerSteps = (translate: (key: string) => string): PrayerStep[] => [
     description: translate('tashahhud_desc'),
     arabicText: "التَّحِيَّاتُ لِلَّهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ\nالسَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ",
     repetition: translate('once_per_sitting'),
-    imageUrl: "https://images.unsplash.com/photo-1583468323330-9032ad490fed?w=800&auto=format&fit=crop",
   },
   {
     id: 11,
@@ -267,7 +244,6 @@ const getPrayerSteps = (translate: (key: string) => string): PrayerStep[] => [
     description: translate('taslim_desc'),
     arabicText: "السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللَّه",
     repetition: translate('twice_right_and_left'),
-    imageUrl: "https://images.unsplash.com/photo-1609599006353-e629aaabfeae?w=800&auto=format&fit=crop",
   },
 ];
 
@@ -417,14 +393,6 @@ export default function PrayerGuideScreen() {
                   {isExpanded && (
                     <View style={styles.stepContent}>
                       <View style={[styles.divider, { backgroundColor: colors.border }]} />
-                      
-                      {step.imageUrl && (
-                        <Image
-                          source={{ uri: step.imageUrl }}
-                          style={styles.stepImage}
-                          resizeMode="cover"
-                        />
-                      )}
                       
                       <Text style={[styles.stepDescription, { color: colors.text }]}>
                         {step.description}
@@ -603,14 +571,6 @@ export default function PrayerGuideScreen() {
                     <View style={styles.stepContent}>
                       <View style={[styles.divider, { backgroundColor: colors.border }]} />
                       
-                      {step.imageUrl && (
-                        <Image
-                          source={{ uri: step.imageUrl }}
-                          style={styles.stepImage}
-                          resizeMode="cover"
-                        />
-                      )}
-                      
                       <Text style={[styles.stepDescription, { color: colors.text }]}>
                         {step.description}
                       </Text>
@@ -721,18 +681,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   headerTitle: {
-    fontSize: 28,
-    fontWeight: "600" as const,
+    fontSize: 32,
+    fontWeight: "700" as const,
     color: "#ffffff",
     marginTop: 16,
-    letterSpacing: 0.8,
+    letterSpacing: 0.5,
     textAlign: "center",
   },
   headerArabic: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: "600" as const,
     color: "#ffffff",
-    opacity: 0.95,
+    opacity: 0.9,
     marginTop: 8,
   },
   headerSubtext: {
@@ -1076,12 +1036,5 @@ const styles = StyleSheet.create({
   prayerOptionArabic: {
     fontSize: 20,
     fontWeight: "600" as const,
-  },
-  stepImage: {
-    width: "100%",
-    height: 200,
-    borderRadius: 12,
-    marginBottom: 16,
-    backgroundColor: "rgba(0,0,0,0.05)",
   },
 });
