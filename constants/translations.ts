@@ -97,7 +97,24 @@ type TranslationKey =
   | "personalized_stories"
   | "share_your_challenge"
   | "story_chat_description"
-  | "share_your_situation";
+  | "share_your_situation"
+  | "wudu"
+  | "salah"
+  | "how_to_perform_wudu"
+  | "wudu_description"
+  | "after_completing_wudu"
+  | "the_shahada"
+  | "dua"
+  | "wudu_complete_note"
+  | "select_prayer"
+  | "choose_which_prayer"
+  | "fard_rakats"
+  | "sunnah_before"
+  | "sunnah_after"
+  | "prayer_name_with_prayer"
+  | "once"
+  | "times"
+  | "times_each";
 
 const translations: Record<Language, Record<TranslationKey, string>> = {
   en: {
@@ -198,6 +215,23 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     share_your_challenge: "Share Your Challenge",
     story_chat_description: "Receive personalized stories and wisdom from Islamic teachings",
     share_your_situation: "Share what's on your heart...",
+    wudu: "Wudu",
+    salah: "Salah",
+    how_to_perform_wudu: "How to Perform Wudu",
+    wudu_description: "Wudu (ablution) is the ritual washing performed before prayer. It purifies the body and prepares the heart for worship.",
+    after_completing_wudu: "After Completing Wudu",
+    the_shahada: "The Shahada",
+    dua: "Dua",
+    wudu_complete_note: "At this point your wudu is complete and you can begin to pray.",
+    select_prayer: "Select Prayer",
+    choose_which_prayer: "Choose which prayer you are performing",
+    fard_rakats: "Fard Rakats",
+    sunnah_before: "Sunnah Before",
+    sunnah_after: "Sunnah After",
+    prayer_name_with_prayer: "Prayer",
+    once: "Once",
+    times: "times",
+    times_each: "times each",
   },
   ar: {
     quran: "القرآن",
@@ -297,6 +331,23 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     share_your_challenge: "شارك تحديك",
     story_chat_description: "احصل على قصص وحكمة شخصية من التعاليم الإسلامية",
     share_your_situation: "شارك ما في قلبك...",
+    wudu: "الوضوء",
+    salah: "الصلاة",
+    how_to_perform_wudu: "كيفية الوضوء",
+    wudu_description: "الوضوء هو الغسل الشعائري الذي يتم قبل الصلاة. إنه يطهر الجسد ويهيئ القلب للعبادة.",
+    after_completing_wudu: "بعد إتمام الوضوء",
+    the_shahada: "الشهادة",
+    dua: "الدعاء",
+    wudu_complete_note: "في هذه المرحلة اكتمل وضوءك ويمكنك البدء في الصلاة.",
+    select_prayer: "اختر الصلاة",
+    choose_which_prayer: "اختر الصلاة التي تؤديها",
+    fard_rakats: "ركعات الفرض",
+    sunnah_before: "السنة قبل",
+    sunnah_after: "السنة بعد",
+    prayer_name_with_prayer: "صلاة",
+    once: "مرة واحدة",
+    times: "مرات",
+    times_each: "مرات لكل منهما",
   },
   ur: {
     quran: "قرآن",
@@ -396,6 +447,23 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     share_your_challenge: "اپنا چیلنج شیئر کریں",
     story_chat_description: "اسلامی تعلیمات سے ذاتی کہانیاں اور حکمت حاصل کریں",
     share_your_situation: "اپنے دل کی بات شیئر کریں...",
+    wudu: "وضو",
+    salah: "نماز",
+    how_to_perform_wudu: "وضو کیسے کریں",
+    wudu_description: "وضو نماز سے پہلے کیا جانے والا رسمی غسل ہے۔ یہ جسم کو پاک کرتا ہے اور دل کو عبادت کے لیے تیار کرتا ہے۔",
+    after_completing_wudu: "وضو مکمل کرنے کے بعد",
+    the_shahada: "شہادہ",
+    dua: "دعا",
+    wudu_complete_note: "اس مقام پر آپ کا وضو مکمل ہو گیا ہے اور آپ نماز شروع کر سکتے ہیں۔",
+    select_prayer: "نماز منتخب کریں",
+    choose_which_prayer: "منتخب کریں کہ آپ کون سی نماز ادا کر رہے ہیں",
+    fard_rakats: "فرض رکعات",
+    sunnah_before: "سنت پہلے",
+    sunnah_after: "سنت بعد",
+    prayer_name_with_prayer: "نماز",
+    once: "ایک بار",
+    times: "بار",
+    times_each: "بار ہر ایک",
   },
   tr: {
     quran: "Kuran",
@@ -495,6 +563,23 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     share_your_challenge: "Zorluğunuzu Paylaşın",
     story_chat_description: "İslami öğretilerden kişiselleştirilmiş hikayeler ve bilgelik alın",
     share_your_situation: "Kalbinizdeki şeyleri paylaşın...",
+    wudu: "Abdest",
+    salah: "Namaz",
+    how_to_perform_wudu: "Abdest Nasıl Alınır",
+    wudu_description: "Abdest, namazdan önce yapılan ritüel yıkanmadır. Bedeni temizler ve kalbi ibadete hazırlar.",
+    after_completing_wudu: "Abdesti Tamamladıktan Sonra",
+    the_shahada: "Şehadet",
+    dua: "Dua",
+    wudu_complete_note: "Bu noktada abdestiniz tamamlanmıştır ve namaza başlayabilirsiniz.",
+    select_prayer: "Namaz Seçin",
+    choose_which_prayer: "Hangi namazı kıldığınızı seçin",
+    fard_rakats: "Farz Rekatlar",
+    sunnah_before: "Öncesi Sünnet",
+    sunnah_after: "Sonrası Sünnet",
+    prayer_name_with_prayer: "Namazı",
+    once: "Bir kez",
+    times: "kez",
+    times_each: "her biri için kez",
   },
   fr: {
     quran: "Coran",
@@ -594,6 +679,23 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     share_your_challenge: "Partagez Votre Défi",
     story_chat_description: "Recevez des histoires personnalisées et de la sagesse des enseignements islamiques",
     share_your_situation: "Partagez ce qui vous préoccupe...",
+    wudu: "Ablutions",
+    salah: "Salat",
+    how_to_perform_wudu: "Comment Effectuer les Ablutions",
+    wudu_description: "Les ablutions sont le lavage rituel effectué avant la prière. Elles purifient le corps et préparent le cœur à l'adoration.",
+    after_completing_wudu: "Après Avoir Terminé les Ablutions",
+    the_shahada: "La Chahada",
+    dua: "Invocation",
+    wudu_complete_note: "À ce stade, vos ablutions sont terminées et vous pouvez commencer à prier.",
+    select_prayer: "Sélectionner la Prière",
+    choose_which_prayer: "Choisissez quelle prière vous effectuez",
+    fard_rakats: "Rakats Fard",
+    sunnah_before: "Sunnah Avant",
+    sunnah_after: "Sunnah Après",
+    prayer_name_with_prayer: "Prière de",
+    once: "Une fois",
+    times: "fois",
+    times_each: "fois chacun",
   },
 
 };

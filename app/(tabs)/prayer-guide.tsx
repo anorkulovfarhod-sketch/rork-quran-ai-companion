@@ -332,7 +332,7 @@ export default function PrayerGuideScreen() {
               styles.sectionTabText,
               { color: activeSection === 'wudu' ? '#ffffff' : colors.muted },
             ]}>
-              Wudu
+              {translate('wudu')}
             </Text>
           </TouchableOpacity>
           
@@ -351,7 +351,7 @@ export default function PrayerGuideScreen() {
               styles.sectionTabText,
               { color: activeSection === 'prayer' ? '#ffffff' : colors.muted },
             ]}>
-              Salah
+              {translate('salah')}
             </Text>
           </TouchableOpacity>
         </View>
@@ -361,13 +361,13 @@ export default function PrayerGuideScreen() {
             <View style={[styles.introCard, { backgroundColor: colors.parchment }]}>
               <Droplets color={colors.primary} size={28} style={{ marginBottom: 12 }} />
               <Text style={[styles.introTitle, { color: colors.text }]}>
-                How to Perform Wudu
+                {translate('how_to_perform_wudu')}
               </Text>
               <Text style={[styles.introArabic, { color: colors.primary }]}>
                 كيفية الوضوء
               </Text>
               <Text style={[styles.introText, { color: colors.text }]}>
-                Wudu (ablution) is the ritual washing performed before prayer. It purifies the body and prepares the heart for worship.
+                {translate('wudu_description')}
               </Text>
             </View>
 
@@ -441,11 +441,11 @@ export default function PrayerGuideScreen() {
 
             <View style={[styles.duaCard, { backgroundColor: colors.parchment }]}>
               <Text style={[styles.duaTitle, { color: colors.text }]}>
-                After Completing Wudu
+                {translate('after_completing_wudu')}
               </Text>
               
               <Text style={[styles.duaSectionTitle, { color: colors.text }]}>
-                The Shahada
+                {translate('the_shahada')}
               </Text>
               <Text style={[styles.duaArabic, { color: '#2980B9' }]}>
                 أشهد أن لا إله إلا الله وأشهد أن محمدًا عبده ورسوله
@@ -460,7 +460,7 @@ export default function PrayerGuideScreen() {
               <View style={[styles.duaDivider, { backgroundColor: colors.border }]} />
 
               <Text style={[styles.duaSectionTitle, { color: colors.text }]}>
-                Dua
+                {translate('dua')}
               </Text>
               <Text style={[styles.duaArabic, { color: '#2980B9' }]}>
                 اللهم اجعلني من التوابين واجعلني من المتطهرين
@@ -473,7 +473,7 @@ export default function PrayerGuideScreen() {
               </Text>
 
               <Text style={[styles.duaNote, { color: colors.muted }]}>
-                At this point your wudu is complete and you can begin to pray.
+                {translate('wudu_complete_note')}
               </Text>
             </View>
           </>
@@ -487,7 +487,7 @@ export default function PrayerGuideScreen() {
               <View style={styles.prayerSelectorContent}>
                 <View style={styles.prayerSelectorLeft}>
                   <Text style={[styles.prayerSelectorLabel, { color: colors.muted }]}>
-                    Select Prayer
+                    {translate('select_prayer')}
                   </Text>
                   <Text style={[styles.prayerSelectorName, { color: colors.text }]}>
                     {selectedPrayer.name}
@@ -505,7 +505,7 @@ export default function PrayerGuideScreen() {
             <View style={[styles.rakatCard, { backgroundColor: colors.parchment }]}>
               <View style={styles.rakatHeader}>
                 <Text style={[styles.rakatTitle, { color: colors.text }]}>
-                  {selectedPrayer.name} Prayer
+                  {selectedPrayer.name} {translate('prayer_name_with_prayer')}
                 </Text>
                 <Text style={[styles.rakatArabic, { color: colors.primary }]}>
                   {selectedPrayer.arabicName}
@@ -518,7 +518,7 @@ export default function PrayerGuideScreen() {
                     {selectedPrayer.rakats}
                   </Text>
                   <Text style={[styles.rakatLabel, { color: colors.muted }]}>
-                    Fard Rakats
+                    {translate('fard_rakats')}
                   </Text>
                 </View>
                 
@@ -528,7 +528,7 @@ export default function PrayerGuideScreen() {
                       {selectedPrayer.sunnahBefore}
                     </Text>
                     <Text style={[styles.rakatLabel, { color: colors.muted }]}>
-                      Sunnah Before
+                      {translate('sunnah_before')}
                     </Text>
                   </View>
                 )}
@@ -539,7 +539,7 @@ export default function PrayerGuideScreen() {
                       {selectedPrayer.sunnahAfter}
                     </Text>
                     <Text style={[styles.rakatLabel, { color: colors.muted }]}>
-                      Sunnah After
+                      {translate('sunnah_after')}
                     </Text>
                   </View>
                 )}
@@ -660,10 +660,10 @@ export default function PrayerGuideScreen() {
         >
           <View style={[styles.modalContent, { backgroundColor: colors.card }]}>
             <Text style={[styles.modalTitle, { color: colors.text }]}>
-              Select Prayer
+              {translate('select_prayer')}
             </Text>
             <Text style={[styles.modalSubtitle, { color: colors.muted }]}>
-              Choose which prayer you are performing
+              {translate('choose_which_prayer')}
             </Text>
             
             {prayers.map((prayer) => (
