@@ -15,6 +15,7 @@ import Colors from "@/constants/colors";
 import { useLanguage, Language } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useReciter } from "@/contexts/ReciterContext";
+import { useChatLimit } from "@/contexts/ChatLimitContext";
 
 const languages = [
   { code: "en" as Language, name: "English", nameArabic: "الإنجليزية" },
@@ -28,6 +29,7 @@ export default function SettingsScreen() {
   const { language, setLanguage, translate } = useLanguage();
   const { theme, toggleTheme } = useTheme();
   const { selectedReciter, setReciter, reciters } = useReciter();
+  const { chatCount, resetChatCount } = useChatLimit();
   const [locationStatus, setLocationStatus] = useState<string>("Not granted");
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.95)).current;
@@ -269,6 +271,46 @@ export default function SettingsScreen() {
               <View style={[styles.locationDescription, { backgroundColor: colors.parchment }]}>
                 <Text style={[styles.locationDescriptionText, { color: colors.text }]}>
                   {translate('location_description')}
+                </Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <SettingsIcon color={colors.primary} size={24} strokeWidth={2} />
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>Developer</Text>
+            </View>
+
+            <View style={[styles.locationCard, { backgroundColor: colors.card }]}>
+              <View style={styles.locationInfo}>
+                <Text style={[styles.locationLabel, { color: colors.text }]}>Chat Messages Sent</Text>
+                <Text style={[styles.locationStatus, { color: colors.primary }]}>
+                  {chatCount} / 3
+                </Text>
+              </View>
+
+              <TouchableOpacity
+                style={styles.locationButton}
+                onPress={async () => {
+                  await resetChatCount();
+                  Alert.alert("Success", "Chat count has been reset to 0");
+                }}
+                activeOpacity={0.8}
+              >
+                <LinearGradient
+                  colors={[colors.primary, colors.primaryDark]}
+                  style={styles.locationButtonGradient}
+                >
+                  <Text style={styles.locationButtonText}>
+                    Reset Chat Count
+                  </Text>
+                </LinearGradient>
+              </TouchableOpacity>
+
+              <View style={[styles.locationDescription, { backgroundColor: colors.parchment }]}>
+                <Text style={[styles.locationDescriptionText, { color: colors.text }]}>
+                  Reset your chat count to test the chat limit feature. This only affects your device.
                 </Text>
               </View>
             </View>
