@@ -16,6 +16,7 @@ export default {
     success: "#10b981",
     parchment: "#f5f2ed",
     headingGold: "#9b7e4a",
+    headingBackground: "#2a2a2a",
   },
   dark: {
     text: "#f5f5f7",
@@ -34,5 +35,6 @@ export default {
     success: "#30d158",
     parchment: "#2c2c2e",
     headingGold: "#b8a06e",
+    headingBackground: "#2a2a2a",
   },
 };

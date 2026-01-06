@@ -195,7 +195,7 @@ export default function PrayersScreen() {
             {location && hasPermission && (
               <View style={[styles.qiblaCard, { backgroundColor: colors.card, shadowColor: colors.primary }]}>
                 <View style={styles.qiblaHeader}>
-                  <Compass color={colors.primary} size={20} strokeWidth={2} />
+                  <Compass color="#b8a06e" size={20} strokeWidth={2} />
                   <Text style={[styles.qiblaTitle, { color: colors.headingGold, textShadowColor: colors.primary, textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 8 }]}>Qibla</Text>
                 </View>
                 <View style={styles.qiblaCompassWrapper}>
@@ -206,7 +206,7 @@ export default function PrayersScreen() {
 
             <View style={[styles.progressCard, { backgroundColor: colors.card, shadowColor: colors.primary }]}>
               <View style={styles.progressHeader}>
-                <CheckCircle2 color={colors.primary} size={20} strokeWidth={2} />
+                <CheckCircle2 color="#b8a06e" size={20} strokeWidth={2} />
                 <Text style={[styles.progressTitle, { color: colors.headingGold, textShadowColor: colors.primary, textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 8 }]}>Today</Text>
               </View>
               <View style={styles.progressCircleContainer}>
@@ -262,7 +262,7 @@ export default function PrayersScreen() {
 
           <View style={[styles.prayersSection, { backgroundColor: colors.card, shadowColor: colors.primary }]}>
             <View style={styles.prayersSectionHeader}>
-              <Clock color={colors.primary} size={20} strokeWidth={2} />
+              <Clock color="#b8a06e" size={20} strokeWidth={2} />
               <Text style={[styles.prayersSectionTitle, { color: colors.headingGold, textShadowColor: colors.primary, textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 8 }]}>Today&apos;s Prayers</Text>
             </View>
             <View style={styles.prayersContainer}>
@@ -443,6 +443,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 8,
     marginBottom: 12,
+    backgroundColor: "#2a2a2a",
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 10,
+    alignSelf: "flex-start",
   },
   qiblaTitle: {
     fontSize: 16,
@@ -469,6 +474,10 @@ const styles = StyleSheet.create({
     gap: 8,
     marginBottom: 12,
     alignSelf: "flex-start",
+    backgroundColor: "#2a2a2a",
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 10,
   },
   progressTitle: {
     fontSize: 16,
@@ -561,6 +570,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 10,
     marginBottom: 16,
+    backgroundColor: "#2a2a2a",
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 10,
+    alignSelf: "flex-start",
   },
   prayersSectionTitle: {
     fontSize: 20,
