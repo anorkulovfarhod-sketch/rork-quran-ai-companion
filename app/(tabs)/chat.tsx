@@ -122,7 +122,7 @@ export default function ChatScreen() {
             <ArrowLeft color={colors.headingGold} size={24} strokeWidth={2} />
           </TouchableOpacity>
           <BookOpen color={colors.headingGold} size={36} strokeWidth={1.5} />
-          <Text style={[styles.headerText, { color: colors.headingGold }]}>{translate('quranic_guidance')}</Text>
+          <Text style={[styles.headerText, { color: colors.headingGold, textShadowColor: 'rgba(184, 160, 110, 0.6)', textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 12 }]}>{translate('quranic_guidance')}</Text>
           <Text style={[styles.headerSubtext, { color: 'rgba(255,255,255,0.8)' }]}>
             {translate('scholarly_insights')}
           </Text>

@@ -114,7 +114,7 @@ export default function SettingsScreen() {
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <Moon color="#b8a06e" size={24} strokeWidth={2} />
-              <Text style={[styles.sectionTitle, { color: colors.headingGold, textShadowColor: colors.primary, textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 8 }]}>{translate('appearance')}</Text>
+              <Text style={[styles.sectionTitle, { color: colors.headingGold, textShadowColor: 'rgba(184, 160, 110, 0.6)', textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 12 }]}>{translate('appearance')}</Text>
             </View>
 
             <View style={styles.themeContainer}>
@@ -158,7 +158,7 @@ export default function SettingsScreen() {
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <Volume2 color="#b8a06e" size={24} strokeWidth={2} />
-              <Text style={[styles.sectionTitle, { color: colors.headingGold, textShadowColor: colors.primary, textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 8 }]}>Reciter</Text>
+              <Text style={[styles.sectionTitle, { color: colors.headingGold, textShadowColor: 'rgba(184, 160, 110, 0.6)', textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 12 }]}>Reciter</Text>
             </View>
 
             <View style={styles.recitersContainer}>
@@ -196,7 +196,7 @@ export default function SettingsScreen() {
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <Globe color="#b8a06e" size={24} strokeWidth={2} />
-              <Text style={[styles.sectionTitle, { color: colors.headingGold, textShadowColor: colors.primary, textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 8 }]}>{translate('language')}</Text>
+              <Text style={[styles.sectionTitle, { color: colors.headingGold, textShadowColor: 'rgba(184, 160, 110, 0.6)', textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 12 }]}>{translate('language')}</Text>
             </View>
 
             <View style={styles.languagesContainer}>
@@ -234,7 +234,7 @@ export default function SettingsScreen() {
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <MapPin color="#b8a06e" size={24} strokeWidth={2} />
-              <Text style={[styles.sectionTitle, { color: colors.headingGold, textShadowColor: colors.primary, textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 8 }]}>{translate('location')}</Text>
+              <Text style={[styles.sectionTitle, { color: colors.headingGold, textShadowColor: 'rgba(184, 160, 110, 0.6)', textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 12 }]}>{translate('location')}</Text>
             </View>
 
             <View style={[styles.locationCard, { backgroundColor: colors.card }]}>
@@ -279,7 +279,7 @@ export default function SettingsScreen() {
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <SettingsIcon color="#b8a06e" size={24} strokeWidth={2} />
-              <Text style={[styles.sectionTitle, { color: colors.headingGold, textShadowColor: colors.primary, textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 8 }]}>Developer</Text>
+              <Text style={[styles.sectionTitle, { color: colors.headingGold, textShadowColor: 'rgba(184, 160, 110, 0.6)', textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 12 }]}>Developer</Text>
             </View>
 
             <View style={[styles.locationCard, { backgroundColor: colors.card }]}>

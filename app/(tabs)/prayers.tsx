@@ -196,7 +196,7 @@ export default function PrayersScreen() {
               <View style={[styles.qiblaCard, { backgroundColor: colors.card, shadowColor: colors.primary }]}>
                 <View style={styles.qiblaHeader}>
                   <Compass color="#b8a06e" size={20} strokeWidth={2} />
-                  <Text style={[styles.qiblaTitle, { color: colors.headingGold, textShadowColor: colors.primary, textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 8 }]}>Qibla</Text>
+                  <Text style={[styles.qiblaTitle, { color: colors.headingGold, textShadowColor: 'rgba(184, 160, 110, 0.6)', textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 12 }]}>Qibla</Text>
                 </View>
                 <View style={styles.qiblaCompassWrapper}>
                   <QiblaCompass latitude={location.latitude} longitude={location.longitude} />
@@ -207,7 +207,7 @@ export default function PrayersScreen() {
             <View style={[styles.progressCard, { backgroundColor: colors.card, shadowColor: colors.primary }]}>
               <View style={styles.progressHeader}>
                 <CheckCircle2 color="#b8a06e" size={20} strokeWidth={2} />
-                <Text style={[styles.progressTitle, { color: colors.headingGold, textShadowColor: colors.primary, textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 8 }]}>Today</Text>
+                <Text style={[styles.progressTitle, { color: colors.headingGold, textShadowColor: 'rgba(184, 160, 110, 0.6)', textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 12 }]}>Today</Text>
               </View>
               <View style={styles.progressCircleContainer}>
                 <View style={styles.progressCircle}>
@@ -263,7 +263,7 @@ export default function PrayersScreen() {
           <View style={[styles.prayersSection, { backgroundColor: colors.card, shadowColor: colors.primary }]}>
             <View style={styles.prayersSectionHeader}>
               <Clock color="#b8a06e" size={20} strokeWidth={2} />
-              <Text style={[styles.prayersSectionTitle, { color: colors.headingGold, textShadowColor: colors.primary, textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 8 }]}>Today&apos;s Prayers</Text>
+              <Text style={[styles.prayersSectionTitle, { color: colors.headingGold, textShadowColor: 'rgba(184, 160, 110, 0.6)', textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 12 }]}>Today&apos;s Prayers</Text>
             </View>
             <View style={styles.prayersContainer}>
               {prayers.map((prayer, index) => {

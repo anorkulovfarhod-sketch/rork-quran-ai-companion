@@ -282,7 +282,7 @@ export default function PrayerGuideScreen() {
       >
         <View style={styles.headerContent}>
           <HandHeart color={colors.headingGold} size={44} strokeWidth={1.5} />
-          <Text style={[styles.headerTitle, { color: colors.headingGold }]}>{translate('prayer_guide')}</Text>
+          <Text style={[styles.headerTitle, { color: colors.headingGold, textShadowColor: 'rgba(184, 160, 110, 0.6)', textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 12 }]}>{translate('prayer_guide')}</Text>
           <Text style={[styles.headerArabic, { color: colors.headingGold }]}>دليل الصلاة</Text>
           <Text style={[styles.headerSubtext, { color: 'rgba(255,255,255,0.8)' }]}>
             {translate('step_by_step_prayer')}
