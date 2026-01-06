@@ -158,7 +158,7 @@ export default function PrayersScreen() {
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <LinearGradient
         colors={['#1a1a1a', '#2a2a2a']}
-        style={styles.headerGradient}
+        style={[styles.headerGradient, { shadowColor: '#b8a06e', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.6, shadowRadius: 20, elevation: 8 }]}
       >
         <Animated.View
           style={[
@@ -196,7 +196,7 @@ export default function PrayersScreen() {
               <View style={[styles.qiblaCard, { backgroundColor: colors.card, shadowColor: colors.primary }]}>
                 <View style={styles.qiblaHeader}>
                   <Compass color="#b8a06e" size={20} strokeWidth={2} />
-                  <Text style={[styles.qiblaTitle, { color: colors.headingGold, textShadowColor: 'rgba(184, 160, 110, 0.6)', textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 12 }]}>Qibla</Text>
+                  <Text style={[styles.qiblaTitle, { color: colors.headingGold }]}>Qibla</Text>
                 </View>
                 <View style={styles.qiblaCompassWrapper}>
                   <QiblaCompass latitude={location.latitude} longitude={location.longitude} />
@@ -207,7 +207,7 @@ export default function PrayersScreen() {
             <View style={[styles.progressCard, { backgroundColor: colors.card, shadowColor: colors.primary }]}>
               <View style={styles.progressHeader}>
                 <CheckCircle2 color="#b8a06e" size={20} strokeWidth={2} />
-                <Text style={[styles.progressTitle, { color: colors.headingGold, textShadowColor: 'rgba(184, 160, 110, 0.6)', textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 12 }]}>Today</Text>
+                <Text style={[styles.progressTitle, { color: colors.headingGold }]}>Today</Text>
               </View>
               <View style={styles.progressCircleContainer}>
                 <View style={styles.progressCircle}>
@@ -263,7 +263,7 @@ export default function PrayersScreen() {
           <View style={[styles.prayersSection, { backgroundColor: colors.card, shadowColor: colors.primary }]}>
             <View style={styles.prayersSectionHeader}>
               <Clock color="#b8a06e" size={20} strokeWidth={2} />
-              <Text style={[styles.prayersSectionTitle, { color: colors.headingGold, textShadowColor: 'rgba(184, 160, 110, 0.6)', textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 12 }]}>Today&apos;s Prayers</Text>
+              <Text style={[styles.prayersSectionTitle, { color: colors.headingGold }]}>Today&apos;s Prayers</Text>
             </View>
             <View style={styles.prayersContainer}>
               {prayers.map((prayer, index) => {
@@ -443,6 +443,11 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 10,
     alignSelf: "flex-start",
+    shadowColor: '#b8a06e',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.6,
+    shadowRadius: 12,
+    elevation: 6,
   },
   qiblaTitle: {
     fontSize: 16,
@@ -570,6 +575,11 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 10,
     alignSelf: "flex-start",
+    shadowColor: '#b8a06e',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.6,
+    shadowRadius: 12,
+    elevation: 6,
   },
   prayersSectionTitle: {
     fontSize: 20,

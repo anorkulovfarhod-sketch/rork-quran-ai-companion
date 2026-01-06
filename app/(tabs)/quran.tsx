@@ -686,7 +686,7 @@ export default function QuranScreen() {
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <LinearGradient
         colors={['#1a1a1a', '#2a2a2a']}
-        style={styles.headerGradient}
+        style={[styles.headerGradient, { shadowColor: '#b8a06e', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.6, shadowRadius: 20, elevation: 8 }]}
       >
         <View style={styles.headerPattern} />
         <Animated.View

@@ -109,7 +109,7 @@ export default function StoryChatScreen() {
     >
       <LinearGradient
         colors={['#1a1a1a', '#2a2a2a']}
-        style={styles.headerGradient}
+        style={[styles.headerGradient, { shadowColor: '#b8a06e', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.6, shadowRadius: 20, elevation: 8 }]}
       >
         <View style={styles.headerContent}>
           <TouchableOpacity 
@@ -120,7 +120,7 @@ export default function StoryChatScreen() {
             <ArrowLeft color={colors.headingGold} size={24} strokeWidth={2} />
           </TouchableOpacity>
           <BookHeart color={colors.headingGold} size={36} strokeWidth={1.5} />
-          <Text style={[styles.headerText, { color: colors.headingGold, textShadowColor: 'rgba(184, 160, 110, 0.6)', textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 12 }]}>{translate('story_chat')}</Text>
+          <Text style={[styles.headerText, { color: colors.headingGold }]}>{translate('story_chat')}</Text>
           <Text style={[styles.headerSubtext, { color: 'rgba(255,255,255,0.8)' }]}>
             {translate('personalized_stories')}
           </Text>

@@ -89,7 +89,7 @@ export default function SettingsScreen() {
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <LinearGradient
         colors={['#1a1a1a', '#2a2a2a']}
-        style={styles.headerGradient}
+        style={[styles.headerGradient, { shadowColor: '#b8a06e', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.6, shadowRadius: 20, elevation: 8 }]}
       >
         <Animated.View
           style={[
@@ -114,7 +114,7 @@ export default function SettingsScreen() {
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <Moon color="#b8a06e" size={24} strokeWidth={2} />
-              <Text style={[styles.sectionTitle, { color: colors.headingGold, textShadowColor: 'rgba(184, 160, 110, 0.6)', textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 12 }]}>{translate('appearance')}</Text>
+              <Text style={[styles.sectionTitle, { color: colors.headingGold }]}>{translate('appearance')}</Text>
             </View>
 
             <View style={styles.themeContainer}>

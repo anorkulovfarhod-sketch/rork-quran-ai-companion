@@ -215,11 +215,11 @@ export default function QuoteScreen() {
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <LinearGradient
         colors={['#1a1a1a', '#2a2a2a']}
-        style={styles.headerGradient}
+        style={[styles.headerGradient, { shadowColor: '#b8a06e', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.6, shadowRadius: 20, elevation: 8 }]}
       >
         <View style={styles.headerContent}>
           <Sparkles color={colors.headingGold} size={44} strokeWidth={1.5} />
-          <Text style={[styles.headerTitle, { color: colors.headingGold, textShadowColor: 'rgba(184, 160, 110, 0.6)', textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 12 }]}>{translate('daily_quran_quote')}</Text>
+          <Text style={[styles.headerTitle, { color: colors.headingGold }]}>{translate('daily_quran_quote')}</Text>
           <Text style={[styles.headerArabic, { color: colors.headingGold }]}>اقتباس قرآني يومي</Text>
           <Text style={[styles.headerSubtext, { color: 'rgba(255,255,255,0.8)' }]}>
             {translate('daily_inspiration')}
