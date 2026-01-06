@@ -277,14 +277,14 @@ export default function PrayerGuideScreen() {
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <LinearGradient
-        colors={[colors.primary, colors.primaryDark]}
+        colors={['#1a1a1a', '#2a2a2a']}
         style={styles.headerGradient}
       >
         <View style={styles.headerContent}>
-          <HandHeart color="#ffffff" size={44} strokeWidth={1.5} />
-          <Text style={styles.headerTitle}>{translate('prayer_guide')}</Text>
-          <Text style={styles.headerArabic}>دليل الصلاة</Text>
-          <Text style={styles.headerSubtext}>
+          <HandHeart color={colors.headingGold} size={44} strokeWidth={1.5} />
+          <Text style={[styles.headerTitle, { color: colors.headingGold }]}>{translate('prayer_guide')}</Text>
+          <Text style={[styles.headerArabic, { color: colors.headingGold }]}>دليل الصلاة</Text>
+          <Text style={[styles.headerSubtext, { color: 'rgba(255,255,255,0.8)' }]}>
             {translate('step_by_step_prayer')}
           </Text>
         </View>
@@ -683,7 +683,6 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 32,
     fontWeight: "700" as const,
-    color: "#ffffff",
     marginTop: 16,
     letterSpacing: 0.5,
     textAlign: "center",
@@ -692,14 +691,10 @@ const styles = StyleSheet.create({
   headerArabic: {
     fontSize: 24,
     fontWeight: "600" as const,
-    color: "#ffffff",
-    opacity: 0.9,
     marginTop: 8,
   },
   headerSubtext: {
     fontSize: 15,
-    color: "#ffffff",
-    opacity: 0.88,
     marginTop: 8,
     textAlign: "center",
     letterSpacing: 0.3,

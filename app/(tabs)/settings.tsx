@@ -88,7 +88,7 @@ export default function SettingsScreen() {
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <LinearGradient
-        colors={[colors.primary, colors.primaryDark]}
+        colors={['#1a1a1a', '#2a2a2a']}
         style={styles.headerGradient}
       >
         <Animated.View
@@ -100,9 +100,9 @@ export default function SettingsScreen() {
             },
           ]}
         >
-          <SettingsIcon color="#ffffff" size={44} strokeWidth={1.5} />
-          <Text style={styles.headerTitle}>{translate('settings')}</Text>
-          <Text style={styles.headerSubtext}>{translate('customize_experience')}</Text>
+          <SettingsIcon color={colors.headingGold} size={44} strokeWidth={1.5} />
+          <Text style={[styles.headerTitle, { color: colors.headingGold }]}>{translate('settings')}</Text>
+          <Text style={[styles.headerSubtext, { color: 'rgba(255,255,255,0.8)' }]}>{translate('customize_experience')}</Text>
         </Animated.View>
       </LinearGradient>
 
@@ -353,7 +353,6 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 30,
     fontWeight: "600" as const,
-    color: "#ffffff",
     marginTop: 20,
     letterSpacing: 0.8,
     fontFamily: "Georgia",
@@ -367,8 +366,6 @@ const styles = StyleSheet.create({
   },
   headerSubtext: {
     fontSize: 15,
-    color: "#ffffff",
-    opacity: 0.88,
     marginTop: 10,
     textAlign: "center",
     letterSpacing: 0.3,

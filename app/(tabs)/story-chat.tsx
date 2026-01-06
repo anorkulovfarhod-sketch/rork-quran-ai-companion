@@ -108,7 +108,7 @@ export default function StoryChatScreen() {
       keyboardVerticalOffset={0}
     >
       <LinearGradient
-        colors={[colors.primary, colors.primaryDark]}
+        colors={['#1a1a1a', '#2a2a2a']}
         style={styles.headerGradient}
       >
         <View style={styles.headerContent}>
@@ -117,11 +117,11 @@ export default function StoryChatScreen() {
             onPress={() => router.back()}
             hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
           >
-            <ArrowLeft color="#ffffff" size={24} strokeWidth={2} />
+            <ArrowLeft color={colors.headingGold} size={24} strokeWidth={2} />
           </TouchableOpacity>
-          <BookHeart color="#ffffff" size={36} strokeWidth={1.5} />
-          <Text style={styles.headerText}>{translate('story_chat')}</Text>
-          <Text style={styles.headerSubtext}>
+          <BookHeart color={colors.headingGold} size={36} strokeWidth={1.5} />
+          <Text style={[styles.headerText, { color: colors.headingGold }]}>{translate('story_chat')}</Text>
+          <Text style={[styles.headerSubtext, { color: 'rgba(255,255,255,0.8)' }]}>
             {translate('personalized_stories')}
           </Text>
         </View>
@@ -309,15 +309,12 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 26,
     fontWeight: "600" as const,
-    color: "#ffffff",
     marginTop: 16,
     letterSpacing: 0.5,
     fontFamily: "Georgia",
   },
   headerSubtext: {
     fontSize: 15,
-    color: "#ffffff",
-    opacity: 0.92,
     marginTop: 6,
     textAlign: "center",
     letterSpacing: 0.3,

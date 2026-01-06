@@ -157,7 +157,7 @@ export default function PrayersScreen() {
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <LinearGradient
-        colors={[colors.primary, colors.primaryDark]}
+        colors={['#1a1a1a', '#2a2a2a']}
         style={styles.headerGradient}
       >
         <Animated.View
@@ -169,10 +169,10 @@ export default function PrayersScreen() {
             },
           ]}
         >
-          <BookOpen color="#ffffff" size={44} strokeWidth={1.5} />
-          <Text style={styles.headerTitle}>{translate('daily_prayers')}</Text>
-          <Text style={styles.headerArabic}>الصلوات الخمس</Text>
-          <Text style={styles.headerSubtext}>
+          <BookOpen color={colors.headingGold} size={44} strokeWidth={1.5} />
+          <Text style={[styles.headerTitle, { color: colors.headingGold }]}>{translate('daily_prayers')}</Text>
+          <Text style={[styles.headerArabic, { color: colors.headingGold }]}>الصلوات الخمس</Text>
+          <Text style={[styles.headerSubtext, { color: 'rgba(255,255,255,0.8)' }]}>
             {translate('track_prayers')}
           </Text>
           {location?.city && (
@@ -374,7 +374,6 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 30,
     fontWeight: "600" as const,
-    color: "#ffffff",
     marginTop: 20,
     letterSpacing: 0.8,
     fontFamily: "Georgia",
@@ -382,14 +381,10 @@ const styles = StyleSheet.create({
   headerArabic: {
     fontSize: 22,
     fontWeight: "600" as const,
-    color: "#ffffff",
-    opacity: 0.95,
     marginTop: 8,
   },
   headerSubtext: {
     fontSize: 15,
-    color: "#ffffff",
-    opacity: 0.88,
     marginTop: 10,
     textAlign: "center",
     letterSpacing: 0.3,
