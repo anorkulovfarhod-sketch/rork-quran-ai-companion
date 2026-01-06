@@ -114,7 +114,7 @@ export default function SettingsScreen() {
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <Moon color={colors.primary} size={24} strokeWidth={2} />
-              <Text style={[styles.sectionTitle, { color: colors.text }]}>{translate('appearance')}</Text>
+              <Text style={[styles.sectionTitle, { color: colors.headingGold, textShadowColor: colors.primary, textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 8 }]}>{translate('appearance')}</Text>
             </View>
 
             <View style={styles.themeContainer}>
@@ -158,7 +158,7 @@ export default function SettingsScreen() {
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <Volume2 color={colors.primary} size={24} strokeWidth={2} />
-              <Text style={[styles.sectionTitle, { color: colors.text }]}>Reciter</Text>
+              <Text style={[styles.sectionTitle, { color: colors.headingGold, textShadowColor: colors.primary, textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 8 }]}>Reciter</Text>
             </View>
 
             <View style={styles.recitersContainer}>
@@ -196,7 +196,7 @@ export default function SettingsScreen() {
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <Globe color={colors.primary} size={24} strokeWidth={2} />
-              <Text style={[styles.sectionTitle, { color: colors.text }]}>{translate('language')}</Text>
+              <Text style={[styles.sectionTitle, { color: colors.headingGold, textShadowColor: colors.primary, textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 8 }]}>{translate('language')}</Text>
             </View>
 
             <View style={styles.languagesContainer}>
@@ -234,7 +234,7 @@ export default function SettingsScreen() {
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <MapPin color={colors.primary} size={24} strokeWidth={2} />
-              <Text style={[styles.sectionTitle, { color: colors.text }]}>{translate('location')}</Text>
+              <Text style={[styles.sectionTitle, { color: colors.headingGold, textShadowColor: colors.primary, textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 8 }]}>{translate('location')}</Text>
             </View>
 
             <View style={[styles.locationCard, { backgroundColor: colors.card }]}>
@@ -279,7 +279,7 @@ export default function SettingsScreen() {
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <SettingsIcon color={colors.primary} size={24} strokeWidth={2} />
-              <Text style={[styles.sectionTitle, { color: colors.text }]}>Developer</Text>
+              <Text style={[styles.sectionTitle, { color: colors.headingGold, textShadowColor: colors.primary, textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 8 }]}>Developer</Text>
             </View>
 
             <View style={[styles.locationCard, { backgroundColor: colors.card }]}>

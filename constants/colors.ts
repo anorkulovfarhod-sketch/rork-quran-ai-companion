@@ -15,6 +15,7 @@ export default {
     muted: "#6b7a76",
     success: "#10b981",
     parchment: "#f5f2ed",
+    headingGold: "#9b7e4a",
   },
   dark: {
     text: "#f5f5f7",
@@ -32,5 +33,6 @@ export default {
     muted: "#98989d",
     success: "#30d158",
     parchment: "#2c2c2e",
+    headingGold: "#b8a06e",
   },
 };

@@ -196,7 +196,7 @@ export default function PrayersScreen() {
               <View style={[styles.qiblaCard, { backgroundColor: colors.card, shadowColor: colors.primary }]}>
                 <View style={styles.qiblaHeader}>
                   <Compass color={colors.primary} size={20} strokeWidth={2} />
-                  <Text style={[styles.qiblaTitle, { color: colors.text }]}>Qibla</Text>
+                  <Text style={[styles.qiblaTitle, { color: colors.headingGold, textShadowColor: colors.primary, textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 8 }]}>Qibla</Text>
                 </View>
                 <View style={styles.qiblaCompassWrapper}>
                   <QiblaCompass latitude={location.latitude} longitude={location.longitude} />
@@ -207,7 +207,7 @@ export default function PrayersScreen() {
             <View style={[styles.progressCard, { backgroundColor: colors.card, shadowColor: colors.primary }]}>
               <View style={styles.progressHeader}>
                 <CheckCircle2 color={colors.primary} size={20} strokeWidth={2} />
-                <Text style={[styles.progressTitle, { color: colors.text }]}>Today</Text>
+                <Text style={[styles.progressTitle, { color: colors.headingGold, textShadowColor: colors.primary, textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 8 }]}>Today</Text>
               </View>
               <View style={styles.progressCircleContainer}>
                 <View style={styles.progressCircle}>
@@ -263,7 +263,7 @@ export default function PrayersScreen() {
           <View style={[styles.prayersSection, { backgroundColor: colors.card, shadowColor: colors.primary }]}>
             <View style={styles.prayersSectionHeader}>
               <Clock color={colors.primary} size={20} strokeWidth={2} />
-              <Text style={[styles.prayersSectionTitle, { color: colors.text }]}>Today&apos;s Prayers</Text>
+              <Text style={[styles.prayersSectionTitle, { color: colors.headingGold, textShadowColor: colors.primary, textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 8 }]}>Today&apos;s Prayers</Text>
             </View>
             <View style={styles.prayersContainer}>
               {prayers.map((prayer, index) => {
