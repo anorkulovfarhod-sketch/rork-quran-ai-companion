@@ -20,7 +20,7 @@ type PlanType = 'monthly' | 'yearly';
 
 export default function PaywallScreen() {
   const router = useRouter();
-  const { offerings, purchase, restore, isPurchasing, isRestoring, isPremium } = useSubscription();
+  const { offerings, purchase, restore, isPurchasing, isRestoring, isPremium, isLoading } = useSubscription();
   const { translate } = useLanguage();
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(50)).current;
@@ -69,7 +69,10 @@ export default function PaywallScreen() {
       
       const currentOffering = offerings?.current;
       if (!currentOffering) {
-        Alert.alert(translate('purchase_failed'), 'Unable to load subscription offerings. Please try again later.');
+        Alert.alert(
+          translate('purchase_failed'), 
+          'Subscription offerings are not available at the moment. This can happen when:\n\n• Testing on web or simulator\n• Network connectivity issues\n• RevenueCat configuration pending\n\nPlease try again on a real device or contact support.'
+        );
         console.error('No current offering available');
         return;
       }
@@ -112,6 +115,54 @@ export default function PaywallScreen() {
     translate('personal_spiritual_guidance'),
     translate('support_development'),
   ];
+
+  if (isLoading) {
+    return (
+      <View style={styles.container}>
+        <TouchableOpacity
+          style={styles.closeButton}
+          onPress={() => router.back()}
+        >
+          <X color={Colors.light.text} size={28} strokeWidth={2} />
+        </TouchableOpacity>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color={Colors.light.primary} />
+          <Text style={styles.loadingText}>Loading subscription options...</Text>
+        </View>
+      </View>
+    );
+  }
+
+  if (!offerings?.current) {
+    return (
+      <View style={styles.container}>
+        <TouchableOpacity
+          style={styles.closeButton}
+          onPress={() => router.back()}
+        >
+          <X color={Colors.light.text} size={28} strokeWidth={2} />
+        </TouchableOpacity>
+        <View style={styles.loadingContainer}>
+          <Text style={styles.errorTitle}>Subscriptions Unavailable</Text>
+          <Text style={styles.errorMessage}>
+            Subscription offerings could not be loaded. This typically happens when:
+          </Text>
+          <Text style={styles.errorBullet}>• Testing on web or simulator</Text>
+          <Text style={styles.errorBullet}>• Network connectivity issues</Text>
+          <Text style={styles.errorBullet}>• RevenueCat setup is pending</Text>
+          <Text style={[styles.errorMessage, { marginTop: 16 }]}>
+            Please try again on a real device or contact support.
+          </Text>
+          <TouchableOpacity
+            style={styles.retryButton}
+            onPress={() => router.back()}
+          >
+            <Text style={styles.retryButtonText}>Go Back</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -488,5 +539,46 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     paddingHorizontal: 20,
   },
-
+  loadingContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 32,
+  },
+  loadingText: {
+    marginTop: 16,
+    fontSize: 16,
+    color: Colors.light.muted,
+  },
+  errorTitle: {
+    fontSize: 24,
+    fontWeight: '700' as const,
+    color: Colors.light.text,
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  errorMessage: {
+    fontSize: 15,
+    color: Colors.light.muted,
+    textAlign: 'center',
+    lineHeight: 22,
+    marginBottom: 8,
+  },
+  errorBullet: {
+    fontSize: 14,
+    color: Colors.light.muted,
+    marginBottom: 4,
+  },
+  retryButton: {
+    marginTop: 24,
+    backgroundColor: Colors.light.primary,
+    paddingVertical: 14,
+    paddingHorizontal: 32,
+    borderRadius: 12,
+  },
+  retryButtonText: {
+    fontSize: 16,
+    fontWeight: '600' as const,
+    color: '#ffffff',
+  },
 });
