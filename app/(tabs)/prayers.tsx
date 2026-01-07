@@ -274,7 +274,7 @@ export default function PrayersScreen() {
                 
                 return (
                   <TouchableOpacity
-                    key={prayer.name}
+                    key={`${prayer.name}-${index}`}
                     style={[
                       styles.prayerCard,
                       { backgroundColor: colors.background, borderColor: isNext ? colors.accent : 'transparent' },
