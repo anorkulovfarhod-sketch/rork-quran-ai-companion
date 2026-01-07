@@ -262,7 +262,7 @@ export default function PrayersScreen() {
 
           <View style={[styles.prayersSection, { backgroundColor: colors.card, shadowColor: colors.primary }]}>
             <View style={[styles.prayersSectionHeader, { backgroundColor: theme === 'dark' ? '#2a2a2a' : colors.parchment, shadowColor: theme === 'dark' ? '#b8a06e' : 'transparent', shadowOpacity: theme === 'dark' ? 0.6 : 0 }]}>
-              <Clock color={theme === 'dark' ? '#b8a06e' : colors.primary} size={20} strokeWidth={2} />
+              <Clock color={theme === 'dark' ? colors.headingGold : colors.primary} size={20} strokeWidth={2} />
               <Text style={[styles.prayersSectionTitle, { color: theme === 'dark' ? colors.headingGold : colors.primary }]}>Today&apos;s Prayers</Text>
             </View>
             <View style={styles.prayersContainer}>

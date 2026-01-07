@@ -299,7 +299,7 @@ export default function PrayerGuideScreen() {
           <TouchableOpacity
             style={[
               styles.sectionTab,
-              activeSection === 'wudu' && { backgroundColor: colors.primary },
+              activeSection === 'wudu' && { backgroundColor: theme === 'dark' ? colors.headingGold : colors.primary },
             ]}
             onPress={() => setActiveSection('wudu')}
           >
@@ -318,7 +318,7 @@ export default function PrayerGuideScreen() {
           <TouchableOpacity
             style={[
               styles.sectionTab,
-              activeSection === 'prayer' && { backgroundColor: colors.primary },
+              activeSection === 'prayer' && { backgroundColor: theme === 'dark' ? colors.headingGold : colors.primary },
             ]}
             onPress={() => setActiveSection('prayer')}
           >
@@ -338,11 +338,11 @@ export default function PrayerGuideScreen() {
         {activeSection === 'wudu' ? (
           <>
             <View style={[styles.introCard, { backgroundColor: colors.parchment }]}>
-              <Droplets color={colors.primary} size={28} style={{ marginBottom: 12 }} />
+              <Droplets color={theme === 'dark' ? colors.headingGold : colors.primary} size={28} style={{ marginBottom: 12 }} />
               <Text style={[styles.introTitle, { color: colors.text }]}>
                 {translate('how_to_perform_wudu')}
               </Text>
-              <Text style={[styles.introArabic, { color: colors.primary }]}>
+              <Text style={[styles.introArabic, { color: theme === 'dark' ? colors.headingGold : colors.primary }]}>
                 كيفية الوضوء
               </Text>
               <Text style={[styles.introText, { color: colors.text }]}>
@@ -376,7 +376,7 @@ export default function PrayerGuideScreen() {
                       <Text style={[styles.stepTitle, { color: colors.text }]}>
                         {step.title}
                       </Text>
-                      <Text style={[styles.stepArabicTitle, { color: '#2980B9' }]}>
+                      <Text style={[styles.stepArabicTitle, { color: theme === 'dark' ? colors.headingGold : '#2980B9' }]}>
                         {step.arabicTitle}
                       </Text>
                     </View>
@@ -399,7 +399,7 @@ export default function PrayerGuideScreen() {
                       </Text>
 
                       <View style={styles.repetitionBadge}>
-                        <CheckCircle color="#2980B9" size={16} />
+                        <CheckCircle color={theme === 'dark' ? colors.headingGold : '#2980B9'} size={16} />
                         <Text style={[styles.repetitionText, { color: colors.muted }]}>
                           {step.repetition}
                         </Text>
@@ -418,10 +418,10 @@ export default function PrayerGuideScreen() {
               <Text style={[styles.duaSectionTitle, { color: colors.text }]}>
                 {translate('the_shahada')}
               </Text>
-              <Text style={[styles.duaArabic, { color: '#2980B9' }]}>
+              <Text style={[styles.duaArabic, { color: theme === 'dark' ? colors.headingGold : '#2980B9' }]}>
                 أشهد أن لا إله إلا الله وأشهد أن محمدًا عبده ورسوله
               </Text>
-              <Text style={[styles.duaTransliteration, { color: colors.primary, fontWeight: '600' }]}>
+              <Text style={[styles.duaTransliteration, { color: theme === 'dark' ? colors.headingGold : colors.primary, fontWeight: '600' }]}>
                 Ash-hadu an la ilaha illal lahu wa ash-hadu anna Muhammadan &apos;abduhu wa rasuluh
               </Text>
               <Text style={[styles.duaTranslation, { color: colors.muted }]}>
@@ -433,10 +433,10 @@ export default function PrayerGuideScreen() {
               <Text style={[styles.duaSectionTitle, { color: colors.text }]}>
                 {translate('dua')}
               </Text>
-              <Text style={[styles.duaArabic, { color: '#2980B9' }]}>
+              <Text style={[styles.duaArabic, { color: theme === 'dark' ? colors.headingGold : '#2980B9' }]}>
                 اللهم اجعلني من التوابين واجعلني من المتطهرين
               </Text>
-              <Text style={[styles.duaTransliteration, { color: colors.primary, fontWeight: '600' }]}>
+              <Text style={[styles.duaTransliteration, { color: theme === 'dark' ? colors.headingGold : colors.primary, fontWeight: '600' }]}>
                 Allahuma j&apos;alnee mina tawabeen waj-&apos;alnee minal mutatahireen
               </Text>
               <Text style={[styles.duaTranslation, { color: colors.muted }]}>
@@ -465,7 +465,7 @@ export default function PrayerGuideScreen() {
                   </Text>
                 </View>
                 <View style={styles.prayerSelectorRight}>
-                  <Text style={[styles.prayerSelectorArabic, { color: colors.primary }]}>
+                  <Text style={[styles.prayerSelectorArabic, { color: theme === 'dark' ? colors.headingGold : colors.primary }]}>
                     {selectedPrayer.arabicName}
                   </Text>
                   <ChevronDown color={colors.muted} size={24} />
@@ -478,14 +478,14 @@ export default function PrayerGuideScreen() {
                 <Text style={[styles.rakatTitle, { color: colors.text }]}>
                   {selectedPrayer.name} {translate('prayer_name_with_prayer')}
                 </Text>
-                <Text style={[styles.rakatArabic, { color: colors.primary }]}>
+                <Text style={[styles.rakatArabic, { color: theme === 'dark' ? colors.headingGold : colors.primary }]}>
                   {selectedPrayer.arabicName}
                 </Text>
               </View>
               
               <View style={styles.rakatInfo}>
                 <View style={styles.rakatItem}>
-                  <Text style={[styles.rakatNumber, { color: colors.primary }]}>
+                  <Text style={[styles.rakatNumber, { color: theme === 'dark' ? colors.headingGold : colors.primary }]}>
                     {selectedPrayer.rakats}
                   </Text>
                   <Text style={[styles.rakatLabel, { color: colors.muted }]}>
@@ -495,7 +495,7 @@ export default function PrayerGuideScreen() {
                 
                 {selectedPrayer.sunnahBefore && (
                   <View style={styles.rakatItem}>
-                    <Text style={[styles.rakatNumber, { color: colors.accent }]}>
+                    <Text style={[styles.rakatNumber, { color: theme === 'dark' ? colors.headingGold : colors.accent }]}>
                       {selectedPrayer.sunnahBefore}
                     </Text>
                     <Text style={[styles.rakatLabel, { color: colors.muted }]}>
@@ -506,7 +506,7 @@ export default function PrayerGuideScreen() {
                 
                 {selectedPrayer.sunnahAfter && (
                   <View style={styles.rakatItem}>
-                    <Text style={[styles.rakatNumber, { color: colors.accent }]}>
+                    <Text style={[styles.rakatNumber, { color: theme === 'dark' ? colors.headingGold : colors.accent }]}>
                       {selectedPrayer.sunnahAfter}
                     </Text>
                     <Text style={[styles.rakatLabel, { color: colors.muted }]}>
@@ -542,7 +542,7 @@ export default function PrayerGuideScreen() {
                   <View style={styles.stepHeader}>
                     <View style={styles.stepNumber}>
                       <LinearGradient
-                        colors={[colors.primary, colors.primaryDark]}
+                        colors={theme === 'dark' ? [colors.headingGold, colors.headingGold] : [colors.primary, colors.primaryDark]}
                         style={styles.stepNumberGradient}
                       >
                         <Text style={styles.stepNumberText}>{step.id}</Text>
@@ -576,14 +576,14 @@ export default function PrayerGuideScreen() {
                       </Text>
 
                       <View style={[styles.arabicBox, { backgroundColor: colors.parchment }]}>
-                        <Text style={[styles.arabicText, { color: colors.primary }]}>
+                        <Text style={[styles.arabicText, { color: theme === 'dark' ? colors.headingGold : colors.primary }]}>
                           {step.arabicText}
                         </Text>
                       </View>
 
                       {step.repetition && (
                         <View style={styles.repetitionBadge}>
-                          <CheckCircle color={colors.accent} size={16} />
+                          <CheckCircle color={theme === 'dark' ? colors.headingGold : colors.accent} size={16} />
                           <Text style={[styles.repetitionText, { color: colors.muted }]}>
                             {step.repetition}
                           </Text>
@@ -599,7 +599,7 @@ export default function PrayerGuideScreen() {
               <Text style={[styles.footerText, { color: colors.text }]}>
                 {translate('prayer_guide_footer')}
               </Text>
-              <Text style={[styles.footerArabic, { color: colors.primary }]}>
+              <Text style={[styles.footerArabic, { color: theme === 'dark' ? colors.headingGold : colors.primary }]}>
                 إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا
               </Text>
               <Text style={[styles.footerReference, { color: colors.muted }]}>
@@ -649,7 +649,7 @@ export default function PrayerGuideScreen() {
                     {prayer.description}
                   </Text>
                 </View>
-                <Text style={[styles.prayerOptionArabic, { color: colors.primary }]}>
+                <Text style={[styles.prayerOptionArabic, { color: theme === 'dark' ? colors.headingGold : colors.primary }]}>
                   {prayer.arabicName}
                 </Text>
               </TouchableOpacity>

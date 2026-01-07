@@ -239,12 +239,12 @@ export default function QuoteScreen() {
           ]}
         >
           <View style={styles.decorativeTop}>
-            <BookOpen color={colors.accent} size={32} strokeWidth={1.5} />
+            <BookOpen color={theme === 'dark' ? colors.headingGold : colors.accent} size={32} strokeWidth={1.5} />
           </View>
 
-          <Text style={[styles.verseArabic, { color: colors.primary }]}>{currentVerse.arabic}</Text>
+          <Text style={[styles.verseArabic, { color: theme === 'dark' ? colors.headingGold : colors.primary }]}>{currentVerse.arabic}</Text>
           
-          <View style={[styles.divider, { backgroundColor: colors.accent }]} />
+          <View style={[styles.divider, { backgroundColor: theme === 'dark' ? colors.headingGold : colors.accent }]} />
           
           <Text style={[styles.verseTranslation, { color: colors.text }]}>{currentVerse.translations[language || 'en']}</Text>
           
@@ -253,17 +253,17 @@ export default function QuoteScreen() {
           </View>
 
           <View style={styles.decorativeBottom}>
-            <View style={[styles.decorativeLine, { backgroundColor: colors.accent }]} />
+            <View style={[styles.decorativeLine, { backgroundColor: theme === 'dark' ? colors.headingGold : colors.accent }]} />
           </View>
         </Animated.View>
 
 
 
-        <View style={[styles.infoCard, { backgroundColor: colors.parchment, borderLeftColor: colors.accent }]}>
+        <View style={[styles.infoCard, { backgroundColor: colors.parchment, borderLeftColor: theme === 'dark' ? colors.headingGold : colors.accent }]}>
           <Text style={[styles.infoText, { color: colors.text }]}>
             {translate('verse_guide_day')}
           </Text>
-          <Text style={[styles.infoArabic, { color: colors.primary }]}>
+          <Text style={[styles.infoArabic, { color: theme === 'dark' ? colors.headingGold : colors.primary }]}>
             وَذَكِّرْ فَإِنَّ الذِّكْرَىٰ تَنفَعُ الْمُؤْمِنِينَ
           </Text>
           <Text style={[styles.infoReference, { color: colors.text }]}>

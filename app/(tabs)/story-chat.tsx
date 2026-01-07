@@ -186,7 +186,7 @@ export default function StoryChatScreen() {
             key={message.id}
             style={[
               styles.messageBubble,
-              message.role === "user" ? [styles.userBubble, { backgroundColor: colors.primary, shadowColor: colors.primary }] : [styles.aiBubble, { backgroundColor: colors.card }],
+              message.role === "user" ? [styles.userBubble, { backgroundColor: theme === 'dark' ? colors.headingGold : colors.primary, shadowColor: theme === 'dark' ? colors.headingGold : colors.primary }] : [styles.aiBubble, { backgroundColor: colors.card }],
             ]}
           >
             {message.parts.map((part, idx) => {
@@ -212,7 +212,7 @@ export default function StoryChatScreen() {
 
         {isLoading && (
           <View style={[styles.messageBubble, styles.aiBubble, { backgroundColor: colors.card }]}>
-            <ActivityIndicator color={colors.primary} />
+            <ActivityIndicator color={theme === 'dark' ? colors.headingGold : colors.primary} />
           </View>
         )}
 
@@ -238,7 +238,7 @@ export default function StoryChatScreen() {
             </Text>
             {!canSendMessage && (
               <TouchableOpacity onPress={() => router.push('/paywall')}>
-                <Text style={[styles.unlockText, { color: colors.primary }]}>Unlock Chat</Text>
+                <Text style={[styles.unlockText, { color: theme === 'dark' ? colors.headingGold : colors.primary }]}>Unlock Chat</Text>
               </TouchableOpacity>
             )}
           </View>
@@ -265,7 +265,7 @@ export default function StoryChatScreen() {
             <LinearGradient
               colors={
                 input.trim() && canSendMessage
-                  ? [colors.primary, colors.primaryDark]
+                  ? (theme === 'dark' ? [colors.headingGold, colors.headingGold] : [colors.primary, colors.primaryDark])
                   : [colors.muted, colors.muted]
               }
               style={styles.sendButtonGradient}
