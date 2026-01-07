@@ -111,7 +111,7 @@ export default function ChatScreen() {
     >
       <LinearGradient
         colors={theme === 'dark' ? ['#1a1a1a', '#2a2a2a'] : [colors.primary, colors.primaryDark]}
-        style={[styles.headerGradient, theme === 'dark' && { shadowColor: '#b8a06e', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.6, shadowRadius: 20, elevation: 8 }]}
+        style={[styles.headerGradient, theme === 'dark' && { shadowColor: colors.headingGold, shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.6, shadowRadius: 20, elevation: 8 }]}
       >
         <View style={styles.headerContent}>
           <TouchableOpacity 

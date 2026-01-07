@@ -89,7 +89,7 @@ export default function SettingsScreen() {
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <LinearGradient
         colors={theme === 'dark' ? ['#1a1a1a', '#2a2a2a'] : [colors.primary, colors.primaryDark]}
-        style={[styles.headerGradient, theme === 'dark' && { shadowColor: '#b8a06e', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.6, shadowRadius: 20, elevation: 8 }]}
+        style={[styles.headerGradient, theme === 'dark' && { shadowColor: colors.headingGold, shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.6, shadowRadius: 20, elevation: 8 }]}
       >
         <Animated.View
           style={[
@@ -113,7 +113,7 @@ export default function SettingsScreen() {
         <Animated.View style={{ opacity: fadeAnim }}>
           <View style={styles.section}>
             <View style={[styles.sectionHeader, { backgroundColor: theme === 'dark' ? '#2a2a2a' : colors.parchment }]}>
-              <Moon color={theme === 'dark' ? '#b8a06e' : colors.primary} size={24} strokeWidth={2} />
+              <Moon color={theme === 'dark' ? colors.headingGold : colors.primary} size={24} strokeWidth={2} />
               <Text style={[styles.sectionTitle, { color: theme === 'dark' ? colors.headingGold : colors.primary }]}>{translate('appearance')}</Text>
             </View>
 
@@ -157,7 +157,7 @@ export default function SettingsScreen() {
 
           <View style={styles.section}>
             <View style={[styles.sectionHeader, { backgroundColor: theme === 'dark' ? '#2a2a2a' : colors.parchment }]}>
-              <Volume2 color={theme === 'dark' ? '#b8a06e' : colors.primary} size={24} strokeWidth={2} />
+              <Volume2 color={theme === 'dark' ? colors.headingGold : colors.primary} size={24} strokeWidth={2} />
               <Text style={[styles.sectionTitle, { color: theme === 'dark' ? colors.headingGold : colors.primary }]}>Reciter</Text>
             </View>
 
@@ -195,7 +195,7 @@ export default function SettingsScreen() {
 
           <View style={styles.section}>
             <View style={[styles.sectionHeader, { backgroundColor: theme === 'dark' ? '#2a2a2a' : colors.parchment }]}>
-              <Globe color={theme === 'dark' ? '#b8a06e' : colors.primary} size={24} strokeWidth={2} />
+              <Globe color={theme === 'dark' ? colors.headingGold : colors.primary} size={24} strokeWidth={2} />
               <Text style={[styles.sectionTitle, { color: theme === 'dark' ? colors.headingGold : colors.primary }]}>{translate('language')}</Text>
             </View>
 
@@ -233,7 +233,7 @@ export default function SettingsScreen() {
 
           <View style={styles.section}>
             <View style={[styles.sectionHeader, { backgroundColor: theme === 'dark' ? '#2a2a2a' : colors.parchment }]}>
-              <MapPin color={theme === 'dark' ? '#b8a06e' : colors.primary} size={24} strokeWidth={2} />
+              <MapPin color={theme === 'dark' ? colors.headingGold : colors.primary} size={24} strokeWidth={2} />
               <Text style={[styles.sectionTitle, { color: theme === 'dark' ? colors.headingGold : colors.primary }]}>{translate('location')}</Text>
             </View>
 
@@ -278,7 +278,7 @@ export default function SettingsScreen() {
 
           <View style={styles.section}>
             <View style={[styles.sectionHeader, { backgroundColor: theme === 'dark' ? '#2a2a2a' : colors.parchment }]}>
-              <SettingsIcon color={theme === 'dark' ? '#b8a06e' : colors.primary} size={24} strokeWidth={2} />
+              <SettingsIcon color={theme === 'dark' ? colors.headingGold : colors.primary} size={24} strokeWidth={2} />
               <Text style={[styles.sectionTitle, { color: theme === 'dark' ? colors.headingGold : colors.primary }]}>Developer</Text>
             </View>
 

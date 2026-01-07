@@ -549,7 +549,7 @@ export default function PrayerGuideScreen() {
                       </LinearGradient>
                     </View>
                     
-                    <View style={[styles.stepTitleContainer, theme === 'dark' && { backgroundColor: '#2a2a2a', paddingHorizontal: 12, paddingVertical: 8, borderRadius: 10, shadowColor: '#b8a06e', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.6, shadowRadius: 12, elevation: 6 }]}>
+                    <View style={[styles.stepTitleContainer, theme === 'dark' && { backgroundColor: '#2a2a2a', paddingHorizontal: 12, paddingVertical: 8, borderRadius: 10, shadowColor: colors.headingGold, shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.6, shadowRadius: 12, elevation: 6 }]}>
                       <Text style={[styles.stepTitle, { color: theme === 'dark' ? colors.headingGold : colors.text }]}>
                         {step.title}
                       </Text>

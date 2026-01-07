@@ -158,7 +158,7 @@ export default function PrayersScreen() {
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <LinearGradient
         colors={theme === 'dark' ? ['#1a1a1a', '#2a2a2a'] : [colors.primary, colors.primaryDark]}
-        style={[styles.headerGradient, theme === 'dark' && { shadowColor: '#b8a06e', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.6, shadowRadius: 20, elevation: 8 }]}
+        style={[styles.headerGradient, theme === 'dark' && { shadowColor: colors.headingGold, shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.6, shadowRadius: 20, elevation: 8 }]}
       >
         <Animated.View
           style={[
@@ -194,8 +194,8 @@ export default function PrayersScreen() {
           <View style={styles.cardsRow}>
             {location && hasPermission && (
               <View style={[styles.qiblaCard, { backgroundColor: colors.card, shadowColor: colors.primary }]}>
-                <View style={[styles.qiblaHeader, { backgroundColor: theme === 'dark' ? '#2a2a2a' : colors.parchment, shadowColor: theme === 'dark' ? '#b8a06e' : 'transparent', shadowOpacity: theme === 'dark' ? 0.6 : 0 }]}>
-                  <Compass color={theme === 'dark' ? '#b8a06e' : colors.primary} size={20} strokeWidth={2} />
+                <View style={[styles.qiblaHeader, { backgroundColor: theme === 'dark' ? '#2a2a2a' : colors.parchment, shadowColor: theme === 'dark' ? colors.headingGold : 'transparent', shadowOpacity: theme === 'dark' ? 0.6 : 0 }]}>
+                  <Compass color={theme === 'dark' ? colors.headingGold : colors.primary} size={20} strokeWidth={2} />
                   <Text style={[styles.qiblaTitle, { color: theme === 'dark' ? colors.headingGold : colors.primary }]}>Qibla</Text>
                 </View>
                 <View style={styles.qiblaCompassWrapper}>
@@ -206,7 +206,7 @@ export default function PrayersScreen() {
 
             <View style={[styles.progressCard, { backgroundColor: colors.card, shadowColor: colors.primary }]}>
               <View style={[styles.progressHeader, { backgroundColor: theme === 'dark' ? '#2a2a2a' : colors.parchment }]}>
-                <CheckCircle2 color={theme === 'dark' ? '#b8a06e' : colors.primary} size={20} strokeWidth={2} />
+                <CheckCircle2 color={theme === 'dark' ? colors.headingGold : colors.primary} size={20} strokeWidth={2} />
                 <Text style={[styles.progressTitle, { color: theme === 'dark' ? colors.headingGold : colors.primary }]}>Today</Text>
               </View>
               <View style={styles.progressCircleContainer}>
@@ -261,7 +261,7 @@ export default function PrayersScreen() {
           </View>
 
           <View style={[styles.prayersSection, { backgroundColor: colors.card, shadowColor: colors.primary }]}>
-            <View style={[styles.prayersSectionHeader, { backgroundColor: theme === 'dark' ? '#2a2a2a' : colors.parchment, shadowColor: theme === 'dark' ? '#b8a06e' : 'transparent', shadowOpacity: theme === 'dark' ? 0.6 : 0 }]}>
+            <View style={[styles.prayersSectionHeader, { backgroundColor: theme === 'dark' ? '#2a2a2a' : colors.parchment, shadowColor: theme === 'dark' ? colors.headingGold : 'transparent', shadowOpacity: theme === 'dark' ? 0.6 : 0 }]}>
               <Clock color={theme === 'dark' ? colors.headingGold : colors.primary} size={20} strokeWidth={2} />
               <Text style={[styles.prayersSectionTitle, { color: theme === 'dark' ? colors.headingGold : colors.primary }]}>Today&apos;s Prayers</Text>
             </View>
