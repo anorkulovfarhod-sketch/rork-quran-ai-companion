@@ -11,6 +11,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { BookOpen, CheckCircle, XCircle, RefreshCw, Trophy, Sparkles } from "lucide-react-native";
 import Colors from "@/constants/colors";
+import { useTheme } from "@/contexts/ThemeContext";
 import { useMutation } from "@tanstack/react-query";
 import { generateObject } from "@rork-ai/toolkit-sdk";
 import { z } from "zod";
@@ -26,6 +27,8 @@ type QuizQuestion = {
 type QuizState = "idle" | "loading" | "active" | "completed";
 
 export default function QuizScreen() {
+  const { theme } = useTheme();
+  const colors = theme === 'light' ? Colors.light : Colors.dark;
   const [quizState, setQuizState] = useState<QuizState>("idle");
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -167,40 +170,40 @@ export default function QuizScreen() {
 
   if (quizState === "idle") {
     return (
-      <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
+      <Animated.View style={[styles.container, { opacity: fadeAnim, backgroundColor: colors.background }]}>
         <LinearGradient
-          colors={[Colors.light.primary, Colors.light.primaryDark]}
-          style={styles.headerGradient}
+          colors={theme === 'dark' ? ['#1a1a1a', '#2a2a2a'] : [colors.primary, colors.primaryDark]}
+          style={[styles.headerGradient, theme === 'dark' && { shadowColor: '#b8a06e', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.6, shadowRadius: 20, elevation: 8 }]}
         >
           <View style={styles.heroPattern} />
-          <BookOpen color={Colors.light.secondary} size={44} strokeWidth={1.5} />
-          <Text style={styles.headerArabic}>اختبار المعرفة</Text>
-          <Text style={styles.headerTitle}>Knowledge Quiz</Text>
-          <Text style={styles.headerSubtext}>
+          <BookOpen color={theme === 'dark' ? colors.headingGold : '#ffffff'} size={44} strokeWidth={1.5} />
+          <Text style={[styles.headerArabic, { color: theme === 'dark' ? colors.headingGold : '#ffffff' }]}>اختبار المعرفة</Text>
+          <Text style={[styles.headerTitle, { color: theme === 'dark' ? colors.headingGold : '#ffffff' }]}>Knowledge Quiz</Text>
+          <Text style={[styles.headerSubtext, { color: 'rgba(255,255,255,0.8)' }]}>
             Test Your Understanding Of Quranic Teachings
           </Text>
         </LinearGradient>
 
         <ScrollView style={styles.contentContainer} contentContainerStyle={styles.contentInner}>
           <View style={styles.featuresContainer}>
-            <View style={styles.featureCard}>
-              <Sparkles color={Colors.light.accent} size={28} strokeWidth={1.5} />
-              <Text style={styles.featureTitle}>Freshly Generated</Text>
-              <Text style={styles.featureText}>
+            <View style={[styles.featureCard, { backgroundColor: colors.card }]}>
+              <Sparkles color={theme === 'dark' ? colors.headingGold : colors.accent} size={28} strokeWidth={1.5} />
+              <Text style={[styles.featureTitle, { color: colors.text }]}>Freshly Generated</Text>
+              <Text style={[styles.featureText, { color: colors.muted }]}>
                 Unique Questions Every Session
               </Text>
             </View>
-            <View style={styles.featureCard}>
-              <BookOpen color={Colors.light.accent} size={28} strokeWidth={1.5} />
-              <Text style={styles.featureTitle}>Scholarly Explanations</Text>
-              <Text style={styles.featureText}>
+            <View style={[styles.featureCard, { backgroundColor: colors.card }]}>
+              <BookOpen color={theme === 'dark' ? colors.headingGold : colors.accent} size={28} strokeWidth={1.5} />
+              <Text style={[styles.featureTitle, { color: colors.text }]}>Scholarly Explanations</Text>
+              <Text style={[styles.featureText, { color: colors.muted }]}>
                 Learn From Each Answer
               </Text>
             </View>
-            <View style={styles.featureCard}>
-              <Trophy color={Colors.light.accent} size={28} strokeWidth={1.5} />
-              <Text style={styles.featureTitle}>Your Learning Journey</Text>
-              <Text style={styles.featureText}>
+            <View style={[styles.featureCard, { backgroundColor: colors.card }]}>
+              <Trophy color={theme === 'dark' ? colors.headingGold : colors.accent} size={28} strokeWidth={1.5} />
+              <Text style={[styles.featureTitle, { color: colors.text }]}>Your Learning Journey</Text>
+              <Text style={[styles.featureText, { color: colors.muted }]}>
                 Track Your Progress
               </Text>
             </View>
@@ -208,12 +211,12 @@ export default function QuizScreen() {
 
           <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
             <TouchableOpacity
-              style={styles.startButton}
+              style={[styles.startButton, { shadowColor: colors.primary }]}
               onPress={handleStartQuiz}
               activeOpacity={0.9}
             >
               <LinearGradient
-                colors={[Colors.light.primary, Colors.light.primaryDark]}
+                colors={theme === 'dark' ? [colors.headingGold, colors.headingGold] : [colors.primary, colors.primaryDark]}
                 style={styles.startButtonGradient}
               >
                 <Text style={styles.startButtonText}>Begin Quiz</Text>
@@ -227,11 +230,11 @@ export default function QuizScreen() {
 
   if (quizState === "loading" || generateQuizMutation.isPending) {
     return (
-      <View style={styles.loadingContainer}>
+      <View style={[styles.loadingContainer, { backgroundColor: colors.background }]}>
         {!generateQuizMutation.isError && (
           <>
-            <ActivityIndicator size="large" color={Colors.light.primary} />
-            <Text style={styles.loadingText}>Generating Your Quiz...</Text>
+            <ActivityIndicator size="large" color={theme === 'dark' ? colors.headingGold : colors.primary} />
+            <Text style={[styles.loadingText, { color: colors.muted }]}>Generating Your Quiz...</Text>
           </>
         )}
         {generateQuizMutation.isError && (
@@ -243,7 +246,7 @@ export default function QuizScreen() {
                 : "An error occurred. Please check your connection and try again."}
             </Text>
             <TouchableOpacity
-              style={styles.retryButton}
+              style={[styles.retryButton, { backgroundColor: colors.primary }]}
               onPress={handleRestartQuiz}
             >
               <Text style={styles.retryButtonText}>Go Back</Text>
@@ -257,26 +260,26 @@ export default function QuizScreen() {
   if (quizState === "completed") {
     const percentage = Math.round((score / questions.length) * 100);
     return (
-      <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
+      <Animated.View style={[styles.container, { opacity: fadeAnim, backgroundColor: colors.background }]}>
         <LinearGradient
-          colors={[Colors.light.primary, Colors.light.primaryDark]}
-          style={styles.resultHeader}
+          colors={theme === 'dark' ? ['#1a1a1a', '#2a2a2a'] : [colors.primary, colors.primaryDark]}
+          style={[styles.resultHeader, theme === 'dark' && { shadowColor: '#b8a06e', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.6, shadowRadius: 20, elevation: 8 }]}
         >
-          <Trophy color={Colors.light.secondary} size={56} strokeWidth={1.5} />
-          <Text style={styles.resultTitle}>Completed</Text>
+          <Trophy color={theme === 'dark' ? colors.headingGold : '#ffffff'} size={56} strokeWidth={1.5} />
+          <Text style={[styles.resultTitle, { color: theme === 'dark' ? colors.headingGold : '#ffffff' }]}>Completed</Text>
         </LinearGradient>
 
         <ScrollView style={styles.contentContainer} contentContainerStyle={styles.contentInner}>
-          <View style={styles.scoreCard}>
-            <Text style={styles.scoreNumber}>{percentage}%</Text>
-            <Text style={styles.scoreLabel}>Your Score</Text>
-            <Text style={styles.scoreDetail}>
+          <View style={[styles.scoreCard, { backgroundColor: colors.card, shadowColor: colors.primary }]}>
+            <Text style={[styles.scoreNumber, { color: theme === 'dark' ? colors.headingGold : colors.primary }]}>{percentage}%</Text>
+            <Text style={[styles.scoreLabel, { color: colors.muted }]}>Your Score</Text>
+            <Text style={[styles.scoreDetail, { color: colors.text }]}>
               {score} of {questions.length} correct
             </Text>
           </View>
 
-          <View style={styles.resultMessage}>
-            <Text style={styles.resultMessageText}>
+          <View style={[styles.resultMessage, { backgroundColor: colors.parchment }]}>
+            <Text style={[styles.resultMessageText, { color: colors.text }]}>
               {percentage >= 80
                 ? "Excellent mastery of Quranic knowledge"
                 : percentage >= 60
@@ -286,12 +289,12 @@ export default function QuizScreen() {
           </View>
 
           <TouchableOpacity
-            style={styles.restartButton}
+            style={[styles.restartButton, { borderColor: theme === 'dark' ? colors.headingGold : colors.primary, backgroundColor: colors.card, shadowColor: colors.primary }]}
             onPress={handleRestartQuiz}
             activeOpacity={0.8}
           >
-            <RefreshCw color={Colors.light.primary} size={20} strokeWidth={2} />
-            <Text style={styles.restartButtonText}>Start New Quiz</Text>
+            <RefreshCw color={theme === 'dark' ? colors.headingGold : colors.primary} size={20} strokeWidth={2} />
+            <Text style={[styles.restartButtonText, { color: theme === 'dark' ? colors.headingGold : colors.primary }]}>Start New Quiz</Text>
           </TouchableOpacity>
         </ScrollView>
       </Animated.View>
@@ -299,13 +302,15 @@ export default function QuizScreen() {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.progressBar}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <View style={[styles.progressBar, { backgroundColor: colors.border }]}>
         <View
           style={[
             styles.progressFill,
             {
               width: `${((currentQuestionIndex + 1) / questions.length) * 100}%`,
+              backgroundColor: theme === 'dark' ? colors.headingGold : colors.primary,
+              shadowColor: theme === 'dark' ? colors.headingGold : colors.primary,
             },
           ]}
         />
@@ -313,13 +318,13 @@ export default function QuizScreen() {
 
       <ScrollView style={styles.quizContainer}>
         <View style={styles.questionHeader}>
-          <Text style={styles.questionNumber}>
+          <Text style={[styles.questionNumber, { color: colors.muted }]}>
             Question {currentQuestionIndex + 1} of {questions.length}
           </Text>
-          <Text style={styles.surahText}>{currentQuestion?.surah}</Text>
+          <Text style={[styles.surahText, { color: theme === 'dark' ? colors.headingGold : colors.primary }]}>{currentQuestion?.surah}</Text>
         </View>
 
-        <Text style={styles.questionText}>{currentQuestion?.question}</Text>
+        <Text style={[styles.questionText, { color: colors.text }]}>{currentQuestion?.question}</Text>
 
         <View style={styles.optionsContainer}>
           {currentQuestion?.options.map((option, index) => {
@@ -327,17 +332,17 @@ export default function QuizScreen() {
             const isCorrect = index === currentQuestion.correctAnswer;
             const showResult = showExplanation;
 
-            let backgroundColor = Colors.light.card;
-            let borderColor = Colors.light.border;
+            let backgroundColor = colors.card;
+            let borderColor = colors.border;
 
             if (showResult && isCorrect) {
-              backgroundColor = "#d1fae5";
-              borderColor = Colors.light.primary;
+              backgroundColor = theme === 'dark' ? '#1a3d2e' : '#d1fae5';
+              borderColor = theme === 'dark' ? colors.headingGold : colors.primary;
             } else if (showResult && isSelected && !isCorrect) {
-              backgroundColor = "#fee2e2";
-              borderColor = "#ef4444";
+              backgroundColor = theme === 'dark' ? '#3d1a1a' : '#fee2e2';
+              borderColor = '#ef4444';
             } else if (isSelected) {
-              borderColor = Colors.light.primary;
+              borderColor = theme === 'dark' ? colors.headingGold : colors.primary;
             }
 
             return (
@@ -350,12 +355,12 @@ export default function QuizScreen() {
                 onPress={() => handleAnswerSelect(index)}
                 disabled={showExplanation}
               >
-                <Text style={styles.optionLetter}>
+                <Text style={[styles.optionLetter, { backgroundColor: theme === 'dark' ? colors.headingGold : colors.primary }]}>
                   {String.fromCharCode(65 + index)}
                 </Text>
-                <Text style={styles.optionText}>{option}</Text>
+                <Text style={[styles.optionText, { color: colors.text }]}>{option}</Text>
                 {showResult && isCorrect && (
-                  <CheckCircle color={Colors.light.primary} size={24} />
+                  <CheckCircle color={theme === 'dark' ? colors.headingGold : colors.primary} size={24} />
                 )}
                 {showResult && isSelected && !isCorrect && (
                   <XCircle color="#ef4444" size={24} />
@@ -366,9 +371,9 @@ export default function QuizScreen() {
         </View>
 
         {showExplanation && (
-          <View style={styles.explanationCard}>
-            <Text style={styles.explanationTitle}>Explanation</Text>
-            <Text style={styles.explanationText}>
+          <View style={[styles.explanationCard, { backgroundColor: colors.parchment, borderLeftColor: theme === 'dark' ? colors.headingGold : colors.accent }]}>
+            <Text style={[styles.explanationTitle, { color: theme === 'dark' ? colors.headingGold : colors.primary }]}>Explanation</Text>
+            <Text style={[styles.explanationText, { color: colors.text }]}>
               {currentQuestion?.explanation}
             </Text>
           </View>
@@ -376,13 +381,13 @@ export default function QuizScreen() {
       </ScrollView>
 
       {showExplanation && (
-        <View style={styles.bottomButton}>
+        <View style={[styles.bottomButton, { backgroundColor: colors.card }]}>
           <TouchableOpacity
-            style={styles.nextButton}
+            style={[styles.nextButton, { shadowColor: colors.primary }]}
             onPress={handleNextQuestion}
           >
             <LinearGradient
-              colors={[Colors.light.primary, Colors.light.primaryDark]}
+              colors={theme === 'dark' ? [colors.headingGold, colors.headingGold] : [colors.primary, colors.primaryDark]}
               style={styles.nextButtonGradient}
             >
               <Text style={styles.nextButtonText}>
@@ -401,7 +406,6 @@ export default function QuizScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.light.background,
   },
   headerGradient: {
     paddingVertical: 52,
@@ -461,11 +465,10 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   featureCard: {
-    backgroundColor: Colors.light.card,
     padding: 28,
     borderRadius: 18,
     alignItems: "center",
-    shadowColor: Colors.light.primary,
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.06,
     shadowRadius: 10,
@@ -474,13 +477,11 @@ const styles = StyleSheet.create({
   featureTitle: {
     fontSize: 17,
     fontWeight: "600" as const,
-    color: Colors.light.text,
     marginTop: 16,
     letterSpacing: 0.3,
   },
   featureText: {
     fontSize: 14,
-    color: Colors.light.muted,
     marginTop: 6,
     textAlign: "center",
     lineHeight: 20,
@@ -489,7 +490,6 @@ const styles = StyleSheet.create({
     marginTop: 40,
     borderRadius: 28,
     overflow: "hidden",
-    shadowColor: Colors.light.primary,
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.25,
     shadowRadius: 12,
@@ -509,21 +509,16 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: Colors.light.background,
     gap: 16,
   },
   loadingText: {
     fontSize: 16,
-    color: Colors.light.muted,
   },
   progressBar: {
     height: 4,
-    backgroundColor: Colors.light.border,
   },
   progressFill: {
     height: "100%",
-    backgroundColor: Colors.light.primary,
-    shadowColor: Colors.light.primary,
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.4,
     shadowRadius: 4,
@@ -537,19 +532,16 @@ const styles = StyleSheet.create({
   },
   questionNumber: {
     fontSize: 14,
-    color: Colors.light.muted,
     fontWeight: "600" as const,
   },
   surahText: {
     fontSize: 12,
-    color: Colors.light.primary,
     marginTop: 4,
     fontWeight: "600" as const,
   },
   questionText: {
     fontSize: 21,
     fontWeight: "600" as const,
-    color: Colors.light.text,
     lineHeight: 32,
     marginBottom: 28,
     letterSpacing: 0.3,
@@ -574,7 +566,6 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 18,
-    backgroundColor: Colors.light.primary,
     color: "#ffffff",
     textAlign: "center",
     lineHeight: 36,
@@ -584,16 +575,13 @@ const styles = StyleSheet.create({
   optionText: {
     flex: 1,
     fontSize: 16,
-    color: Colors.light.text,
     lineHeight: 22,
   },
   explanationCard: {
     marginTop: 28,
     padding: 24,
-    backgroundColor: Colors.light.parchment,
     borderRadius: 18,
     borderLeftWidth: 4,
-    borderLeftColor: Colors.light.accent,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.04,
@@ -603,19 +591,16 @@ const styles = StyleSheet.create({
   explanationTitle: {
     fontSize: 16,
     fontWeight: "600" as const,
-    color: Colors.light.primary,
     marginBottom: 10,
     letterSpacing: 0.4,
   },
   explanationText: {
     fontSize: 15,
-    color: Colors.light.text,
     lineHeight: 24,
     letterSpacing: 0.2,
   },
   bottomButton: {
     padding: 20,
-    backgroundColor: Colors.light.card,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.04,
@@ -625,7 +610,6 @@ const styles = StyleSheet.create({
   nextButton: {
     borderRadius: 20,
     overflow: "hidden",
-    shadowColor: Colors.light.primary,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.25,
     shadowRadius: 10,
@@ -661,12 +645,10 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   },
   scoreCard: {
-    backgroundColor: Colors.light.card,
     padding: 48,
     borderRadius: 20,
     alignItems: "center",
     marginTop: 12,
-    shadowColor: Colors.light.primary,
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.1,
     shadowRadius: 16,
@@ -675,23 +657,19 @@ const styles = StyleSheet.create({
   scoreNumber: {
     fontSize: 72,
     fontWeight: "600" as const,
-    color: Colors.light.primary,
     letterSpacing: -2,
   },
   scoreLabel: {
     fontSize: 17,
-    color: Colors.light.muted,
     marginTop: 12,
     letterSpacing: 0.5,
   },
   scoreDetail: {
     fontSize: 16,
-    color: Colors.light.text,
     marginTop: 6,
     letterSpacing: 0.2,
   },
   resultMessage: {
-    backgroundColor: Colors.light.parchment,
     padding: 24,
     borderRadius: 18,
     marginTop: 24,
@@ -703,7 +681,6 @@ const styles = StyleSheet.create({
   },
   resultMessageText: {
     fontSize: 16,
-    color: Colors.light.text,
     textAlign: "center",
     lineHeight: 26,
     letterSpacing: 0.3,
@@ -717,9 +694,6 @@ const styles = StyleSheet.create({
     marginTop: 32,
     borderRadius: 16,
     borderWidth: 2,
-    borderColor: Colors.light.primary,
-    backgroundColor: Colors.light.card,
-    shadowColor: Colors.light.primary,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 6,
@@ -728,7 +702,6 @@ const styles = StyleSheet.create({
   restartButtonText: {
     fontSize: 16,
     fontWeight: "600" as const,
-    color: Colors.light.primary,
     letterSpacing: 0.4,
   },
   errorContainer: {
@@ -755,7 +728,6 @@ const styles = StyleSheet.create({
     marginTop: 16,
     paddingVertical: 12,
     paddingHorizontal: 20,
-    backgroundColor: Colors.light.primary,
     borderRadius: 8,
     alignItems: "center",
   },
