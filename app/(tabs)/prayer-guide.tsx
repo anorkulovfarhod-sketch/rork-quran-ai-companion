@@ -277,13 +277,13 @@ export default function PrayerGuideScreen() {
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <LinearGradient
-        colors={['#1a1a1a', '#2a2a2a']}
+        colors={theme === 'dark' ? ['#1a1a1a', '#2a2a2a'] : [colors.primary, colors.primaryDark]}
         style={styles.headerGradient}
       >
         <View style={styles.headerContent}>
-          <HandHeart color={colors.headingGold} size={44} strokeWidth={1.5} />
-          <Text style={[styles.headerTitle, { color: colors.headingGold, textShadowColor: 'rgba(184, 160, 110, 0.6)', textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 12 }]}>{translate('prayer_guide')}</Text>
-          <Text style={[styles.headerArabic, { color: colors.headingGold }]}>دليل الصلاة</Text>
+          <HandHeart color={theme === 'dark' ? colors.headingGold : '#ffffff'} size={44} strokeWidth={1.5} />
+          <Text style={[styles.headerTitle, { color: theme === 'dark' ? colors.headingGold : '#ffffff' }]}>{translate('prayer_guide')}</Text>
+          <Text style={[styles.headerArabic, { color: theme === 'dark' ? colors.headingGold : '#ffffff' }]}>دليل الصلاة</Text>
           <Text style={[styles.headerSubtext, { color: 'rgba(255,255,255,0.8)' }]}>
             {translate('step_by_step_prayer')}
           </Text>

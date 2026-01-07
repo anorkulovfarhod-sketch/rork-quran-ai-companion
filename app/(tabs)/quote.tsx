@@ -214,13 +214,13 @@ export default function QuoteScreen() {
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <LinearGradient
-        colors={['#1a1a1a', '#2a2a2a']}
-        style={[styles.headerGradient, { shadowColor: '#b8a06e', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.6, shadowRadius: 20, elevation: 8 }]}
+        colors={theme === 'dark' ? ['#1a1a1a', '#2a2a2a'] : [colors.primary, colors.primaryDark]}
+        style={[styles.headerGradient, theme === 'dark' && { shadowColor: '#b8a06e', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.6, shadowRadius: 20, elevation: 8 }]}
       >
         <View style={styles.headerContent}>
-          <Sparkles color={colors.headingGold} size={44} strokeWidth={1.5} />
-          <Text style={[styles.headerTitle, { color: colors.headingGold }]}>{translate('daily_quran_quote')}</Text>
-          <Text style={[styles.headerArabic, { color: colors.headingGold }]}>اقتباس قرآني يومي</Text>
+          <Sparkles color={theme === 'dark' ? colors.headingGold : '#ffffff'} size={44} strokeWidth={1.5} />
+          <Text style={[styles.headerTitle, { color: theme === 'dark' ? colors.headingGold : '#ffffff' }]}>{translate('daily_quran_quote')}</Text>
+          <Text style={[styles.headerArabic, { color: theme === 'dark' ? colors.headingGold : '#ffffff' }]}>اقتباس قرآني يومي</Text>
           <Text style={[styles.headerSubtext, { color: 'rgba(255,255,255,0.8)' }]}>
             {translate('daily_inspiration')}
           </Text>

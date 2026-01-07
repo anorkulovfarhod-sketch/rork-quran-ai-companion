@@ -108,8 +108,8 @@ export default function StoryChatScreen() {
       keyboardVerticalOffset={0}
     >
       <LinearGradient
-        colors={['#1a1a1a', '#2a2a2a']}
-        style={[styles.headerGradient, { shadowColor: '#b8a06e', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.6, shadowRadius: 20, elevation: 8 }]}
+        colors={theme === 'dark' ? ['#1a1a1a', '#2a2a2a'] : [colors.primary, colors.primaryDark]}
+        style={[styles.headerGradient, theme === 'dark' && { shadowColor: '#b8a06e', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.6, shadowRadius: 20, elevation: 8 }]}
       >
         <View style={styles.headerContent}>
           <TouchableOpacity 
@@ -117,10 +117,10 @@ export default function StoryChatScreen() {
             onPress={() => router.back()}
             hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
           >
-            <ArrowLeft color={colors.headingGold} size={24} strokeWidth={2} />
+            <ArrowLeft color={theme === 'dark' ? colors.headingGold : '#ffffff'} size={24} strokeWidth={2} />
           </TouchableOpacity>
-          <BookHeart color={colors.headingGold} size={36} strokeWidth={1.5} />
-          <Text style={[styles.headerText, { color: colors.headingGold }]}>{translate('story_chat')}</Text>
+          <BookHeart color={theme === 'dark' ? colors.headingGold : '#ffffff'} size={36} strokeWidth={1.5} />
+          <Text style={[styles.headerText, { color: theme === 'dark' ? colors.headingGold : '#ffffff' }]}>{translate('story_chat')}</Text>
           <Text style={[styles.headerSubtext, { color: 'rgba(255,255,255,0.8)' }]}>
             {translate('personalized_stories')}
           </Text>

@@ -157,8 +157,8 @@ export default function PrayersScreen() {
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <LinearGradient
-        colors={['#1a1a1a', '#2a2a2a']}
-        style={[styles.headerGradient, { shadowColor: '#b8a06e', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.6, shadowRadius: 20, elevation: 8 }]}
+        colors={theme === 'dark' ? ['#1a1a1a', '#2a2a2a'] : [colors.primary, colors.primaryDark]}
+        style={[styles.headerGradient, theme === 'dark' && { shadowColor: '#b8a06e', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.6, shadowRadius: 20, elevation: 8 }]}
       >
         <Animated.View
           style={[
@@ -169,9 +169,9 @@ export default function PrayersScreen() {
             },
           ]}
         >
-          <BookOpen color={colors.headingGold} size={44} strokeWidth={1.5} />
-          <Text style={[styles.headerTitle, { color: colors.headingGold }]}>{translate('daily_prayers')}</Text>
-          <Text style={[styles.headerArabic, { color: colors.headingGold }]}>الصلوات الخمس</Text>
+          <BookOpen color={theme === 'dark' ? colors.headingGold : '#ffffff'} size={44} strokeWidth={1.5} />
+          <Text style={[styles.headerTitle, { color: theme === 'dark' ? colors.headingGold : '#ffffff' }]}>{translate('daily_prayers')}</Text>
+          <Text style={[styles.headerArabic, { color: theme === 'dark' ? colors.headingGold : '#ffffff' }]}>الصلوات الخمس</Text>
           <Text style={[styles.headerSubtext, { color: 'rgba(255,255,255,0.8)' }]}>
             {translate('track_prayers')}
           </Text>
@@ -194,9 +194,9 @@ export default function PrayersScreen() {
           <View style={styles.cardsRow}>
             {location && hasPermission && (
               <View style={[styles.qiblaCard, { backgroundColor: colors.card, shadowColor: colors.primary }]}>
-                <View style={styles.qiblaHeader}>
-                  <Compass color="#b8a06e" size={20} strokeWidth={2} />
-                  <Text style={[styles.qiblaTitle, { color: colors.headingGold }]}>Qibla</Text>
+                <View style={[styles.qiblaHeader, { backgroundColor: theme === 'dark' ? '#2a2a2a' : colors.parchment, shadowColor: theme === 'dark' ? '#b8a06e' : 'transparent', shadowOpacity: theme === 'dark' ? 0.6 : 0 }]}>
+                  <Compass color={theme === 'dark' ? '#b8a06e' : colors.primary} size={20} strokeWidth={2} />
+                  <Text style={[styles.qiblaTitle, { color: theme === 'dark' ? colors.headingGold : colors.primary }]}>Qibla</Text>
                 </View>
                 <View style={styles.qiblaCompassWrapper}>
                   <QiblaCompass latitude={location.latitude} longitude={location.longitude} />
@@ -205,9 +205,9 @@ export default function PrayersScreen() {
             )}
 
             <View style={[styles.progressCard, { backgroundColor: colors.card, shadowColor: colors.primary }]}>
-              <View style={styles.progressHeader}>
-                <CheckCircle2 color="#b8a06e" size={20} strokeWidth={2} />
-                <Text style={[styles.progressTitle, { color: colors.headingGold }]}>Today</Text>
+              <View style={[styles.progressHeader, { backgroundColor: theme === 'dark' ? '#2a2a2a' : colors.parchment }]}>
+                <CheckCircle2 color={theme === 'dark' ? '#b8a06e' : colors.primary} size={20} strokeWidth={2} />
+                <Text style={[styles.progressTitle, { color: theme === 'dark' ? colors.headingGold : colors.primary }]}>Today</Text>
               </View>
               <View style={styles.progressCircleContainer}>
                 <View style={styles.progressCircle}>
@@ -261,9 +261,9 @@ export default function PrayersScreen() {
           </View>
 
           <View style={[styles.prayersSection, { backgroundColor: colors.card, shadowColor: colors.primary }]}>
-            <View style={styles.prayersSectionHeader}>
-              <Clock color="#b8a06e" size={20} strokeWidth={2} />
-              <Text style={[styles.prayersSectionTitle, { color: colors.headingGold }]}>Today&apos;s Prayers</Text>
+            <View style={[styles.prayersSectionHeader, { backgroundColor: theme === 'dark' ? '#2a2a2a' : colors.parchment, shadowColor: theme === 'dark' ? '#b8a06e' : 'transparent', shadowOpacity: theme === 'dark' ? 0.6 : 0 }]}>
+              <Clock color={theme === 'dark' ? '#b8a06e' : colors.primary} size={20} strokeWidth={2} />
+              <Text style={[styles.prayersSectionTitle, { color: theme === 'dark' ? colors.headingGold : colors.primary }]}>Today&apos;s Prayers</Text>
             </View>
             <View style={styles.prayersContainer}>
               {prayers.map((prayer, index) => {
@@ -438,14 +438,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 8,
     marginBottom: 12,
-    backgroundColor: "#2a2a2a",
     paddingHorizontal: 12,
     paddingVertical: 8,
     borderRadius: 10,
     alignSelf: "flex-start",
-    shadowColor: '#b8a06e',
     shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.6,
     shadowRadius: 12,
     elevation: 6,
   },
@@ -474,7 +471,6 @@ const styles = StyleSheet.create({
     gap: 8,
     marginBottom: 12,
     alignSelf: "flex-start",
-    backgroundColor: "#2a2a2a",
     paddingHorizontal: 12,
     paddingVertical: 8,
     borderRadius: 10,
@@ -570,14 +566,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 10,
     marginBottom: 16,
-    backgroundColor: "#2a2a2a",
     paddingHorizontal: 12,
     paddingVertical: 8,
     borderRadius: 10,
     alignSelf: "flex-start",
-    shadowColor: '#b8a06e',
     shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.6,
     shadowRadius: 12,
     elevation: 6,
   },
