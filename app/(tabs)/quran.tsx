@@ -410,15 +410,15 @@ export default function QuranScreen() {
     return (
       <View style={[styles.container, { backgroundColor: colors.background }]}>
         <LinearGradient
-          colors={[colors.primary, colors.primaryDark]}
-          style={styles.surahHeader}
+          colors={theme === 'dark' ? ['#1a1a1a', '#2a2a2a'] : [colors.primary, colors.primaryDark]}
+          style={[styles.surahHeader, theme === 'dark' && { shadowColor: '#b8a06e', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.6, shadowRadius: 20, elevation: 8 }]}
         >
           <TouchableOpacity style={styles.backButton} onPress={handleBack}>
             <Text style={styles.backText}>← {translate('back')}</Text>
           </TouchableOpacity>
-          <Text style={styles.surahHeaderArabic}>{surah?.nameArabic}</Text>
-          <Text style={styles.surahHeaderTitle}>{surah?.name}</Text>
-          <Text style={styles.surahHeaderSubtext}>
+          <Text style={[styles.surahHeaderArabic, { color: theme === 'dark' ? colors.headingGold : '#ffffff' }]}>{surah?.nameArabic}</Text>
+          <Text style={[styles.surahHeaderTitle, { color: theme === 'dark' ? colors.headingGold : '#ffffff' }]}>{surah?.name}</Text>
+          <Text style={[styles.surahHeaderSubtext, { color: 'rgba(255,255,255,0.8)' }]}>
             {surah?.verses} {translate('verses')} • {translate(surah?.revelation.toLowerCase() as any)}
           </Text>
           
@@ -876,14 +876,12 @@ const styles = StyleSheet.create({
   surahHeaderArabic: {
     fontSize: 32,
     fontWeight: "600" as const,
-    color: "#ffffff",
     textAlign: "center",
     letterSpacing: 1,
   },
   surahHeaderTitle: {
     fontSize: 22,
     fontWeight: "500" as const,
-    color: "#ffffff",
     opacity: 0.95,
     marginTop: 8,
     textAlign: "center",
@@ -892,7 +890,6 @@ const styles = StyleSheet.create({
   },
   surahHeaderSubtext: {
     fontSize: 14,
-    color: "#ffffff",
     opacity: 0.88,
     marginTop: 8,
     textAlign: "center",
