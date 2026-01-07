@@ -20,7 +20,7 @@ type PlanType = 'monthly' | 'yearly';
 
 export default function PaywallScreen() {
   const router = useRouter();
-  const { offerings, purchase, restore, isPurchasing, isRestoring, isPremium, isLoading } = useSubscription();
+  const { offerings, purchase, restore, isPurchasing, isRestoring, isPremium } = useSubscription();
   const { translate } = useLanguage();
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(50)).current;
@@ -66,28 +66,20 @@ export default function PaywallScreen() {
       console.log('Purchase button pressed');
       console.log('Selected plan:', selectedPlan);
       console.log('Offerings available:', offerings);
-      console.log('Has offerings:', hasOfferings);
       
-      if (!hasOfferings) {
-        Alert.alert(
-          'Subscription Not Available',
-          'To subscribe, please use the app on a real iOS or Android device. Web and simulator purchases are not supported.\n\nOnce subscribed, your premium access will sync across all your devices.'
-        );
+      const currentOffering = offerings?.current;
+      if (!currentOffering) {
+        Alert.alert(translate('purchase_failed'), 'Unable to load subscription offerings. Please try again later.');
+        console.error('No current offering available');
         return;
       }
       
-      const currentOffering = offerings?.current;
       const packageToPurchase = selectedPlan === 'yearly' ? yearlyPackage : monthlyPackage;
       
       if (!packageToPurchase) {
-        if (currentOffering && currentOffering.availablePackages.length > 0) {
-          const fallbackPackage = currentOffering.availablePackages[0];
-          console.log('Using fallback package:', fallbackPackage.identifier);
-          await purchase(fallbackPackage);
-        } else {
-          Alert.alert(translate('purchase_failed'), 'No subscription packages available.');
-          return;
-        }
+        const fallbackPackage = currentOffering.availablePackages[0];
+        console.log('Using fallback package:', fallbackPackage.identifier);
+        await purchase(fallbackPackage);
       } else {
         console.log('Purchasing package:', packageToPurchase.identifier);
         await purchase(packageToPurchase);
@@ -113,30 +105,13 @@ export default function PaywallScreen() {
   };
 
   const features = [
-    'Unlimited AI Islamic Scholar Chat',
-    'Personalized Quranic Guidance & Tafsir',
-    'Interactive Story-Based Learning',
-    'Ad-Free Experience Across All Features',
+    translate('unlimited_chat_messages'),
+    translate('ask_quran_questions'),
+    translate('scholarly_interpretations'),
+    translate('explore_islamic_teachings'),
+    translate('personal_spiritual_guidance'),
+    translate('support_development'),
   ];
-
-  if (isLoading) {
-    return (
-      <View style={styles.container}>
-        <TouchableOpacity
-          style={styles.closeButton}
-          onPress={() => router.back()}
-        >
-          <X color={Colors.light.text} size={28} strokeWidth={2} />
-        </TouchableOpacity>
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color={Colors.light.primary} />
-          <Text style={styles.loadingText}>Loading subscription options...</Text>
-        </View>
-      </View>
-    );
-  }
-
-  const hasOfferings = offerings?.current && offerings.current.availablePackages.length > 0;
 
   return (
     <View style={styles.container}>
@@ -168,9 +143,9 @@ export default function PaywallScreen() {
             <Crown color={Colors.light.secondary} size={64} strokeWidth={1.5} />
           </LinearGradient>
 
-          <Text style={styles.title}>Amaanah Premium</Text>
+          <Text style={styles.title}>{translate('unlock_premium')}</Text>
           <Text style={styles.subtitle}>
-            Unlock the full spiritual experience
+            {translate('enhance_spiritual_journey')}
           </Text>
 
           <View style={styles.featuresContainer}>
@@ -513,46 +488,5 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     paddingHorizontal: 20,
   },
-  loadingContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 32,
-  },
-  loadingText: {
-    marginTop: 16,
-    fontSize: 16,
-    color: Colors.light.muted,
-  },
-  errorTitle: {
-    fontSize: 24,
-    fontWeight: '700' as const,
-    color: Colors.light.text,
-    marginBottom: 16,
-    textAlign: 'center',
-  },
-  errorMessage: {
-    fontSize: 15,
-    color: Colors.light.muted,
-    textAlign: 'center',
-    lineHeight: 22,
-    marginBottom: 8,
-  },
-  errorBullet: {
-    fontSize: 14,
-    color: Colors.light.muted,
-    marginBottom: 4,
-  },
-  retryButton: {
-    marginTop: 24,
-    backgroundColor: Colors.light.primary,
-    paddingVertical: 14,
-    paddingHorizontal: 32,
-    borderRadius: 12,
-  },
-  retryButtonText: {
-    fontSize: 16,
-    fontWeight: '600' as const,
-    color: '#ffffff',
-  },
+
 });
