@@ -25,7 +25,7 @@ export default {
     tabIconDefault: "#8e8e93",
     tabIconSelected: "#a89968",
     primary: "#a89968",
-    primaryDark: "#8f7f57",
+    primaryDark: "#f5f5f7",
     secondary: "#a89968",
     accent: "#a89968",
     card: "#1c1c1e",
