@@ -108,12 +108,10 @@ export default function PaywallScreen() {
   };
 
   const features = [
-    translate('unlimited_chat_messages'),
-    translate('ask_quran_questions'),
-    translate('scholarly_interpretations'),
-    translate('explore_islamic_teachings'),
-    translate('personal_spiritual_guidance'),
-    translate('support_development'),
+    'Unlimited AI Islamic Scholar Chat',
+    'Personalized Quranic Guidance & Tafsir',
+    'Interactive Story-Based Learning',
+    'Ad-Free Experience Across All Features',
   ];
 
   if (isLoading) {
@@ -194,9 +192,9 @@ export default function PaywallScreen() {
             <Crown color={Colors.light.secondary} size={64} strokeWidth={1.5} />
           </LinearGradient>
 
-          <Text style={styles.title}>{translate('unlock_premium')}</Text>
+          <Text style={styles.title}>Amaanah Premium</Text>
           <Text style={styles.subtitle}>
-            {translate('enhance_spiritual_journey')}
+            Unlock the full spiritual experience
           </Text>
 
           <View style={styles.featuresContainer}>
