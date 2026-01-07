@@ -488,7 +488,7 @@ export default function QuranScreen() {
               style={[
                 styles.verseCard,
                 { backgroundColor: colors.card },
-                currentPlayingVerse === index && [styles.verseCardPlaying, { borderColor: colors.primary, backgroundColor: colors.parchment }]
+                currentPlayingVerse === index && [styles.verseCardPlaying, { borderColor: theme === 'dark' ? colors.headingGold : colors.primary, backgroundColor: colors.parchment }]
               ]}
               onLayout={(event) => {
                 const { y } = event.nativeEvent.layout;
@@ -502,7 +502,7 @@ export default function QuranScreen() {
                 <TouchableOpacity
                   style={[
                     styles.versePlayButton,
-                    { backgroundColor: colors.parchment, borderColor: colors.primary },
+                    { backgroundColor: colors.parchment, borderColor: theme === 'dark' ? colors.headingGold : colors.primary },
                     currentPlayingVerse === index && status.playing && styles.versePlayButtonActive
                   ]}
                   onPress={() => togglePlayVerse(index)}
@@ -627,7 +627,7 @@ export default function QuranScreen() {
                     key={reciter.id}
                     style={[
                       styles.reciterOption,
-                      { backgroundColor: colors.background, borderColor: localReciter.id === reciter.id ? colors.primary : colors.border }
+                      { backgroundColor: colors.background, borderColor: localReciter.id === reciter.id ? (theme === 'dark' ? colors.headingGold : colors.primary) : colors.border }
                     ]}
                     onPress={async () => {
                       if (playerRef.current) {
