@@ -86,7 +86,7 @@ export default function StoryChatScreen() {
   const handleSend = async () => {
     if (input.trim()) {
       if (!canSendMessage) {
-        router.push('/paywall');
+        router.push('/paywall' as any);
         return;
       }
       
@@ -237,7 +237,7 @@ export default function StoryChatScreen() {
               )}
             </Text>
             {!canSendMessage && (
-              <TouchableOpacity onPress={() => router.push('/paywall')}>
+              <TouchableOpacity onPress={() => router.push('/paywall' as any)}>
                 <Text style={[styles.unlockText, { color: theme === 'dark' ? colors.headingGold : colors.primary }]}>Unlock Chat</Text>
               </TouchableOpacity>
             )}
