@@ -66,23 +66,28 @@ export default function PaywallScreen() {
       console.log('Purchase button pressed');
       console.log('Selected plan:', selectedPlan);
       console.log('Offerings available:', offerings);
+      console.log('Has offerings:', hasOfferings);
       
-      const currentOffering = offerings?.current;
-      if (!currentOffering) {
+      if (!hasOfferings) {
         Alert.alert(
-          translate('purchase_failed'), 
-          'Subscription offerings are not available at the moment. This can happen when:\n\n• Testing on web or simulator\n• Network connectivity issues\n• RevenueCat configuration pending\n\nPlease try again on a real device or contact support.'
+          'Subscription Not Available',
+          'To subscribe, please use the app on a real iOS or Android device. Web and simulator purchases are not supported.\n\nOnce subscribed, your premium access will sync across all your devices.'
         );
-        console.error('No current offering available');
         return;
       }
       
+      const currentOffering = offerings?.current;
       const packageToPurchase = selectedPlan === 'yearly' ? yearlyPackage : monthlyPackage;
       
       if (!packageToPurchase) {
-        const fallbackPackage = currentOffering.availablePackages[0];
-        console.log('Using fallback package:', fallbackPackage.identifier);
-        await purchase(fallbackPackage);
+        if (currentOffering && currentOffering.availablePackages.length > 0) {
+          const fallbackPackage = currentOffering.availablePackages[0];
+          console.log('Using fallback package:', fallbackPackage.identifier);
+          await purchase(fallbackPackage);
+        } else {
+          Alert.alert(translate('purchase_failed'), 'No subscription packages available.');
+          return;
+        }
       } else {
         console.log('Purchasing package:', packageToPurchase.identifier);
         await purchase(packageToPurchase);
@@ -131,36 +136,7 @@ export default function PaywallScreen() {
     );
   }
 
-  if (!offerings?.current) {
-    return (
-      <View style={styles.container}>
-        <TouchableOpacity
-          style={styles.closeButton}
-          onPress={() => router.back()}
-        >
-          <X color={Colors.light.text} size={28} strokeWidth={2} />
-        </TouchableOpacity>
-        <View style={styles.loadingContainer}>
-          <Text style={styles.errorTitle}>Subscriptions Unavailable</Text>
-          <Text style={styles.errorMessage}>
-            Subscription offerings could not be loaded. This typically happens when:
-          </Text>
-          <Text style={styles.errorBullet}>• Testing on web or simulator</Text>
-          <Text style={styles.errorBullet}>• Network connectivity issues</Text>
-          <Text style={styles.errorBullet}>• RevenueCat setup is pending</Text>
-          <Text style={[styles.errorMessage, { marginTop: 16 }]}>
-            Please try again on a real device or contact support.
-          </Text>
-          <TouchableOpacity
-            style={styles.retryButton}
-            onPress={() => router.back()}
-          >
-            <Text style={styles.retryButtonText}>Go Back</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
-  }
+  const hasOfferings = offerings?.current && offerings.current.availablePackages.length > 0;
 
   return (
     <View style={styles.container}>
